@@ -1,0 +1,4 @@
+EXPORTS
+	D3DXAssembleShader
+	D3DXCompileShader
+	D3DXCreateBuffer

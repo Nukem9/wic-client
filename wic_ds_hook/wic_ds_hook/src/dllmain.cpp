@@ -95,7 +95,7 @@ void PatchServerAssert(DWORD Address)
 BOOL WicDS_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 {
 	Server_PatchFPUExceptions();
-	Server_PatchFramerate(1000);
+	Server_PatchFramerate(200);
 
 	EXCO_Directory::InitializeHook();
 	EX_CAI_Type::InitializeHook();

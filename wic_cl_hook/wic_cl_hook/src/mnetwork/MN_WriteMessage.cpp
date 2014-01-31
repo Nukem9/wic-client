@@ -6,9 +6,14 @@ void MN_WriteMessage::PrepareWrite(ushort aLengthToWrite, short aTypeCheckValue)
 
 	__asm
 	{
-		push aTypeCheckValue	// 3: aTypeCheckValue
-		push aLengthToWrite		// 2: aLengthToWrite
-		mov eax, this			// 1: thisptr
+		movzx eax, aTypeCheckValue
+		push eax					// 3: aTypeCheckValue
+
+		movzx eax, aLengthToWrite
+		push eax					// 2: aLengthToWrite
+
+		push ecx
+		pop eax						// 1: thisptr
 
 		call dword ptr ds:[ptr_MN_WriteMessage_PrepareWrite]
 	}

@@ -89,6 +89,9 @@
     <ClInclude Include="src\Ptr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\mmassgate\MMG_CdKey.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dllmain.cpp">
@@ -125,6 +128,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\mcommon2\MC_Mem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mmassgate\MMG_CdKey.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

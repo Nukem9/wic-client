@@ -92,6 +92,14 @@ void PatchServerAssert(DWORD Address)
 	*(bool *)Address = true;
 }
 
+struct hostent *PASCAL hk_gethostbyname(const char *name)
+{
+	if(strstr(name, "massgate.net"))
+		name = "127.0.0.1";
+
+	return gethostbyname(name);
+}
+
 BOOL WicDS_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 {
 	Server_PatchFPUExceptions();
@@ -175,6 +183,10 @@ BOOL WicDS_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 
 	// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 405, "iz>= 0 && iz < mmInfo.myNumPatchesZ", &byte_8F01E2);
 	PatchServerAssert(0x008F01E2);
+
+	//gethostbyname()
+	VirtualProtect((LPVOID)0x0074D3A8, 4, PAGE_EXECUTE_READWRITE, &d);
+	*(DWORD *)0x0074D3A8 = (DWORD)&hk_gethostbyname;
 
 	return TRUE;
 }

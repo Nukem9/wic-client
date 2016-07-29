@@ -22,3 +22,12 @@ bool MN_Message::Empty()
 {
 	return this->myCurrentPacket == nullptr;
 }
+
+DPTR(MN_MessageOnlineExeDisc, ourZipFlag);
+DPTR(MN_MessageOnlineExeDisc, ourCompressionFlag);
+DPTR(MN_MessageOnlineExeDisc, ourDefaultTypeCheckFlag);
+
+bool MN_MessageOnlineExeDisc::Empty()
+{
+	return this->myCurrentPacket == nullptr;
+}

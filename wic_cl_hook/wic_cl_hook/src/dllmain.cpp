@@ -96,6 +96,31 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	return TRUE;
 }
 
+BOOL Wic_HookInitV2(HMODULE hModule, DWORD ul_reason_for_call)
+{
+	AllocConsole();
+	freopen("CONOUT$", "w", stdout);
+	freopen("CONOUT$", "w", stderr);
+	
+	wchar_t fullPath[2048];
+	memset(fullPath, 0, sizeof(fullPath));
+	GetModuleFileNameW(NULL, fullPath, 2048);
+
+	struct _stat buf;
+	_wstat(fullPath, &buf);
+
+	if(wcsstr(fullPath, L"wic.exe") && buf.st_size == 10906680)
+		WIC_EXE::InitializeHook();
+	else if(wcsstr(fullPath, L"wic_online.exe") && buf.st_size == 10484792)
+		WIC_ONLINE_EXE::InitializeHook();
+	else if(wcsstr(fullPath, L"wic_ds.exe"))
+		return FALSE;
+	else
+		return FALSE;
+	
+	return TRUE;
+}
+
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
 {
 	if(ul_reason_for_call != DLL_PROCESS_ATTACH)
@@ -103,5 +128,6 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
 
 	DisableThreadLibraryCalls(hModule);
 
+	//return Wic_HookInitV2(hModule, ul_reason_for_call);
 	return Wic_HookInit(hModule, ul_reason_for_call);
 }

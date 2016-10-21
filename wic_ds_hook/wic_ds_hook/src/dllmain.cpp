@@ -94,8 +94,8 @@ void PatchServerAssert(DWORD Address)
 
 struct hostent *PASCAL hk_gethostbyname(const char *name)
 {
-	if(strstr(name, "massgate.net"))
-		name = "127.0.0.1";
+	if (strstr(name, "massgate.net"))
+		name = "liveaccount.massgate.org";
 
 	return gethostbyname(name);
 }
@@ -107,11 +107,11 @@ BOOL WicDS_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 
 	EXCO_Directory::InitializeHook();
 	EX_CAI_Type::InitializeHook();
-	
-	// No longer needed with FPU exceptions gone
-	//EX_CAI_SupportWeaponManager::InitializeHook();
 
 	DWORD d = 0;
+
+	VirtualProtect((LPVOID)0x0074D3A8, 4, PAGE_EXECUTE_READWRITE, &d);
+	*(DWORD *)0x0074D3A8 = (DWORD)&hk_gethostbyname;
 
 	VirtualProtect((LPVOID)0x00405A40, 7, PAGE_EXECUTE_READWRITE, &d);
 	memcpy((LPVOID)0x00405A40, "\x90\x90\x90\x90\x90\x90\x90", 7);
@@ -184,9 +184,16 @@ BOOL WicDS_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 405, "iz>= 0 && iz < mmInfo.myNumPatchesZ", &byte_8F01E2);
 	PatchServerAssert(0x008F01E2);
 
-	//gethostbyname()
-	VirtualProtect((LPVOID)0x0074D3A8, 4, PAGE_EXECUTE_READWRITE, &d);
-	*(DWORD *)0x0074D3A8 = (DWORD)&hk_gethostbyname;
+	// CAI_Assert(".\\ex_cai_scoutmap.cpp", 215, "tile>=0", &byte_960023);
+	PatchServerAssert(0x00960023);
+
+	//
+	// Patch for WICG_MPyPlayer::cPlayer_ChatMessage where the developers incorrectly
+	// used player slot #0 instead of the script player when sending chat messages.
+	// Slot 0 would crash if no player was connected. Slot -1 is used for scripts.
+	//
+	VirtualProtect((LPVOID)0x004EEFF1, 1, PAGE_EXECUTE_READWRITE, &d);
+	*(BYTE *)0x004EEFF1 = 0xFF;
 
 	return TRUE;
 }

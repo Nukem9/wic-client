@@ -83,11 +83,15 @@ void Server_PatchFramerate(uint Framerate)
 {
 	DWORD d;
 	VirtualProtect((LPVOID)0x00402B1F, sizeof(uint), PAGE_EXECUTE_READWRITE, &d);
+	VirtualProtect((LPVOID)0x000041B5ED, 5, PAGE_EXECUTE_READWRITE, &d);
 
 	// Server FPS divisor
 	// (1000 / FrameTime)	= FPS
 	// (1000 / FPS)			= FrameTime
 	*(uint *)0x00402B1F = 1000 / max(Framerate, 10);
+
+	// Ignore timer errors when a higher framerate is used
+	memcpy((LPVOID)0x000041B5ED, (LPVOID)"\xE9\xDD\x00\x00\x00", 5);
 }
 
 void Server_PatchAssertions()
@@ -167,6 +171,5 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
 		return TRUE;
 
 	DisableThreadLibraryCalls(hModule);
-
 	return WicDS_HookInit(hModule, ul_reason_for_call);
 }

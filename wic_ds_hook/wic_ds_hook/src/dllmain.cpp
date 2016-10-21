@@ -69,10 +69,14 @@ public:
 void Server_PatchFPUExceptions()
 {
 	DWORD d;
-	VirtualProtect((LPVOID)0x004024AF, 1024, PAGE_EXECUTE_READWRITE, &d);
 
-	memcpy((LPVOID)0x004024AF, (LPVOID)"\x90\x90\x90\x90\x90", 5);// _clearfp();
-	memcpy((LPVOID)0x004024BB, (LPVOID)"\x90\x90\x90\x90\x90", 5);// _controlfp();
+	VirtualProtect((LPVOID)0x004024AF, 1024, PAGE_EXECUTE_READWRITE, &d);
+	memcpy((LPVOID)0x004024AF, (LPVOID)"\x90\x90\x90\x90\x90", 5);// main(): _clearfp();
+	memcpy((LPVOID)0x004024BB, (LPVOID)"\x90\x90\x90\x90\x90", 5);// main(): _controlfp();
+
+	VirtualProtect((LPVOID)0x0041C5B1, 1024, PAGE_EXECUTE_READWRITE, &d);
+	memcpy((LPVOID)0x0041C5B1, (LPVOID)"\x90\x90\x90\x90\x90", 5);// MT_Thread_thread_starter(): _clearfp();
+	memcpy((LPVOID)0x0041C5BD, (LPVOID)"\x90\x90\x90\x90\x90", 5);// MT_Thread_thread_starter(): _controlfp();
 }
 
 void Server_PatchFramerate(uint Framerate)

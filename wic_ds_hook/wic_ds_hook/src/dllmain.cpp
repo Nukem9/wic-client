@@ -86,10 +86,37 @@ void Server_PatchFramerate(uint Framerate)
 	*(uint *)0x00402B1F = 1000 / max(Framerate, 10);
 }
 
-void PatchServerAssert(DWORD Address)
+void Server_PatchAssertions()
 {
-	// disable assert
-	*(bool *)Address = true;
+	auto PatchAssert = [](DWORD Address)
+	{
+		// Disable assert by setting 'ignoreAlwaysFlag' to true
+		*(bool *)Address = true;
+	};
+
+	PatchAssert(0x00959B0A);// CAI_Assert(".\\EX_CAI_Type.cpp", 281, "0", &byte_959B0A);
+	PatchAssert(0x00960160);// CAI_Assert(".\\ex_cai_decisiontree_node_branching.cpp", 166, "lowest<100000.0f", &byte_960160);
+	PatchAssert(0x009598F4);// CAI_Assert(".\\EX_AIPlayerContainer.cpp", 2246, "movementSpeed>0 && movementSpeed<900000", &byte_9598F4);
+	PatchAssert(0x00960023);// CAI_Assert(".\\ex_cai_scoutmap.cpp", 215, "tile>=0", &byte_960023);
+
+	PatchAssert(0x008F36E8);// MC_Assert(".\\EXG_Projectile.cpp", 413, "aBlastRadius > 0.0f", &byte_8F36E8);
+	PatchAssert(0x008F39A9);// MC_Assert(".\\EXG_MovementSpline.cpp", 106, "myWaypoints[29].myWaypoint.y >= minHeight", &byte_8F39A9);
+	PatchAssert(0x008F3988);// MC_Assert(".\\EXG_CopterMover.cpp", 546, "minHeight <= destination.y", &byte_8F3988);
+	PatchAssert(0x008EF13C);// MC_Assert("c:\\p4ws\\wic-UPDATE11\\Framework\\MCommon2\\mc_keytree.h", 161, "aKey == current->myKey", &ignoreAlwaysFlag);
+	PatchAssert(0x008F3516);// MC_Assert("c:\\p4ws\\wic-UPDATE11\\Framework\\MCommon2\\mc_keytree.h", 161, "aKey == current->myKey", &ignoreAlwaysFlag);
+	PatchAssert(0x008F01ED);// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 227, "iFromGridX >= 0 && iFromGridX < mmInfo.myNumPatchesX", &byte_8F01ED);
+	PatchAssert(0x008F01EC);// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 228, "iFromGridZ >= 0 && iFromGridZ < mmInfo.myNumPatchesZ", &byte_8F01EC);
+	PatchAssert(0x008F01EB);// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 229, "iToGridX >= 0 && iToGridX < mmInfo.myNumPatchesX", &byte_8F01EB);
+	PatchAssert(0x008F01EA);// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 230, "iToGridZ >= 0 && iToGridZ < mmInfo.myNumPatchesZ", &byte_8F01EA);
+	PatchAssert(0x008F01E9);// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 285, "ix>= 0 && ix < mmInfo.myNumPatchesX", &byte_8F01E9);
+	PatchAssert(0x008F01E8);// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 286, "ix >= 0 && ix < mmInfo.myNumPatchesZ", &byte_8F01E8);
+	PatchAssert(0x008F01E7);// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 287, "iz >= 0 && iz < mmInfo.myNumPatchesX", &byte_8F01E7);
+	PatchAssert(0x008F01E6);// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 288, "iz>= 0 && iz < mmInfo.myNumPatchesZ", &byte_8F01E6);
+	PatchAssert(0x008F01E5);// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 402, "ix>= 0 && ix < mmInfo.myNumPatchesX", &byte_8F01E5);
+	PatchAssert(0x008F01E4);// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 403, "ix >= 0 && ix < mmInfo.myNumPatchesZ", &byte_8F01E4);
+	PatchAssert(0x008F01E3);// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 404, "iz >= 0 && iz < mmInfo.myNumPatchesX", &byte_8F01E3);
+	PatchAssert(0x008F01E2);// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 405, "iz>= 0 && iz < mmInfo.myNumPatchesZ", &byte_8F01E2);
+	PatchAssert(0x008F3693);// MC_Assert(".\\EXG_Container.cpp", 1052, "0 && \"No free slot in container\"", &byte_8F3693);
 }
 
 struct hostent *PASCAL hk_gethostbyname(const char *name)
@@ -104,88 +131,20 @@ BOOL WicDS_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 {
 	Server_PatchFPUExceptions();
 	Server_PatchFramerate(200);
+	Server_PatchAssertions();
 
 	EXCO_Directory::InitializeHook();
 	EX_CAI_Type::InitializeHook();
 
 	DWORD d = 0;
 
+	// Redirect DNS lookups
 	VirtualProtect((LPVOID)0x0074D3A8, 4, PAGE_EXECUTE_READWRITE, &d);
 	*(DWORD *)0x0074D3A8 = (DWORD)&hk_gethostbyname;
 
+	// Disable console title updates every frame
 	VirtualProtect((LPVOID)0x00405A40, 7, PAGE_EXECUTE_READWRITE, &d);
 	memcpy((LPVOID)0x00405A40, "\x90\x90\x90\x90\x90\x90\x90", 7);
-
-	// Patch CAI_Assert(".\\EX_CAI_Type.cpp", 281, "0", &byte_959B0A);
-	VirtualProtect((LPVOID)0x006CBA1E, 5, PAGE_EXECUTE_READWRITE, &d);
-	memcpy((LPVOID)0x006CBA1E, (LPVOID)"\xE9\x63\x03\x00\x00", 4);
-
-	// CAI_Assert(".\\ex_cai_decisiontree_node_branching.cpp", 166, "lowest<100000.0f", &byte_960160);
-	VirtualProtect((LPVOID)0x00735A16, 1, PAGE_EXECUTE_READWRITE, &d);
-	*(BYTE *)0x00735A16 = 0xEB;
-
-	// CAI_Assert(".\\EX_AIPlayerContainer.cpp", 2246, "movementSpeed>0 && movementSpeed<900000", &byte_9598F4);
-	VirtualProtect((LPVOID)0x0068B4B6, 1, PAGE_EXECUTE_READWRITE, &d);
-	*(BYTE *)0x0068B4B6 = 0xEB;
-
-	// MC_Assert(".\\EXG_Projectile.cpp", 413, "aBlastRadius > 0.0f", &byte_8F36E8);
-	VirtualProtect((LPVOID)0x0051F0FF, 1, PAGE_EXECUTE_READWRITE, &d);
-	*(BYTE *)0x0051F0FF = 0xEB;
-
-	// MC_Assert(".\\EXG_MovementSpline.cpp", 106, "myWaypoints[29].myWaypoint.y >= minHeight", &byte_8F39A9);
-	VirtualProtect((LPVOID)0x005473F5, 1, PAGE_EXECUTE_READWRITE, &d);
-	*(BYTE *)0x005473F5 = 0xEB;
-
-	// MC_Assert(".\\EXG_CopterMover.cpp", 546, "minHeight <= destination.y", &byte_8F3988);
-	VirtualProtect((LPVOID)0x005410EF, 1, PAGE_EXECUTE_READWRITE, &d);
-	*(BYTE *)0x005410EF = 0xEB;
-
-	// MC_Assert("c:\\p4ws\\wic-UPDATE11\\Framework\\MCommon2\\mc_keytree.h", 161, "aKey == current->myKey", &ignoreAlwaysFlag);
-	VirtualProtect((LPVOID)0x0044C796, 1, PAGE_EXECUTE_READWRITE, &d);
-	*(BYTE *)0x0044C796 = 0xEB;
-
-	// MC_Assert("c:\\p4ws\\wic-UPDATE11\\Framework\\MCommon2\\mc_keytree.h", 161, "aKey == current->myKey", &ignoreAlwaysFlag);
-	VirtualProtect((LPVOID)0x004E0C1E, 1, PAGE_EXECUTE_READWRITE, &d);
-	*(BYTE *)0x004E0C1E = 0xEB;
-
-	// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 227, "iFromGridX >= 0 && iFromGridX < mmInfo.myNumPatchesX", &byte_8F01ED);
-	PatchServerAssert(0x008F01ED);
-
-	// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 228, "iFromGridZ >= 0 && iFromGridZ < mmInfo.myNumPatchesZ", &byte_8F01EC);
-	PatchServerAssert(0x008F01EC);
-
-	// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 229, "iToGridX >= 0 && iToGridX < mmInfo.myNumPatchesX", &byte_8F01EB);
-	PatchServerAssert(0x008F01EB);
-
-	// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 230, "iToGridZ >= 0 && iToGridZ < mmInfo.myNumPatchesZ", &byte_8F01EA);
-	PatchServerAssert(0x008F01EA);
-
-	// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 285, "ix>= 0 && ix < mmInfo.myNumPatchesX", &byte_8F01E9);
-	PatchServerAssert(0x008F01E9);
-
-	// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 286, "ix >= 0 && ix < mmInfo.myNumPatchesZ", &byte_8F01E8);
-	PatchServerAssert(0x008F01E8);
-
-	// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 287, "iz >= 0 && iz < mmInfo.myNumPatchesX", &byte_8F01E7);
-	PatchServerAssert(0x008F01E7);
-
-	// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 288, "iz>= 0 && iz < mmInfo.myNumPatchesZ", &byte_8F01E6);
-	PatchServerAssert(0x008F01E6);
-
-	// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 402, "ix>= 0 && ix < mmInfo.myNumPatchesX", &byte_8F01E5);
-	PatchServerAssert(0x008F01E5);
-
-	// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 403, "ix >= 0 && ix < mmInfo.myNumPatchesZ", &byte_8F01E4);
-	PatchServerAssert(0x008F01E4);
-
-	// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 404, "iz >= 0 && iz < mmInfo.myNumPatchesX", &byte_8F01E3);
-	PatchServerAssert(0x008F01E3);
-
-	// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 405, "iz>= 0 && iz < mmInfo.myNumPatchesZ", &byte_8F01E2);
-	PatchServerAssert(0x008F01E2);
-
-	// CAI_Assert(".\\ex_cai_scoutmap.cpp", 215, "tile>=0", &byte_960023);
-	PatchServerAssert(0x00960023);
 
 	//
 	// Patch for WICG_MPyPlayer::cPlayer_ChatMessage where the developers incorrectly

@@ -65,14 +65,14 @@ public:
 
 	static void InitializeHook()
 	{
-		Detours::X86::DetourClassFunction((PBYTE)0x006CA630, &GetWeaponDamageDirect);
-		Detours::X86::DetourClassFunction((PBYTE)0x006CA6C0, &GetWeaponDamageBlast);
-		Detours::X86::DetourClassFunction((PBYTE)0x006CA750, &GetArmorPiercingDirect);
-		Detours::X86::DetourClassFunction((PBYTE)0x006CA7E0, &GetArmorPiercingBlast);
-		Detours::X86::DetourClassFunction((PBYTE)0x006CA870, &GetFiringRate);
-		Detours::X86::DetourClassFunction((PBYTE)0x006CA900, &GetBulletsPerMag);
-		Detours::X86::DetourClassFunction((PBYTE)0x006CA990, &GetReloadTime);
-		Detours::X86::DetourClassFunction((PBYTE)0x006CAA20, &GetAccuracy);
+		Detours::X86::DetourFunctionClass((PBYTE)0x006CA630, &GetWeaponDamageDirect);
+		Detours::X86::DetourFunctionClass((PBYTE)0x006CA6C0, &GetWeaponDamageBlast);
+		Detours::X86::DetourFunctionClass((PBYTE)0x006CA750, &GetArmorPiercingDirect);
+		Detours::X86::DetourFunctionClass((PBYTE)0x006CA7E0, &GetArmorPiercingBlast);
+		Detours::X86::DetourFunctionClass((PBYTE)0x006CA870, &GetFiringRate);
+		Detours::X86::DetourFunctionClass((PBYTE)0x006CA900, &GetBulletsPerMag);
+		Detours::X86::DetourFunctionClass((PBYTE)0x006CA990, &GetReloadTime);
+		Detours::X86::DetourFunctionClass((PBYTE)0x006CAA20, &GetAccuracy);
 	}
 
 	const unsigned int GetWeaponDamageDirect()

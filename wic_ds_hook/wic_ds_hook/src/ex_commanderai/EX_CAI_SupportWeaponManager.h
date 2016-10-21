@@ -17,38 +17,6 @@ public:
 	bool					myExitedSleepFlag;		// this+0x13D
 	bool					myFirstTimeFlag;		// this+0x13E
 	bool					myIsBridgeRepairer;		// this+0x13F
-
-	static void InitializeHook()
-	{
-		Detours::X86::DetourClassFunction((PBYTE)0x0072FA60, &NonVirt_Update);
-	}
-
-	void NonVirt_Update()
-	{
-		if(this->myFirstTimeFlag)
-		{
-			this->myFireTime = MI_Time::ourCurrentTime;
-			this->myFirstTimeFlag = false;
-		}
-
-		if(this->myIsSleepingFlag)
-		{
-			// Fix FPU exceptions
-			__try
-			{
-				if((MI_Time::ourCurrentTime - this->myFireTime) > this->myReloadTime)
-				{
-					this->myExitedSleepFlag = true;
-					this->myIsSleepingFlag = false;
-				}
-			}
-			__except(EXCEPTION_EXECUTE_HANDLER)
-			{
-				this->myFireTime = MI_Time::ourCurrentTime;
-				this->myReloadTime = MI_Time::ourCurrentTime;
-			}
-		}
-	}
 };
 
 CHECK_OFFSET(EX_CAI_SupportWeaponManager, myGameWrapper, 0xC);

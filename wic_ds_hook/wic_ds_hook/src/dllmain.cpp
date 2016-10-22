@@ -158,6 +158,10 @@ BOOL WicDS_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	VirtualProtect((LPVOID)0x00405A40, 7, PAGE_EXECUTE_READWRITE, &d);
 	memcpy((LPVOID)0x00405A40, "\x90\x90\x90\x90\x90\x90\x90", 7);
 
+	// Allow ranked servers to use mods
+	VirtualProtect((LPVOID)0x004072E9, 1, PAGE_EXECUTE_READWRITE, &d);
+	memcpy((LPVOID)0x004072E9, "\xEB", 1);
+
 	//
 	// Patch for WICG_MPyPlayer::cPlayer_ChatMessage where the developers incorrectly
 	// used player slot #0 instead of the script player when sending chat messages.

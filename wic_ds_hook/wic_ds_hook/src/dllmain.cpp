@@ -139,6 +139,8 @@ struct hostent *PASCAL hk_gethostbyname(const char *name)
 
 BOOL WicDS_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 {
+	MMG_Protocols::MassgateProtocolVersion = 150;
+
 	Server_PatchFPUExceptions();
 	Server_PatchFramerate(200);
 	Server_PatchAssertions();

@@ -221,6 +221,9 @@
     <ClInclude Include="src\Ptr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\mmassgate\MMG_Protocols.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="d3dx9_33.cpp">
@@ -242,6 +245,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ex_common\EXCO_Directory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mmassgate\MMG_Protocols.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

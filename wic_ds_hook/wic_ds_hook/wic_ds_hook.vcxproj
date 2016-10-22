@@ -135,6 +135,7 @@
     <ClInclude Include="src\mcommon2\MC_Vector4.h" />
     <ClInclude Include="src\mcommon2\MI_Time.h" />
     <ClInclude Include="src\mcommon2\stdafx.h" />
+    <ClInclude Include="src\mmassgate\MMG_Protocols.h" />
     <ClInclude Include="src\mmassgate\MMG_TrackableServer.h" />
     <ClInclude Include="src\mmassgate\stdafx.h" />
     <ClInclude Include="src\Ptr.h" />
@@ -146,6 +147,7 @@
     <ClCompile Include="src\ex_common\EXCO_Directory.cpp" />
     <ClCompile Include="src\mcommon2\MC_Mem.cpp" />
     <ClCompile Include="src\mcommon2\MI_Time.cpp" />
+    <ClCompile Include="src\mmassgate\MMG_Protocols.cpp" />
     <ClCompile Include="src\mmassgate\MMG_TrackableServer.cpp" />
     <ClCompile Include="src\stdafx.cpp" />
   </ItemGroup>

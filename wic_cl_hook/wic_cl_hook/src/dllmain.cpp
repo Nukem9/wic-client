@@ -128,6 +128,5 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
 
 	DisableThreadLibraryCalls(hModule);
 
-	//return Wic_HookInitV2(hModule, ul_reason_for_call);
 	return Wic_HookInit(hModule, ul_reason_for_call);
 }

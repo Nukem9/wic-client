@@ -1,7 +1,5 @@
 #include "../stdafx.h"
 
-static bool startup_flag=false;
-
 namespace WIC_EXE
 {
 	void WIC_WriteConsole(const char *aString, ...)
@@ -32,28 +30,17 @@ namespace WIC_EXE
 
 	HINSTANCE PASCAL hk_shellexecutea(HWND hwnd, LPCTSTR lpOperation, LPCTSTR lpFile, LPCTSTR lpParameters, LPCTSTR lpDirectory, INT nShowCmd)
 	{
+		WIC_WriteConsole("%s", lpFile);
+
 		if(strstr(lpFile, "www.massgate.net"))
 		{
-			int bufLength = strlen(lpFile);
+			size_t index = (size_t)(strstr(lpFile, "www.massgate.net") - lpFile);
 
-			char *oldURL = "www.massgate.net";
-			char *newURL = "http://127.0.0.1";	//urls need to be the same length for this to work
-
-			char *tmp = (char *)malloc(bufLength + 1);
-			memset(tmp, 0, sizeof(tmp));
-			memcpy(tmp, lpFile, bufLength + 1);
-
-			size_t index	= strstr(lpFile, oldURL) - lpFile;
-
-			if(strstr(lpFile, oldURL))
-			{
-				for(int i = 0; i < strlen(newURL); i++)
-					tmp[index+i] = newURL[i];
-			}
-
-			memcpy((void*)lpFile, tmp, bufLength + 1);
-			free(tmp);
+			if (index)
+				memcpy((void*)(lpFile+index), "http://127.0.0.1", 16);
 		}
+
+		WIC_WriteConsole("%s", lpFile);
 
 		return ShellExecuteA(hwnd, lpOperation, lpFile, lpParameters, lpDirectory, nShowCmd);
 	}

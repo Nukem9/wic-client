@@ -1,15 +1,19 @@
 #pragma once
 
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <winsock.h>
 #include <stdio.h>
 #include <intrin.h>
 
-// Detours
+#pragma comment(lib, "ws2_32.lib")
+
+// Shared libraries
 #pragma comment(lib, "detours.lib")
 #include "../../shared/detours/Detours.h"
+#include "../../shared/shared_utility.h"
+#include "../../shared/Ptr.h"
 
-#pragma comment(lib, "ws2_32.lib")
 
 /***** Constants & type definitions *****/
 #define VAR_STRING(a) #a
@@ -29,9 +33,6 @@ typedef unsigned long long	sizeptr_t;
 #define CHECK_OFFSET(str, member, offset)	static_assert(offsetof(str, member) == offset, #str "." #member ": Invalid struct/class member offset");
 #define CHECK_SIZE(str, size)				static_assert(sizeof(str) == size, #str ": Invalid struct/class size");
 /****************************************/
-
-// Pointer helper
-#include "../../shared/Ptr.h"
 
 // MCommon2
 #include "mcommon2/stdafx.h"

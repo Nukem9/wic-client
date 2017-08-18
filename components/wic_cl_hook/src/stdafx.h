@@ -8,11 +8,13 @@
 #include <shellapi.h>
 #include <sys/stat.h>
 
-// Detours
+#pragma comment(lib, "ws2_32.lib")
+
+// Shared libraries
 #pragma comment(lib, "detours.lib")
 #include "../../shared/detours/Detours.h"
-
-#pragma comment(lib, "ws2_32.lib")
+#include "../../shared/shared_utility.h"
+#include "../../shared/Ptr.h"
 
 /***** Constants & type definitions *****/
 #define VAR_STRING(a) #a
@@ -32,9 +34,6 @@ typedef unsigned long long	sizeptr_t;
 #define CHECK_OFFSET(str, member, offset)	static_assert(offsetof(str, member) == offset, #str "." #member ": Invalid struct/class member offset");
 #define CHECK_SIZE(str, size)				static_assert(sizeof(str) == size, #str ": Invalid struct/class size");
 /****************************************/
-
-// Pointer helper
-#include "../../shared/Ptr.h"
 
 // wic.exe and wic_online.exe detours
 #include "versions/stdafx.h"

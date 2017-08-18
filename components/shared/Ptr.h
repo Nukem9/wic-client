@@ -10,7 +10,7 @@
 #define DPTR(c, n)					c::_##n c::n
 
 // Hacked together
-template<typename T, sizeptr_t Address>
+template<typename T, unsigned long Address>
 class Ptr
 {
 	static_assert(Address > 0, "Address bound to a zero value");

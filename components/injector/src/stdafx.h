@@ -11,3 +11,5 @@
 #pragma comment(lib, "detours.lib")
 #include "../../shared/detours/Detours.h"
 #include "../../shared/shared_utility.h"
+
+#include "util.h"

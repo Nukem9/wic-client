@@ -3,7 +3,10 @@
 wchar_t g_ModulePath[MAX_PATH];
 HMODULE g_ModuleHandle;
 
-void hk_mainCRTStartup()
+uint8_t *detourInfo;
+uint8_t *detourEntry;
+
+int __cdecl hk_mainCRTStartup()
 {
 	// Check which game exe this is (multiple variations, same version)
 	if (wcsstr(g_ModulePath, L"wic.exe"))
@@ -29,54 +32,22 @@ void hk_mainCRTStartup()
 	{
 		// WIC map editor
 	}
-}
-
-bool GetModuleVersion(wchar_t *Path, int *Major, int *Minor, int *Build, int *Revision)
-{
-	DWORD verHandle;
-	DWORD verSize = GetFileVersionInfoSize(Path, &verHandle);
-
-	if (verSize == 0)
-		return false;
-
-	// Allocate & read the version structures
-	std::vector<BYTE> verData(verSize);
+	else
 	{
-		UINT size;
-		LPVOID lpBuffer;
-
-		if (!GetFileVersionInfo(Path, verHandle, verSize, verData.data()) || !VerQueryValue(verData.data(), L"\\", (LPVOID *)&lpBuffer, &size))
-			return false;
-
-		if (size < sizeof(VS_FIXEDFILEINFO))
-			return false;
-
-		// Check magic constant given by MSDN
-		VS_FIXEDFILEINFO *verInfo = (VS_FIXEDFILEINFO *)lpBuffer;
-
-		if (verInfo->dwSignature != 0xFEEF04BD)
-			return false;
-
-		if (Major)
-			*Major = (verInfo->dwFileVersionMS >> 16) & 0xffff;
-
-		if (Minor)
-			*Minor = (verInfo->dwFileVersionMS >> 0) & 0xffff;
-
-		if (Build)
-			*Build = (verInfo->dwFileVersionLS >> 16) & 0xffff;
-
-		if (Revision)
-			*Revision = (verInfo->dwFileVersionLS >> 0) & 0xffff;
+		MessageBox(nullptr, L"Unknown game executable detected. DLL not loaded.", L"Injector error", MB_ICONERROR);
 	}
 
-	return true;
+	// Unhook and return to the original function prologue
+	Detours::X86::DetourRemove(detourInfo);
+	return ((int(__cdecl *)())detourEntry)();
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
 {
 	if (ul_reason_for_call != DLL_PROCESS_ATTACH)
 		return TRUE;
+
+	DisableThreadLibraryCalls(hModule);
 
 	// Determine the executable path
 	g_ModuleHandle = GetModuleHandle(nullptr);
@@ -98,10 +69,10 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
 
 	// Now hook the original entrypoint
 	PIMAGE_DOS_HEADER dosHeader = (PIMAGE_DOS_HEADER)g_ModuleHandle;
-	PIMAGE_NT_HEADERS ntHeaders = (PIMAGE_NT_HEADERS)((size_t)dosHeader + dosHeader->e_lfanew);
+	PIMAGE_NT_HEADERS ntHeaders = (PIMAGE_NT_HEADERS)((uint8_t *)dosHeader + dosHeader->e_lfanew);
+	uint8_t *entryAddress = ((uint8_t *)dosHeader + ntHeaders->OptionalHeader.AddressOfEntryPoint);
 
-	Detours::X86::DetourFunction((uint8_t *)ntHeaders->OptionalHeader.AddressOfEntryPoint, (uint8_t *)&hk_mainCRTStartup);
-
-	DisableThreadLibraryCalls(hModule);
+	detourInfo = Detours::X86::DetourFunction(entryAddress, (uint8_t *)&hk_mainCRTStartup);
+	detourEntry = entryAddress;
 	return TRUE;
 }

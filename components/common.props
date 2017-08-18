@@ -8,10 +8,13 @@
   <ItemDefinitionGroup>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Configuration)\</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <ClCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)\shared</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WarningLevel>Level3</WarningLevel>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />

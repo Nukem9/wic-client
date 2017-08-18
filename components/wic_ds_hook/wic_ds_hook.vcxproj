@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0519A147-BB37-49B7-8F13-EFB14690CE94}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>wic_ds_hook</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\common.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\common.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;WIC_DS_HOOK_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;WIC_DS_HOOK_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="d3dx9_33.h" />
+    <ClInclude Include="src\ex_commanderai\EX_CAI_BaseType.h" />
+    <ClInclude Include="src\ex_commanderai\EX_CAI_BaseTypeContainer.h" />
+    <ClInclude Include="src\ex_commanderai\EX_CAI_CommanderAI_Data.h" />
+    <ClInclude Include="src\ex_commanderai\EX_CAI_GameWrapper.h" />
+    <ClInclude Include="src\ex_commanderai\EX_CAI_Manager.h" />
+    <ClInclude Include="src\ex_commanderai\EX_CAI_ShooterAbility.h" />
+    <ClInclude Include="src\ex_commanderai\EX_CAI_SupportWeaponManager.h" />
+    <ClInclude Include="src\ex_commanderai\EX_CAI_Troop_Request.h" />
+    <ClInclude Include="src\ex_commanderai\EX_CAI_Type.h" />
+    <ClInclude Include="src\ex_commanderai\EX_CAI_Vector3f.h" />
+    <ClInclude Include="src\ex_commanderai\stdafx.h" />
+    <ClInclude Include="src\ex_common\EXCO_DamageModel.h" />
+    <ClInclude Include="src\ex_common\EXCO_Difficulty.h" />
+    <ClInclude Include="src\ex_common\EXCO_Direction.h" />
+    <ClInclude Include="src\ex_common\EXCO_Directory.h" />
+    <ClInclude Include="src\ex_common\EXCO_LOSSet.h" />
+    <ClInclude Include="src\ex_common\EXCO_MissionMetaInfo.h" />
+    <ClInclude Include="src\ex_common\EXCO_MissionSet.h" />
+    <ClInclude Include="src\ex_common\EXCO_Persistent.h" />
+    <ClInclude Include="src\ex_common\EXCO_PersistentMember.h" />
+    <ClInclude Include="src\ex_common\EXCO_Slot.h" />
+    <ClInclude Include="src\ex_common\EXCO_SlotManager.h" />
+    <ClInclude Include="src\ex_common\EXCO_SoundSourceType.h" />
+    <ClInclude Include="src\ex_common\EXCO_UnitType.h" />
+    <ClInclude Include="src\ex_common\stdafx.h" />
+    <ClInclude Include="src\ex_common\WICAI_Types.h" />
+    <ClInclude Include="src\ex_common\WICO_BotOptions.h" />
+    <ClInclude Include="src\ex_common\WICO_CollisionObject.h" />
+    <ClInclude Include="src\ex_common\WICO_CollisionObject_Instance.h" />
+    <ClInclude Include="src\ex_common\WICO_DebugRenderer.h" />
+    <ClInclude Include="src\ex_common\WICO_GlobalUnitValues.h" />
+    <ClInclude Include="src\ex_common\WICO_SplinePath.h" />
+    <ClInclude Include="src\ex_common\WICO_Team.h" />
+    <ClInclude Include="src\ex_remote\stdafx.h" />
+    <ClInclude Include="src\ex_remote\WICR_ClientFactory.h" />
+    <ClInclude Include="src\ex_remote\WICR_GameController.h" />
+    <ClInclude Include="src\ice\Ice.h" />
+    <ClInclude Include="src\ice\IceLocDecoder.h" />
+    <ClInclude Include="src\ice\stdafx.h" />
+    <ClInclude Include="src\mcommon2\MC_BitVector.h" />
+    <ClInclude Include="src\mcommon2\MC_Debug.h" />
+    <ClInclude Include="src\mcommon2\MC_GrowingArray.h" />
+    <ClInclude Include="src\mcommon2\MC_HybridArray.h" />
+    <ClInclude Include="src\mcommon2\MC_Link.h" />
+    <ClInclude Include="src\mcommon2\MC_List.h" />
+    <ClInclude Include="src\mcommon2\MC_Matrix33.h" />
+    <ClInclude Include="src\mcommon2\MC_Matrix44.h" />
+    <ClInclude Include="src\mcommon2\MC_Mem.h" />
+    <ClInclude Include="src\mcommon2\MC_StaticString.h" />
+    <ClInclude Include="src\mcommon2\MC_Str.h" />
+    <ClInclude Include="src\mcommon2\MC_Vector2.h" />
+    <ClInclude Include="src\mcommon2\MC_Vector3.h" />
+    <ClInclude Include="src\mcommon2\MC_Vector4.h" />
+    <ClInclude Include="src\mcommon2\MI_Time.h" />
+    <ClInclude Include="src\mcommon2\stdafx.h" />
+    <ClInclude Include="src\mmassgate\MMG_Protocols.h" />
+    <ClInclude Include="src\mmassgate\MMG_TrackableServer.h" />
+    <ClInclude Include="src\mmassgate\stdafx.h" />
+    <ClInclude Include="src\Ptr.h" />
+    <ClInclude Include="src\stdafx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="d3dx9_33.cpp" />
+    <ClCompile Include="src\dllmain.cpp" />
+    <ClCompile Include="src\ex_common\EXCO_Directory.cpp" />
+    <ClCompile Include="src\mcommon2\MC_Mem.cpp" />
+    <ClCompile Include="src\mcommon2\MI_Time.cpp" />
+    <ClCompile Include="src\mmassgate\MMG_Protocols.cpp" />
+    <ClCompile Include="src\mmassgate\MMG_TrackableServer.cpp" />
+    <ClCompile Include="src\stdafx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="exports.def" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,26 +1,64 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wic_cl_hook", "wic_cl_hook\wic_cl_hook\wic_cl_hook.vcxproj", "{DF9E8774-8F5C-4D2D-90C1-8B5210D91027}"
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "injector", "components\injector\injector.vcxproj", "{61298182-D5E3-4EB4-843F-4A399FA7C4C2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{06E30C65-D79A-4FEC-8A60-B36D907E6601} = {06E30C65-D79A-4FEC-8A60-B36D907E6601}
+	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wic_ds_hook", "wic_ds_hook\wic_ds_hook\wic_ds_hook.vcxproj", "{0519A147-BB37-49B7-8F13-EFB14690CE94}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "detours", "components\shared\detours\detours.vcxproj", "{06E30C65-D79A-4FEC-8A60-B36D907E6601}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wic_cl_hook", "components\wic_cl_hook\wic_cl_hook.vcxproj", "{DF9E8774-8F5C-4D2D-90C1-8B5210D91027}"
+	ProjectSection(ProjectDependencies) = postProject
+		{06E30C65-D79A-4FEC-8A60-B36D907E6601} = {06E30C65-D79A-4FEC-8A60-B36D907E6601}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wic_ds_hook", "components\wic_ds_hook\wic_ds_hook.vcxproj", "{0519A147-BB37-49B7-8F13-EFB14690CE94}"
+	ProjectSection(ProjectDependencies) = postProject
+		{06E30C65-D79A-4FEC-8A60-B36D907E6601} = {06E30C65-D79A-4FEC-8A60-B36D907E6601}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
 		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{61298182-D5E3-4EB4-843F-4A399FA7C4C2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{61298182-D5E3-4EB4-843F-4A399FA7C4C2}.Debug|Win32.Build.0 = Debug|Win32
+		{61298182-D5E3-4EB4-843F-4A399FA7C4C2}.Debug|x64.ActiveCfg = Debug|x64
+		{61298182-D5E3-4EB4-843F-4A399FA7C4C2}.Debug|x64.Build.0 = Debug|x64
+		{61298182-D5E3-4EB4-843F-4A399FA7C4C2}.Release|Win32.ActiveCfg = Release|Win32
+		{61298182-D5E3-4EB4-843F-4A399FA7C4C2}.Release|Win32.Build.0 = Release|Win32
+		{61298182-D5E3-4EB4-843F-4A399FA7C4C2}.Release|x64.ActiveCfg = Release|x64
+		{61298182-D5E3-4EB4-843F-4A399FA7C4C2}.Release|x64.Build.0 = Release|x64
+		{06E30C65-D79A-4FEC-8A60-B36D907E6601}.Debug|Win32.ActiveCfg = Debug|Win32
+		{06E30C65-D79A-4FEC-8A60-B36D907E6601}.Debug|Win32.Build.0 = Debug|Win32
+		{06E30C65-D79A-4FEC-8A60-B36D907E6601}.Debug|x64.ActiveCfg = Debug|Win32
+		{06E30C65-D79A-4FEC-8A60-B36D907E6601}.Release|Win32.ActiveCfg = Release|Win32
+		{06E30C65-D79A-4FEC-8A60-B36D907E6601}.Release|Win32.Build.0 = Release|Win32
+		{06E30C65-D79A-4FEC-8A60-B36D907E6601}.Release|x64.ActiveCfg = Release|Win32
 		{DF9E8774-8F5C-4D2D-90C1-8B5210D91027}.Debug|Win32.ActiveCfg = Debug|Win32
 		{DF9E8774-8F5C-4D2D-90C1-8B5210D91027}.Debug|Win32.Build.0 = Debug|Win32
+		{DF9E8774-8F5C-4D2D-90C1-8B5210D91027}.Debug|x64.ActiveCfg = Debug|Win32
 		{DF9E8774-8F5C-4D2D-90C1-8B5210D91027}.Release|Win32.ActiveCfg = Release|Win32
 		{DF9E8774-8F5C-4D2D-90C1-8B5210D91027}.Release|Win32.Build.0 = Release|Win32
+		{DF9E8774-8F5C-4D2D-90C1-8B5210D91027}.Release|x64.ActiveCfg = Release|Win32
 		{0519A147-BB37-49B7-8F13-EFB14690CE94}.Debug|Win32.ActiveCfg = Debug|Win32
 		{0519A147-BB37-49B7-8F13-EFB14690CE94}.Debug|Win32.Build.0 = Debug|Win32
+		{0519A147-BB37-49B7-8F13-EFB14690CE94}.Debug|x64.ActiveCfg = Debug|Win32
 		{0519A147-BB37-49B7-8F13-EFB14690CE94}.Release|Win32.ActiveCfg = Release|Win32
 		{0519A147-BB37-49B7-8F13-EFB14690CE94}.Release|Win32.Build.0 = Release|Win32
+		{0519A147-BB37-49B7-8F13-EFB14690CE94}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3BAC4946-F222-4BAD-9071-30657B03B5A6}
 	EndGlobalSection
 EndGlobal

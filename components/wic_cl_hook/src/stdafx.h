@@ -34,7 +34,7 @@ typedef unsigned long long	sizeptr_t;
 /****************************************/
 
 // Pointer helper
-#include "Ptr.h"
+#include "../../shared/Ptr.h"
 
 // wic.exe and wic_online.exe detours
 #include "versions/stdafx.h"

@@ -31,7 +31,7 @@ typedef unsigned long long	sizeptr_t;
 /****************************************/
 
 // Pointer helper
-#include "Ptr.h"
+#include "../../shared/Ptr.h"
 
 // MCommon2
 #include "mcommon2/stdafx.h"

@@ -91,7 +91,6 @@
     <ClInclude Include="src\mrender\MR_RenderD3D10.h" />
     <ClInclude Include="src\mrender\MR_VertexShader.h" />
     <ClInclude Include="src\mrender\stdafx.h" />
-    <ClInclude Include="src\Ptr.h" />
     <ClInclude Include="src\mcommon2\MC_HybridArray.h" />
     <ClInclude Include="src\mcommon2\stdafx.h" />
     <ClInclude Include="src\mmassgate\MMG_Protocols.h" />

@@ -80,9 +80,6 @@
     <ClInclude Include="src\mcommon2\MC_Mem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ptr.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\mmassgate\MMG_CdKey.h">
       <Filter>Header Files</Filter>
     </ClInclude>

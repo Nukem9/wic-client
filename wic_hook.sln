@@ -20,6 +20,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wic_ds_hook", "components\w
 		{06E30C65-D79A-4FEC-8A60-B36D907E6601} = {06E30C65-D79A-4FEC-8A60-B36D907E6601}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wic_bt_hook", "components\wic_bt_hook\wic_bt_hook.vcxproj", "{74FD4F98-B23C-440D-9276-BD2E9F663B7F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{06E30C65-D79A-4FEC-8A60-B36D907E6601} = {06E30C65-D79A-4FEC-8A60-B36D907E6601}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -42,6 +47,10 @@ Global
 		{0519A147-BB37-49B7-8F13-EFB14690CE94}.Debug|Win32.Build.0 = Debug|Win32
 		{0519A147-BB37-49B7-8F13-EFB14690CE94}.Release|Win32.ActiveCfg = Release|Win32
 		{0519A147-BB37-49B7-8F13-EFB14690CE94}.Release|Win32.Build.0 = Release|Win32
+		{74FD4F98-B23C-440D-9276-BD2E9F663B7F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{74FD4F98-B23C-440D-9276-BD2E9F663B7F}.Debug|Win32.Build.0 = Debug|Win32
+		{74FD4F98-B23C-440D-9276-BD2E9F663B7F}.Release|Win32.ActiveCfg = Release|Win32
+		{74FD4F98-B23C-440D-9276-BD2E9F663B7F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

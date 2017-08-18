@@ -57,7 +57,6 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -75,12 +74,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="d3dx9_33.h" />
     <ClInclude Include="src\ex_commanderai\EX_CAI_BaseType.h" />
     <ClInclude Include="src\ex_commanderai\EX_CAI_BaseTypeContainer.h" />
     <ClInclude Include="src\ex_commanderai\EX_CAI_CommanderAI_Data.h" />
@@ -143,7 +140,6 @@
     <ClInclude Include="src\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="d3dx9_33.cpp" />
     <ClCompile Include="src\dllmain.cpp" />
     <ClCompile Include="src\ex_common\EXCO_Directory.cpp" />
     <ClCompile Include="src\mcommon2\MC_Mem.cpp" />
@@ -151,9 +147,6 @@
     <ClCompile Include="src\mmassgate\MMG_Protocols.cpp" />
     <ClCompile Include="src\mmassgate\MMG_TrackableServer.cpp" />
     <ClCompile Include="src\stdafx.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="exports.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

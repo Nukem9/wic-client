@@ -55,7 +55,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -70,10 +70,13 @@
     <ClInclude Include="src\mcommon2\MC_Vector2.h" />
     <ClInclude Include="src\mcommon2\MC_Vector3.h" />
     <ClInclude Include="src\mcommon2\MC_Vector4.h" />
+    <ClInclude Include="src\mcommon2\MF_File.h" />
+    <ClInclude Include="src\mmassgate\MMG_BitStream.h" />
     <ClInclude Include="src\mmassgate\MMG_BlockTEA.h" />
     <ClInclude Include="src\mmassgate\MMG_CryptoHash.h" />
     <ClInclude Include="src\mmassgate\MMG_ICipher.h" />
     <ClInclude Include="src\mmassgate\MMG_CdKey.h" />
+    <ClInclude Include="src\mmassgate\MMG_Tiger.h" />
     <ClInclude Include="src\mnetwork\MN_INetHandler.h" />
     <ClInclude Include="src\mnetwork\MN_NetRequester.h" />
     <ClInclude Include="src\mrender\MR_Render.h" />
@@ -102,13 +105,16 @@
     <ClCompile Include="src\mcommon2\MC_Mem.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\mcommon2\MF_File.cpp" />
     <ClCompile Include="src\mmassgate\MMG_CdKey.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../stdafx.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="src\mmassgate\MMG_CryptoHash.cpp" />
     <ClCompile Include="src\mmassgate\MMG_Protocols.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\mmassgate\MMG_Tiger.cpp" />
     <ClCompile Include="src\mnetwork\MN_Format.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>

@@ -83,6 +83,12 @@
     <ClInclude Include="src\mmassgate\MMG_CdKey.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\mnetwork\MN_NetRequester.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\mnetwork\MN_INetHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dllmain.cpp">
@@ -119,6 +125,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\mmassgate\MMG_CdKey.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mnetwork\MN_NetRequester.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

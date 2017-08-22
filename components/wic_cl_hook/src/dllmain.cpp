@@ -28,8 +28,13 @@ struct hostent *PASCAL hk_gethostbyname(const char *name)
 {
 	WIC_WriteConsole("gethostbyname(%s)", name);
 
-	if(strstr(name, "massgate.net"))
-		name = "127.0.0.1";
+	if (strstr(name, "massgate.net") ||
+		strstr(name, "massive.se") ||
+		strstr(name, "ubisoft.com"))
+	{
+		// Everything is redirected to a single IP address now
+		return gethostbyname("liveaccount.massgate.org");
+	}
 
 	return gethostbyname(name);
 }
@@ -102,6 +107,7 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 
 	//orig = (DWORD)Detours::X86::DetourFunction((PBYTE)0x00754F40, (PBYTE)&hk_EXG_Game_EXG_Game);
 
+	MN_NetRequester::InitializeHook();
 	MMG_CdKey::InitializeHook();
 	MR_RenderD3D10::InitializeHook();
 

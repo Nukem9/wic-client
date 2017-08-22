@@ -9,28 +9,34 @@ uint8_t *detourEntry;
 int __cdecl hk_mainCRTStartup()
 {
 	// Check which game exe this is (multiple variations, same version)
-	if (wcsstr(g_ModulePath, L"wic.exe"))
+	if (wcsstr(g_ModulePath, L"WICEd"))
 	{
-		// Vanilla game exe
-		LoadLibrary(L"wic_cl_hook.dll");
+		// WIC map editor
 	}
-	else if (wcsstr(g_ModulePath, L"wic_online.exe"))
-	{
-		// Vanilla game exe, multiplayer-mode only
-	}
-	else if (wcsstr(g_ModulePath, L"wic_ds.exe"))
+	if (wcsstr(g_ModulePath, L"wic_ds"))
 	{
 		// Dedicated server
 		LoadLibrary(L"wic_ds_hook.dll");
 	}
-	else if (wcsstr(g_ModulePath, L"wic-BroadcastTool.exe"))
+	else if (wcsstr(g_ModulePath, L"wic-BroadcastTool"))
 	{
 		// Broadcast (recording) tool
 		LoadLibrary(L"wic_bt_hook.dll");
 	}
-	else if (wcsstr(g_ModulePath, L"WICEd.exe"))
+	else if (wcsstr(g_ModulePath, L"wic_online"))
 	{
-		// WIC map editor
+		// Vanilla game exe, multiplayer-mode only
+		//
+		// This exe is pointless, so relaunch wic.exe that has actual patches
+		if (!RelaunchWicExecutable(L"wic", L"wic_online"))
+			MessageBox(nullptr, L"Unable to launch 'wic.exe'", L"Injector error", MB_ICONERROR);
+
+		ExitProcess(0);
+	}
+	if (wcsstr(g_ModulePath, L"wic"))
+	{
+		// Vanilla game exe
+		LoadLibrary(L"wic_cl_hook.dll");
 	}
 	else
 	{

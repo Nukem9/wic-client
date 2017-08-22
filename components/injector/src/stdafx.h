@@ -4,6 +4,7 @@
 #include <windows.h>
 #include <stdint.h>
 #include <vector>
+#include <shellapi.h>
 
 #pragma comment(lib, "version.lib")
 

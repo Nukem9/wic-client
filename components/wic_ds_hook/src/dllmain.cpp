@@ -68,30 +68,26 @@ public:
 
 void Server_PatchFPUExceptions()
 {
-	DWORD d;
+	PatchMemory(0x004024AF, (PBYTE)"\x90\x90\x90\x90\x90", 5);// main(): _clearfp();
+	PatchMemory(0x004024BB, (PBYTE)"\x90\x90\x90\x90\x90", 5);// main(): _controlfp();
 
-	VirtualProtect((LPVOID)0x004024AF, 1024, PAGE_EXECUTE_READWRITE, &d);
-	memcpy((LPVOID)0x004024AF, (LPVOID)"\x90\x90\x90\x90\x90", 5);// main(): _clearfp();
-	memcpy((LPVOID)0x004024BB, (LPVOID)"\x90\x90\x90\x90\x90", 5);// main(): _controlfp();
-
-	VirtualProtect((LPVOID)0x0041C5B1, 1024, PAGE_EXECUTE_READWRITE, &d);
-	memcpy((LPVOID)0x0041C5B1, (LPVOID)"\x90\x90\x90\x90\x90", 5);// MT_Thread_thread_starter(): _clearfp();
-	memcpy((LPVOID)0x0041C5BD, (LPVOID)"\x90\x90\x90\x90\x90", 5);// MT_Thread_thread_starter(): _controlfp();
+	PatchMemory(0x0041C5B1, (PBYTE)"\x90\x90\x90\x90\x90", 5);// MT_Thread_thread_starter(): _clearfp();
+	PatchMemory(0x0041C5BD, (PBYTE)"\x90\x90\x90\x90\x90", 5);// MT_Thread_thread_starter(): _controlfp();
 }
 
 void Server_PatchFramerate(uint Framerate)
 {
-	DWORD d;
-	VirtualProtect((LPVOID)0x00402B1F, sizeof(uint), PAGE_EXECUTE_READWRITE, &d);
-	VirtualProtect((LPVOID)0x000041B5ED, 5, PAGE_EXECUTE_READWRITE, &d);
-
 	// Server FPS divisor
 	// (1000 / FrameTime)	= FPS
 	// (1000 / FPS)			= FrameTime
-	*(uint *)0x00402B1F = 1000 / max(Framerate, 10);
+	uint frameTime = 1000 / max(Framerate, 10);
+	PatchMemory(0x00402B1F, (PBYTE)&frameTime, sizeof(uint));
 
 	// Ignore timer errors when a higher framerate is used
-	memcpy((LPVOID)0x000041B5ED, (LPVOID)"\xE9\xDD\x00\x00\x00", 5);
+	PatchMemory(0x0041B5ED, (PBYTE)"\xE9\xDD\x00\x00\x00", 5);
+
+	// Disable console title updates every frame
+	PatchMemory(0x00405A40, (PBYTE)"\x90\x90\x90\x90\x90\x90\x90", 7);
 }
 
 void Server_PatchAssertions()
@@ -155,21 +151,15 @@ BOOL WicDS_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	VirtualProtect((LPVOID)0x0074D3A8, 4, PAGE_EXECUTE_READWRITE, &d);
 	*(DWORD *)0x0074D3A8 = (DWORD)&hk_gethostbyname;
 
-	// Disable console title updates every frame
-	VirtualProtect((LPVOID)0x00405A40, 7, PAGE_EXECUTE_READWRITE, &d);
-	memcpy((LPVOID)0x00405A40, "\x90\x90\x90\x90\x90\x90\x90", 7);
-
 	// Allow ranked servers to use mods
-	VirtualProtect((LPVOID)0x004072E9, 1, PAGE_EXECUTE_READWRITE, &d);
-	memcpy((LPVOID)0x004072E9, "\xEB", 1);
+	PatchMemory(0x004072E9, (PBYTE)"\xEB", 1);
 
 	//
 	// Patch for WICG_MPyPlayer::cPlayer_ChatMessage where the developers incorrectly
 	// used player slot #0 instead of the script player when sending chat messages.
 	// Slot 0 would crash if no player was connected. Slot -1 is used for scripts.
 	//
-	VirtualProtect((LPVOID)0x004EEFF1, 1, PAGE_EXECUTE_READWRITE, &d);
-	*(BYTE *)0x004EEFF1 = 0xFF;
+	PatchMemory(0x004EEFF1, (PBYTE)"\xFF", 1);
 
 	return TRUE;
 }

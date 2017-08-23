@@ -117,9 +117,8 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	// Set the protocol version
 	MMG_Protocols::MassgateProtocolVersion = 150;
 
-	// Always enable multiple game instances
-	VirtualProtect((LPVOID)0x00B2EFA9, 1, PAGE_EXECUTE_READWRITE, &d);
-	*(BYTE *)0x00B2EFA9 = 0xEB;
+	// Always enable the console
+	PatchMemory(0x00B31A16, (PBYTE)"\xEB", 1);
 
 	return TRUE;
 }

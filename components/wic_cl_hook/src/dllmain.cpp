@@ -1,13 +1,5 @@
 #include "stdafx.h"
 
-/*
-* *******************
-* Signature scan for EXG_Game::EXG_PlayerContainer::myPlayers
-* \x8D\x8B\x28\x00\x01\x00
-* x?xxxx
-* *******************
-*/
-
 void WIC_WriteConsole(const char *aString, ...)
 {
 	char buffer[2048];
@@ -64,61 +56,35 @@ void __declspec(naked) hook()
 	}
 }
 
-
-/*#include "../steam/steam_api.h"
-#pragma comment(lib, "steam/steam_api.lib")
-
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
-{
-	if (SteamAPI_RestartAppIfNecessary(0))
-		return 1;
-
-	if (!SteamAPI_Init())
-	{
-		printf("Fatal Error - Steam must be running to play this game (SteamAPI_Init() failed).\n");
-		//return 1;
-	}
-
-	MessageBoxA(nullptr, "", "", 0);
-
-	return ((int (WINAPI *)(HINSTANCE, HINSTANCE, LPSTR, int))0x00B2EF40)(hInstance, hPrevInstance, lpCmdLine, nShowCmd);
-}
-*/
 BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 {
 	DWORD d;
 
-	//Detours::X86::DetourFunction((PBYTE)0x00554295, (PBYTE)&WinMain, Detours::X86Option::USE_CALL);
-
-	AllocConsole();
-	freopen("CONOUT$", "w", stdout);
-	freopen("CONOUT$", "w", stderr);
-
-	// Hook gethostbyname (IAT)
-	VirtualProtect((LPVOID)0x00BEC594, 4, PAGE_EXECUTE_READWRITE, &d);
-	*(DWORD *)0x00BEC594 = (DWORD)&hk_gethostbyname;
-
-	//char buf[64];
-	//sprintf_s(buf, "LIST: 0x%X", &addrList);
-	//MessageBoxA(nullptr, buf, "", 0);
-
-	Detours::X86::DetourFunction((PBYTE)0x00A01520, (PBYTE)&WIC_WriteConsole);
-	Detours::X86::DetourFunction((PBYTE)0x00BD1C73, (PBYTE)&hook);
-
-	//orig = (DWORD)Detours::X86::DetourFunction((PBYTE)0x00754F40, (PBYTE)&hk_EXG_Game_EXG_Game);
-
-	MN_NetRequester::InitializeHook();
-	MMG_CdKey::InitializeHook();
-	MR_RenderD3D10::InitializeHook();
-
-	//VirtualProtect((LPVOID)0x009356C8, 4, PAGE_EXECUTE_READWRITE, &d);
-	//*(WORD *)0x009356C8 = 0x9090; LOS hack?
+	if (AllocConsole())
+	{
+		freopen("CONOUT$", "w", stdout);
+		freopen("CONOUT$", "w", stderr);
+	}
 
 	// Set the protocol version
 	MMG_Protocols::MassgateProtocolVersion = 150;
 
 	// Always enable the console
 	PatchMemory(0x00B31A16, (PBYTE)"\xEB", 1);
+
+	// Hook gethostbyname (IAT)
+	VirtualProtect((LPVOID)0x00BEC594, 4, PAGE_EXECUTE_READWRITE, &d);
+	*(DWORD *)0x00BEC594 = (DWORD)&hk_gethostbyname;
+
+	// Copy MC_Debug::DebugMessage strings directly to the console output
+	Detours::X86::DetourFunction((PBYTE)0x00A01520, (PBYTE)&WIC_WriteConsole);
+
+	// Write MMG_AccountProtocol cipher keys directly after EncryptionKeySequenceNumber in message packets
+	Detours::X86::DetourFunction((PBYTE)0x00BD1C73, (PBYTE)&hook);
+
+	MN_NetRequester::InitializeHook();
+	MMG_CdKey::InitializeHook();
+	MR_RenderD3D10::InitializeHook();
 
 	return TRUE;
 }

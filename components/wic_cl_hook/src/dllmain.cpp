@@ -56,6 +56,21 @@ void __declspec(naked) hook()
 	}
 }
 
+void WINAPI hk_GetSystemInfo(LPSYSTEM_INFO lpSystemInfo)
+{
+	GetSystemInfo(lpSystemInfo);
+
+	// Restrict core count to 16 because of a hardcoded array in MT_Supervisor
+	if (lpSystemInfo)
+		lpSystemInfo->dwNumberOfProcessors = min(lpSystemInfo->dwNumberOfProcessors, 16);
+}
+
+DWORD_PTR WINAPI hk_SetThreadAffinityMask(HANDLE hThread, DWORD_PTR dwThreadAffinityMask)
+{
+	// Don't change anything, the OS knows better than the game
+	return 0xFFFFFFFF;
+}
+
 BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 {
 	DWORD d;
@@ -75,6 +90,14 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	// Hook gethostbyname (IAT)
 	VirtualProtect((LPVOID)0x00BEC594, 4, PAGE_EXECUTE_READWRITE, &d);
 	*(DWORD *)0x00BEC594 = (DWORD)&hk_gethostbyname;
+
+	// Hook GetSystemInfo (IAT)
+	VirtualProtect((LPVOID)0x00BEC19C, 4, PAGE_EXECUTE_READWRITE, &d);
+	*(DWORD *)0x00BEC19C = (DWORD)&hk_GetSystemInfo;
+
+	// Hook SetThreadAffinityMask (IAT)
+	VirtualProtect((LPVOID)0x00BEC1A4, 4, PAGE_EXECUTE_READWRITE, &d);
+	*(DWORD *)0x00BEC1A4 = (DWORD)&hk_SetThreadAffinityMask;
 
 	// Copy MC_Debug::DebugMessage strings directly to the console output
 	Detours::X86::DetourFunction((PBYTE)0x00A01520, (PBYTE)&WIC_WriteConsole);

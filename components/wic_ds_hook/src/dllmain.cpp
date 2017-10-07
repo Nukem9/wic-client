@@ -134,6 +134,21 @@ struct hostent *PASCAL hk_gethostbyname(const char *name)
 	return gethostbyname(name);
 }
 
+void WINAPI hk_GetSystemInfo(LPSYSTEM_INFO lpSystemInfo)
+{
+	GetSystemInfo(lpSystemInfo);
+
+	// Restrict core count to 16 because of a hardcoded array in MT_Supervisor
+	if (lpSystemInfo)
+		lpSystemInfo->dwNumberOfProcessors = min(lpSystemInfo->dwNumberOfProcessors, 16);
+}
+
+DWORD_PTR WINAPI hk_SetThreadAffinityMask(HANDLE hThread, DWORD_PTR dwThreadAffinityMask)
+{
+	// Don't change anything, the OS knows better than the game
+	return 0xFFFFFFFF;
+}
+
 BOOL WicDS_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 {
 	MMG_Protocols::MassgateProtocolVersion = 150;
@@ -150,6 +165,14 @@ BOOL WicDS_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	// Redirect DNS lookups
 	VirtualProtect((LPVOID)0x0074D3A8, 4, PAGE_EXECUTE_READWRITE, &d);
 	*(DWORD *)0x0074D3A8 = (DWORD)&hk_gethostbyname;
+
+	// Hook GetSystemInfo (IAT)
+	VirtualProtect((LPVOID)0x0074D0F8, 4, PAGE_EXECUTE_READWRITE, &d);
+	*(DWORD *)0x0074D0F8 = (DWORD)&hk_GetSystemInfo;
+
+	// Hook SetThreadAffinityMask (IAT)
+	VirtualProtect((LPVOID)0x00BEC1A4, 4, PAGE_EXECUTE_READWRITE, &d);
+	*(DWORD *)0x0074D0F4 = (DWORD)&hk_SetThreadAffinityMask;
 
 	// Allow ranked servers to use mods
 	PatchMemory(0x004072E9, (PBYTE)"\xEB", 1);

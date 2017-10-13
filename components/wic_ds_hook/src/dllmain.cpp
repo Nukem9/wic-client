@@ -153,8 +153,22 @@ BOOL WicDS_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 {
 	MMG_Protocols::MassgateProtocolVersion = 150;
 
+	int argCount = 0;
+	LPWSTR *commandLine = CommandLineToArgvW(GetCommandLineW(), &argCount);
+
+	for (int i = 0; i < argCount; i++)
+	{
+		if (wcsicmp(commandLine[i], L"-fps") != 0)
+			continue;
+
+		if ((i + 1) >= argCount)
+			continue;
+
+		// -fps 12345
+		Server_PatchFramerate(_wtoi(commandLine[i + 1]));
+	}
+
 	Server_PatchFPUExceptions();
-	Server_PatchFramerate(200);
 	Server_PatchAssertions();
 
 	EXCO_Directory::InitializeHook();

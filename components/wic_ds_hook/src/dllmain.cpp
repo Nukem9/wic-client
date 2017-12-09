@@ -124,6 +124,7 @@ void Server_PatchAssertions()
 	PatchAssert(0x008F01E3);// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 404, "iz >= 0 && iz < mmInfo.myNumPatchesX", &byte_8F01E3);
 	PatchAssert(0x008F01E2);// MC_Assert(".\\WICO_HierarchicalHeightMap.cpp", 405, "iz>= 0 && iz < mmInfo.myNumPatchesZ", &byte_8F01E2);
 	PatchAssert(0x008F3693);// MC_Assert(".\\EXG_Container.cpp", 1052, "0 && \"No free slot in container\"", &byte_8F3693);
+	PatchAssert(0x008F6A4F);// MC_Assert(".\\WICO_StatsManager.cpp", 32, "aPlayerNum < EX_MAX_NUM_PLAYERS", &byte_8F6A4F);
 }
 
 struct hostent *PASCAL hk_gethostbyname(const char *name)

@@ -16,21 +16,6 @@ void WIC_WriteConsole(const char *aString, ...)
 	printf("%s\n", buffer);
 }
 
-struct hostent *PASCAL hk_gethostbyname(const char *name)
-{
-	WIC_WriteConsole("gethostbyname(%s)", name);
-
-	if (strstr(name, "massgate.net") ||
-		strstr(name, "massive.se") ||
-		strstr(name, "ubisoft.com"))
-	{
-		// Everything is redirected to a single IP address now
-		return gethostbyname("liveaccount.massgate.org");
-	}
-
-	return gethostbyname(name);
-}
-
 void hook_wrapper(void *accountQuery, MN_WriteMessage *aMessage)
 {
 	MMG_BlockTEA *myCipher = *(MMG_BlockTEA **)((DWORD)accountQuery + 0x4EA);
@@ -56,48 +41,21 @@ void __declspec(naked) hook()
 	}
 }
 
-void WINAPI hk_GetSystemInfo(LPSYSTEM_INFO lpSystemInfo)
-{
-	GetSystemInfo(lpSystemInfo);
-
-	// Restrict core count to 16 because of a hardcoded array in MT_Supervisor
-	if (lpSystemInfo)
-		lpSystemInfo->dwNumberOfProcessors = min(lpSystemInfo->dwNumberOfProcessors, 16);
-}
-
-DWORD_PTR WINAPI hk_SetThreadAffinityMask(HANDLE hThread, DWORD_PTR dwThreadAffinityMask)
-{
-	// Don't change anything, the OS knows better than the game
-	return 0xFFFFFFFF;
-}
-
 BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 {
-	DWORD d;
-
+#if 0
 	if (AllocConsole())
 	{
 		freopen("CONOUT$", "w", stdout);
 		freopen("CONOUT$", "w", stderr);
 	}
+#endif
 
 	// Set the protocol version
 	MMG_Protocols::MassgateProtocolVersion = 150;
 
 	// Always enable the console
 	PatchMemory(0x00B31A16, (PBYTE)"\xEB", 1);
-
-	// Hook gethostbyname (IAT)
-	VirtualProtect((LPVOID)0x00BEC594, 4, PAGE_EXECUTE_READWRITE, &d);
-	*(DWORD *)0x00BEC594 = (DWORD)&hk_gethostbyname;
-
-	// Hook GetSystemInfo (IAT)
-	VirtualProtect((LPVOID)0x00BEC19C, 4, PAGE_EXECUTE_READWRITE, &d);
-	*(DWORD *)0x00BEC19C = (DWORD)&hk_GetSystemInfo;
-
-	// Hook SetThreadAffinityMask (IAT)
-	VirtualProtect((LPVOID)0x00BEC1A4, 4, PAGE_EXECUTE_READWRITE, &d);
-	*(DWORD *)0x00BEC1A4 = (DWORD)&hk_SetThreadAffinityMask;
 
 	// Copy MC_Debug::DebugMessage strings directly to the console output
 	Detours::X86::DetourFunction((PBYTE)0x00A01520, (PBYTE)&WIC_WriteConsole);
@@ -116,8 +74,6 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
 {
 	if(ul_reason_for_call != DLL_PROCESS_ATTACH)
 		return TRUE;
-
-	DisableThreadLibraryCalls(hModule);
 
 	return Wic_HookInit(hModule, ul_reason_for_call);
 }

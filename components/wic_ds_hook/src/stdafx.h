@@ -1,11 +1,8 @@
 #pragma once
 
 #include <windows.h>
-#include <winsock.h>
 #include <stdio.h>
 #include <intrin.h>
-
-#pragma comment(lib, "ws2_32.lib")
 
 // Shared libraries
 #pragma comment(lib, "detours.lib")

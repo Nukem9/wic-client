@@ -5,8 +5,10 @@
 #include <stdint.h>
 #include <vector>
 #include <shellapi.h>
+#include <winsock.h>
 
 #pragma comment(lib, "version.lib")
+#pragma comment(lib, "ws2_32.lib")
 
 // Shared libraries
 #pragma comment(lib, "detours.lib")

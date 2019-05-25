@@ -2,13 +2,10 @@
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-#include <winsock.h>
 #include <stdio.h>
 #include <intrin.h>
 #include <shellapi.h>
 #include <sys/stat.h>
-
-#pragma comment(lib, "ws2_32.lib")
 
 // Shared libraries
 #pragma comment(lib, "detours.lib")

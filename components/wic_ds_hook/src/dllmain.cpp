@@ -179,29 +179,6 @@ void Server_PatchAssertions()
 	PatchAssert(0x008F6A4F);// MC_Assert(".\\WICO_StatsManager.cpp", 32, "aPlayerNum < EX_MAX_NUM_PLAYERS", &byte_8F6A4F);
 }
 
-struct hostent *PASCAL hk_gethostbyname(const char *name)
-{
-	if (strstr(name, "massgate.net"))
-		name = "liveaccount.massgate.org";
-
-	return gethostbyname(name);
-}
-
-void WINAPI hk_GetSystemInfo(LPSYSTEM_INFO lpSystemInfo)
-{
-	GetSystemInfo(lpSystemInfo);
-
-	// Restrict core count to 16 because of a hardcoded array in MT_Supervisor
-	if (lpSystemInfo)
-		lpSystemInfo->dwNumberOfProcessors = min(lpSystemInfo->dwNumberOfProcessors, 16);
-}
-
-DWORD_PTR WINAPI hk_SetThreadAffinityMask(HANDLE hThread, DWORD_PTR dwThreadAffinityMask)
-{
-	// Don't change anything, the OS knows better than the game
-	return 0xFFFFFFFF;
-}
-
 BOOL WicDS_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 {
 	MMG_Protocols::MassgateProtocolVersion = 150;
@@ -227,27 +204,8 @@ BOOL WicDS_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	EXCO_Directory::InitializeHook();
 	EX_CAI_Type::InitializeHook();
 
-	DWORD d = 0;
-
-	// Redirect DNS lookups
-	VirtualProtect((LPVOID)0x0074D3A8, 4, PAGE_EXECUTE_READWRITE, &d);
-	*(DWORD *)0x0074D3A8 = (DWORD)&hk_gethostbyname;
-
-	// Hook GetSystemInfo (IAT)
-	VirtualProtect((LPVOID)0x0074D0F8, 4, PAGE_EXECUTE_READWRITE, &d);
-	*(DWORD *)0x0074D0F8 = (DWORD)&hk_GetSystemInfo;
-
-	// Hook SetThreadAffinityMask (IAT)
-	VirtualProtect((LPVOID)0x00BEC1A4, 4, PAGE_EXECUTE_READWRITE, &d);
-	*(DWORD *)0x0074D0F4 = (DWORD)&hk_SetThreadAffinityMask;
-
 	// Allow ranked servers to use mods
 	PatchMemory(0x004072E9, (PBYTE)"\xEB", 1);
-
-	//*(PBYTE *)&EXCO_MissionInfo__ValidatePlayerRole = Detours::X86::DetourFunction((PBYTE)0x004478F0, (PBYTE)&hk_EXCO_MissionInfo__ValidatePlayerRole);
-	//*(PBYTE *)&MC_KeyTree_WICO_RoleManager__PlayerRole_int___Add = Detours::X86::DetourFunction((PBYTE)0x0044C990, (PBYTE)&hk_MC_KeyTree_WICO_RoleManager__PlayerRole_int___Add);
-	//*(PBYTE *)&MC_GrowingArray_WICO_RoleManager__PlayerRole___Add = Detours::X86::DetourFunction((PBYTE)0x0044CC20, (PBYTE)&hk_MC_GrowingArray_WICO_RoleManager__PlayerRole___Add);
-	//*(PBYTE *)&EXG_Game__PlayerSetRole = Detours::X86::DetourFunction((PBYTE)0x004AEFD0, (PBYTE)&hk_EXG_Game__PlayerSetRole);
 
 	//
 	// Patch for WICG_MPyPlayer::cPlayer_ChatMessage where the developers incorrectly
@@ -255,6 +213,11 @@ BOOL WicDS_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	// Slot 0 would crash if no player was connected. Slot -1 is used for scripts.
 	//
 	PatchMemory(0x004EEFF1, (PBYTE)"\xFF", 1);
+
+	//*(PBYTE *)&EXCO_MissionInfo__ValidatePlayerRole = Detours::X86::DetourFunction((PBYTE)0x004478F0, (PBYTE)&hk_EXCO_MissionInfo__ValidatePlayerRole);
+	//*(PBYTE *)&MC_KeyTree_WICO_RoleManager__PlayerRole_int___Add = Detours::X86::DetourFunction((PBYTE)0x0044C990, (PBYTE)&hk_MC_KeyTree_WICO_RoleManager__PlayerRole_int___Add);
+	//*(PBYTE *)&MC_GrowingArray_WICO_RoleManager__PlayerRole___Add = Detours::X86::DetourFunction((PBYTE)0x0044CC20, (PBYTE)&hk_MC_GrowingArray_WICO_RoleManager__PlayerRole___Add);
+	//*(PBYTE *)&EXG_Game__PlayerSetRole = Detours::X86::DetourFunction((PBYTE)0x004AEFD0, (PBYTE)&hk_EXG_Game__PlayerSetRole);
 
 	return TRUE;
 }
@@ -264,6 +227,5 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
 	if(ul_reason_for_call != DLL_PROCESS_ATTACH)
 		return TRUE;
 
-	DisableThreadLibraryCalls(hModule);
 	return WicDS_HookInit(hModule, ul_reason_for_call);
 }

@@ -78,9 +78,9 @@ int __cdecl hk_mainCRTStartup()
 		}
 	}
 
-	Detours::IATHook((PBYTE)g_ModuleHandle, "WS2_32.dll", "gethostbyname", (PBYTE)&hk_gethostbyname);
-	Detours::IATHook((PBYTE)g_ModuleHandle, "KERNEL32.dll", "GetSystemInfo", (PBYTE)&hk_GetSystemInfo);
-	Detours::IATHook((PBYTE)g_ModuleHandle, "KERNEL32.dll", "SetThreadAffinityMask", (PBYTE)&hk_SetThreadAffinityMask);
+	Detours::IATHook((uint8_t *)g_ModuleHandle, "WS2_32.dll", "gethostbyname", (uint8_t *)&hk_gethostbyname);
+	Detours::IATHook((uint8_t *)g_ModuleHandle, "KERNEL32.dll", "GetSystemInfo", (uint8_t *)&hk_GetSystemInfo);
+	Detours::IATHook((uint8_t *)g_ModuleHandle, "KERNEL32.dll", "SetThreadAffinityMask", (uint8_t *)&hk_SetThreadAffinityMask);
 
 	// Unhook and return to the original function prologue
 	Detours::X86::DetourRemove(detourInfo);

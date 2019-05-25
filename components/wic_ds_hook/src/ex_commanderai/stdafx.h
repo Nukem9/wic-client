@@ -10,3 +10,4 @@
 #include "EX_CAI_Manager.h"
 #include "EX_CAI_GameWrapper.h"
 #include "EX_CAI_SupportWeaponManager.h"
+#include "EX_CAI_AI.h"

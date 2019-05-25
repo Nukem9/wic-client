@@ -23,5 +23,5 @@ public:
 	};
 };
 
-CHECK_OFFSET(MC_Vector2<float>, myX, 0x0);
-CHECK_OFFSET(MC_Vector2<float>, myY, 0x4);
+//CHECK_OFFSET(MC_Vector2<float>, myX, 0x0);
+//CHECK_OFFSET(MC_Vector2<float>, myY, 0x4);

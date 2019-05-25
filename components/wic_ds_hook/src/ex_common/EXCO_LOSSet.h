@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../mcommon2/MC_BitVector.h"
+
 #pragma pack(push, 1)
 class EXCO_LOSSet
 {

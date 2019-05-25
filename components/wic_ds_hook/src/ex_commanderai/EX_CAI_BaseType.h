@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../types.h"
+
 class EXCO_UnitType;
 class EX_CAI_ShooterAbility;
 class EX_CAI_BaseTypeContainer;

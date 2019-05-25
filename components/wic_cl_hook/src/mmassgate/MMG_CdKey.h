@@ -59,6 +59,6 @@ public:
 	static void InitializeHook();
 };
 
-CHECK_OFFSET(MMG_CdKey::Validator, m_Key, 0x0);
-CHECK_OFFSET(MMG_CdKey::Validator, m_IsChecksumCorrect, 0x10);
+//CHECK_OFFSET(MMG_CdKey::Validator, m_Key, 0x0);
+//CHECK_OFFSET(MMG_CdKey::Validator, m_IsChecksumCorrect, 0x10);
 CHECK_SIZE(MMG_CdKey::Validator, 0x11);

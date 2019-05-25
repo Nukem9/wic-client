@@ -66,6 +66,58 @@ public:
 };
 */
 
+class WICO_RoleManager
+{
+public:
+	class PlayerRole
+	{
+	};
+};
+
+class EXG_Game;
+
+bool(__thiscall * EXG_Game__PlayerSetRole)(EXG_Game *thisptr, EXCO_IPlayer *aPlayer, const int aRoleId, bool aIsForcedSwitchedFlag);
+
+bool __fastcall hk_EXG_Game__PlayerSetRole(EXG_Game *thisptr, void *_EDX, EXCO_IPlayer *aPlayer, const int aRoleId, bool aIsForcedSwitchedFlag)
+{
+	if (aRoleId == MC_StringToInt("ARMY_ROLE"))
+		return true;
+
+	return EXG_Game__PlayerSetRole(thisptr, aPlayer, aRoleId, aIsForcedSwitchedFlag);
+}
+
+bool (__thiscall * MC_KeyTree_WICO_RoleManager__PlayerRole_int___Add)(void *thisptr, WICO_RoleManager::PlayerRole *const *anInstance, const int *aKey);
+
+bool __fastcall hk_MC_KeyTree_WICO_RoleManager__PlayerRole_int___Add(void *thisptr, void *_EDX, WICO_RoleManager::PlayerRole *const *anInstance, const int *aKey)
+{
+	if (*aKey == MC_StringToInt("ARMY_ROLE"))
+		return true;
+
+	return MC_KeyTree_WICO_RoleManager__PlayerRole_int___Add(thisptr, anInstance, aKey);
+}
+
+bool(__thiscall * MC_GrowingArray_WICO_RoleManager__PlayerRole___Add)(MC_GrowingArray<WICO_RoleManager::PlayerRole *> *thisptr, WICO_RoleManager::PlayerRole *const *anItem);
+
+bool __fastcall hk_MC_GrowingArray_WICO_RoleManager__PlayerRole___Add(MC_GrowingArray<WICO_RoleManager::PlayerRole *> *thisptr, void *_EDX, WICO_RoleManager::PlayerRole *const *anItem)
+{
+	DWORD ptr = (DWORD)*anItem;
+
+	if (*(DWORD *)(ptr + 0x404) == MC_StringToInt("ARMY_ROLE"))
+		return true;
+
+	return MC_GrowingArray_WICO_RoleManager__PlayerRole___Add(thisptr, anItem);
+}
+
+bool (__thiscall * EXCO_MissionInfo__ValidatePlayerRole)(EXCO_MissionInfo *thisptr, const int aRole);
+
+bool __fastcall hk_EXCO_MissionInfo__ValidatePlayerRole(EXCO_MissionInfo *thisptr, void *_EDX, const int aRole)
+{
+	if (aRole == MC_StringToInt("ARMY_ROLE"))
+		return true;
+
+	return EXCO_MissionInfo__ValidatePlayerRole(thisptr, aRole);
+}
+
 void Server_PatchFPUExceptions()
 {
 	PatchMemory(0x004024AF, (PBYTE)"\x90\x90\x90\x90\x90", 5);// main(): _clearfp();
@@ -191,6 +243,11 @@ BOOL WicDS_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 
 	// Allow ranked servers to use mods
 	PatchMemory(0x004072E9, (PBYTE)"\xEB", 1);
+
+	//*(PBYTE *)&EXCO_MissionInfo__ValidatePlayerRole = Detours::X86::DetourFunction((PBYTE)0x004478F0, (PBYTE)&hk_EXCO_MissionInfo__ValidatePlayerRole);
+	//*(PBYTE *)&MC_KeyTree_WICO_RoleManager__PlayerRole_int___Add = Detours::X86::DetourFunction((PBYTE)0x0044C990, (PBYTE)&hk_MC_KeyTree_WICO_RoleManager__PlayerRole_int___Add);
+	//*(PBYTE *)&MC_GrowingArray_WICO_RoleManager__PlayerRole___Add = Detours::X86::DetourFunction((PBYTE)0x0044CC20, (PBYTE)&hk_MC_GrowingArray_WICO_RoleManager__PlayerRole___Add);
+	//*(PBYTE *)&EXG_Game__PlayerSetRole = Detours::X86::DetourFunction((PBYTE)0x004AEFD0, (PBYTE)&hk_EXG_Game__PlayerSetRole);
 
 	//
 	// Patch for WICG_MPyPlayer::cPlayer_ChatMessage where the developers incorrectly

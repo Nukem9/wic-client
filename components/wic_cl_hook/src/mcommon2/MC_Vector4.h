@@ -41,7 +41,7 @@ public:
 	};
 };
 
-CHECK_OFFSET(MC_Vector4<float>, myX, 0x0);
-CHECK_OFFSET(MC_Vector4<float>, myY, 0x4);
-CHECK_OFFSET(MC_Vector4<float>, myZ, 0x8);
-CHECK_OFFSET(MC_Vector4<float>, myW, 0xC);
+//CHECK_OFFSET(MC_Vector4<float>, myX, 0x0);
+//CHECK_OFFSET(MC_Vector4<float>, myY, 0x4);
+//CHECK_OFFSET(MC_Vector4<float>, myZ, 0x8);
+//CHECK_OFFSET(MC_Vector4<float>, myW, 0xC);

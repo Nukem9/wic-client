@@ -26,7 +26,7 @@ public:
 			this->myLine = aLine;
 		}
 
-		void operator() (const char *aDebugMessage)
+		void operator()(const char *aDebugMessage, ...)
 		{
 			// MC_Debug::InternalPosTracer::operator()
 			((void (__cdecl *)(InternalPosTracer *, const char *))0x00421180)(this, aDebugMessage);

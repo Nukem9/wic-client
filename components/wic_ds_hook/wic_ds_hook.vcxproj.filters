@@ -215,6 +215,27 @@
     <ClInclude Include="src\mmassgate\MMG_Protocols.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ex_common\EXCO_IPlayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ex_common\EXCO_PlayerInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ex_common\WICO_Vote.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ex_common\WICO_GameSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ex_common\EXCO_MissionInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ex_commanderai\EX_CAI_AI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dllmain.cpp">
@@ -236,6 +257,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\mmassgate\MMG_Protocols.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ex_common\EXCO_IPlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ex_commanderai\EX_CAI_AI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

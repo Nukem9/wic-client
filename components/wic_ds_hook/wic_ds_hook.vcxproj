@@ -20,14 +20,14 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -66,6 +66,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\ex_commanderai\EX_CAI_AI.h" />
     <ClInclude Include="src\ex_commanderai\EX_CAI_BaseType.h" />
     <ClInclude Include="src\ex_commanderai\EX_CAI_BaseTypeContainer.h" />
     <ClInclude Include="src\ex_commanderai\EX_CAI_CommanderAI_Data.h" />
@@ -81,11 +82,14 @@
     <ClInclude Include="src\ex_common\EXCO_Difficulty.h" />
     <ClInclude Include="src\ex_common\EXCO_Direction.h" />
     <ClInclude Include="src\ex_common\EXCO_Directory.h" />
+    <ClInclude Include="src\ex_common\EXCO_IPlayer.h" />
     <ClInclude Include="src\ex_common\EXCO_LOSSet.h" />
+    <ClInclude Include="src\ex_common\EXCO_MissionInfo.h" />
     <ClInclude Include="src\ex_common\EXCO_MissionMetaInfo.h" />
     <ClInclude Include="src\ex_common\EXCO_MissionSet.h" />
     <ClInclude Include="src\ex_common\EXCO_Persistent.h" />
     <ClInclude Include="src\ex_common\EXCO_PersistentMember.h" />
+    <ClInclude Include="src\ex_common\EXCO_PlayerInfo.h" />
     <ClInclude Include="src\ex_common\EXCO_Slot.h" />
     <ClInclude Include="src\ex_common\EXCO_SlotManager.h" />
     <ClInclude Include="src\ex_common\EXCO_SoundSourceType.h" />
@@ -96,9 +100,11 @@
     <ClInclude Include="src\ex_common\WICO_CollisionObject.h" />
     <ClInclude Include="src\ex_common\WICO_CollisionObject_Instance.h" />
     <ClInclude Include="src\ex_common\WICO_DebugRenderer.h" />
+    <ClInclude Include="src\ex_common\WICO_GameSettings.h" />
     <ClInclude Include="src\ex_common\WICO_GlobalUnitValues.h" />
     <ClInclude Include="src\ex_common\WICO_SplinePath.h" />
     <ClInclude Include="src\ex_common\WICO_Team.h" />
+    <ClInclude Include="src\ex_common\WICO_Vote.h" />
     <ClInclude Include="src\ex_remote\stdafx.h" />
     <ClInclude Include="src\ex_remote\WICR_ClientFactory.h" />
     <ClInclude Include="src\ex_remote\WICR_GameController.h" />
@@ -125,10 +131,13 @@
     <ClInclude Include="src\mmassgate\MMG_TrackableServer.h" />
     <ClInclude Include="src\mmassgate\stdafx.h" />
     <ClInclude Include="src\stdafx.h" />
+    <ClInclude Include="src\types.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dllmain.cpp" />
+    <ClCompile Include="src\ex_commanderai\EX_CAI_AI.cpp" />
     <ClCompile Include="src\ex_common\EXCO_Directory.cpp" />
+    <ClCompile Include="src\ex_common\EXCO_IPlayer.cpp" />
     <ClCompile Include="src\mcommon2\MC_Mem.cpp" />
     <ClCompile Include="src\mcommon2\MI_Time.cpp" />
     <ClCompile Include="src\mmassgate\MMG_Protocols.cpp" />

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "IceLocDecoder.h"
+
 #pragma pack(push, 1)
 class Ice
 {

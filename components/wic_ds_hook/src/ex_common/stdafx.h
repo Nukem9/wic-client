@@ -28,3 +28,5 @@
 #include "EXCO_DamageModel.h"
 #include "EXCO_SoundSourceType.h"
 #include "EXCO_UnitType.h"
+#include "EXCO_PlayerInfo.h"
+#include "EXCO_IPlayer.h"

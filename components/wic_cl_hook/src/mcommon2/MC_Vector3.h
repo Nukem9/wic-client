@@ -29,6 +29,6 @@ public:
 	};
 };
 
-CHECK_OFFSET(MC_Vector3<float>, myX, 0x0);
-CHECK_OFFSET(MC_Vector3<float>, myY, 0x4);
-CHECK_OFFSET(MC_Vector3<float>, myZ, 0x8);
+//CHECK_OFFSET(MC_Vector3<float>, myX, 0x0);
+//CHECK_OFFSET(MC_Vector3<float>, myY, 0x4);
+//CHECK_OFFSET(MC_Vector3<float>, myZ, 0x8);

@@ -1,5 +1,9 @@
 #pragma once
 
+#include "../mcommon2/MC_GrowingArray.h"
+#include "../ice/Ice.h"
+#include "EXCO_LOSSet.h"
+
 #pragma pack(push, 1)
 class WICO_Team 
 {
@@ -29,7 +33,19 @@ public:
 		int				myESLFreeRolePlayerId;		 // this+0x38
 	};
 
+private:
 	int						myAllowedTeams[2];	// this+0x0
 	MC_GrowingArray<Team *>	myTeams;			// this+0x8
+
+public:
+	AllowedTeam GetAllowedTeamForTeam(const int aTeam)
+	{
+		if (this->myAllowedTeams[0] == aTeam)
+			return Team1;
+		else if (this->myAllowedTeams[1] == aTeam)
+			return Team2;
+
+		return TeamNone;
+	}
 };
 #pragma pack(pop)

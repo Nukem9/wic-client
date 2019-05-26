@@ -4,7 +4,5 @@
 #include <windows.h>
 #include <vector>
 
-#include <Zydis/Zydis.h>
-
 #include "Intrinsic.h"
 #include "Detours.h"

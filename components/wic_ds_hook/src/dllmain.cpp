@@ -188,7 +188,7 @@ BOOL WicDS_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 
 	for (int i = 0; i < argCount; i++)
 	{
-		if (wcsicmp(commandLine[i], L"-fps") != 0)
+		if (_wcsicmp(commandLine[i], L"-fps") != 0)
 			continue;
 
 		if ((i + 1) >= argCount)

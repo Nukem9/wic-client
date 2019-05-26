@@ -1,12 +1,14 @@
 #include "stdafx.h"
 
+extern "C" int DetoursInitZydis32();
+extern "C" int DetoursInitZydis64();
+extern "C" int DetoursGetNextInstructionLength(void *Instruction);
+
 #ifdef _M_AMD64
 namespace Detours
 {
 	namespace X64
 	{
-		static ZydisDecoder			g_Decoder;
-
 		#define HEADER_MAGIC		'@D64'
 
 		#define MAX_INSTRUCT_SIZE	0x20
@@ -29,10 +31,7 @@ namespace Detours
 			// Init decoder exactly once
 			static bool decoderInit = []()
 			{
-				if (ZYAN_FAILED(ZydisDecoderInit(&g_Decoder, ZYDIS_MACHINE_MODE_LONG_64, ZYDIS_ADDRESS_WIDTH_64)))
-					return false;
-
-				return true;
+				return DetoursInitZydis64() == -1 ? false : true;
 			}();
 
 			if (!decoderInit)
@@ -45,23 +44,16 @@ namespace Detours
 			uint32_t neededSize = DetourGetHookLength(Options);
 			uint32_t totalInstrSize = 0;
 
-			ZyanU64 runtimeAddress = (ZyanU64)Target;
-			ZyanUSize offset = 0;
-			ZydisDecodedInstruction instruction;
-
-			while (ZYAN_SUCCESS(ZydisDecoderDecodeBuffer(&g_Decoder, (void *)(Target + offset), ZYDIS_MAX_INSTRUCTION_LENGTH, &instruction)))
+			for (int len = 0; len != -1; len = DetoursGetNextInstructionLength((void *)(Target + totalInstrSize)))
 			{
-				totalInstrSize += instruction.length;
+				totalInstrSize += len;
 
 				if (totalInstrSize >= neededSize)
 					break;
-
-				offset += instruction.length;
-				runtimeAddress += instruction.length;
 			}
 
 			// Unable to find a needed length
-			if (totalInstrSize < neededSize)
+			if (neededSize == 0 || totalInstrSize < neededSize)
 			{
 				BREAK_ON_ERROR();
 				return nullptr;
@@ -285,7 +277,7 @@ namespace Detours
 			//
 			// jmp offset64
 			//
-			int64_t displacement = (int64_t)(Header->TrampolineOffset - Header->CodeOffset - 5);
+			int64_t displacement = (int64_t)(Header->TrampolineOffset - (Header->CodeOffset + 5));
 
 			if (abs(displacement) >= INT_MAX)
 				return false;

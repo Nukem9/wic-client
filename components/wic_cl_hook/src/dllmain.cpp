@@ -41,6 +41,19 @@ void __declspec(naked) hook()
 	}
 }
 
+struct hostent *PASCAL hk_gethostbyname(const char *name)
+{
+	if (strstr(name, "massgate.net") ||
+		strstr(name, "massive.se") ||
+		strstr(name, "ubisoft.com"))
+	{
+		// Everything is redirected to a single IP address now
+		return gethostbyname("liveaccount.massgate.org");
+	}
+
+	return gethostbyname(name);
+}
+
 BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 {
 #if 0
@@ -52,7 +65,7 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 #endif
 
 	// Set the protocol version
-	MMG_Protocols::MassgateProtocolVersion = 150;
+	//MMG_Protocols::MassgateProtocolVersion = 150;
 
 	// Always enable the console
 	PatchMemory(0x00B31A16, (PBYTE)"\xEB", 1);
@@ -62,6 +75,10 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 
 	// Write MMG_AccountProtocol cipher keys directly after EncryptionKeySequenceNumber in message packets
 	Detours::X86::DetourFunction((PBYTE)0x00BD1C73, (PBYTE)&hook);
+
+	// Hook gethostbyname (IAT)
+	uintptr_t addr = (uintptr_t)&hk_gethostbyname;
+	PatchMemory(0x00BEC594, (PBYTE)&addr, sizeof(uintptr_t));
 
 	MN_NetRequester::InitializeHook();
 	MMG_CdKey::InitializeHook();

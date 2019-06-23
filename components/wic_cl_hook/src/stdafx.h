@@ -6,6 +6,9 @@
 #include <intrin.h>
 #include <shellapi.h>
 #include <sys/stat.h>
+#include <winsock.h>
+
+#pragma comment(lib, "ws2_32.lib")
 
 // Shared libraries
 #pragma comment(lib, "detours.lib")

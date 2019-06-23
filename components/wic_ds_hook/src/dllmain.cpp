@@ -118,6 +118,19 @@ bool __fastcall hk_EXCO_MissionInfo__ValidatePlayerRole(EXCO_MissionInfo *thispt
 	return EXCO_MissionInfo__ValidatePlayerRole(thisptr, aRole);
 }
 
+struct hostent *PASCAL hk_gethostbyname(const char *name)
+{
+	if (strstr(name, "massgate.net") ||
+		strstr(name, "massive.se") ||
+		strstr(name, "ubisoft.com"))
+	{
+		// Everything is redirected to a single IP address now
+		return gethostbyname("liveaccount.massgate.org");
+	}
+
+	return gethostbyname(name);
+}
+
 void Server_PatchFPUExceptions()
 {
 	PatchMemory(0x004024AF, (PBYTE)"\x90\x90\x90\x90\x90", 5);// main(): _clearfp();
@@ -213,6 +226,10 @@ BOOL WicDS_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	// Slot 0 would crash if no player was connected. Slot -1 is used for scripts.
 	//
 	PatchMemory(0x004EEFF1, (PBYTE)"\xFF", 1);
+
+	// Hook gethostbyname (IAT)
+	uintptr_t addr = (uintptr_t)&hk_gethostbyname;
+	PatchMemory(0x0074D3A8, (PBYTE)&addr, sizeof(uintptr_t));
 
 	//*(PBYTE *)&EXCO_MissionInfo__ValidatePlayerRole = Detours::X86::DetourFunction((PBYTE)0x004478F0, (PBYTE)&hk_EXCO_MissionInfo__ValidatePlayerRole);
 	//*(PBYTE *)&MC_KeyTree_WICO_RoleManager__PlayerRole_int___Add = Detours::X86::DetourFunction((PBYTE)0x0044C990, (PBYTE)&hk_MC_KeyTree_WICO_RoleManager__PlayerRole_int___Add);

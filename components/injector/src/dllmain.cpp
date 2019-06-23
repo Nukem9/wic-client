@@ -7,19 +7,6 @@ HMODULE g_ModuleHandle;
 uint8_t *detourInfo;
 uint8_t *detourEntry;
 
-struct hostent *PASCAL hk_gethostbyname(const char *name)
-{
-	if (strstr(name, "massgate.net") ||
-		strstr(name, "massive.se") ||
-		strstr(name, "ubisoft.com"))
-	{
-		// Everything is redirected to a single IP address now
-		return gethostbyname("liveaccount.massgate.org");
-	}
-
-	return gethostbyname(name);
-}
-
 void WINAPI hk_GetSystemInfo(LPSYSTEM_INFO lpSystemInfo)
 {
 	GetSystemInfo(lpSystemInfo);
@@ -78,7 +65,6 @@ int __cdecl hk_mainCRTStartup()
 		}
 	}
 
-	Detours::IATHook((uint8_t *)g_ModuleHandle, "WS2_32.dll", "gethostbyname", (uint8_t *)&hk_gethostbyname);
 	Detours::IATHook((uint8_t *)g_ModuleHandle, "KERNEL32.dll", "GetSystemInfo", (uint8_t *)&hk_GetSystemInfo);
 	Detours::IATHook((uint8_t *)g_ModuleHandle, "KERNEL32.dll", "SetThreadAffinityMask", (uint8_t *)&hk_SetThreadAffinityMask);
 

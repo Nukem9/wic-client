@@ -1,13 +1,11 @@
 #include "../stdafx.h"
 
-bool(__thiscall * WICP_DebugView::Init)(WICP_DebugView *);
-
-bool WICP_DebugView::hk_Init()
+bool WICP_DebugView::Init()
 {
 	EX3D_Console::ourInstance->AddFunc("DebugToggle", Console_DebugScriptToggle, this, false, nullptr);
 	EX3D_Console::ourInstance->AddFunc("DebugToggleDevMenu", Console_DebugViewToggle, this, false, nullptr);
 
-	return Init(this);
+	return ((bool(__stdcall *)(WICP_DebugView *))0x008FF040)(this);
 }
 
 void WICP_DebugView::SetCycleValue(int aValue)

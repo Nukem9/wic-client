@@ -107,9 +107,7 @@ public:
 	bool myKloe_refl;
 	bool myKloe_t2;
 
-	static bool(__thiscall * Init)(WICP_DebugView *);
-	bool hk_Init();
-
+	bool __stdcall Init();
 	void SetCycleValue(int aValue);
 	void SetToggleValue(int aValue);
 	void PropagateToGroup(WICO_DebugView::DV_Flag aFlag, const bool aEnableFlag);

@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+void PatchMemoryAllocators();
+
 void WriteEncryptionKeys(void *accountQuery, MN_WriteMessage *aMessage)
 {
 	auto myCipher = *(MMG_BlockTEA **)((uintptr_t)accountQuery + 0x4EA);
@@ -66,7 +68,7 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	//
 	// Register custom commands to show the ingame debug menu
 	//
-	Detours::X86::DetourFunctionClass((uint8_t *)0x008FF040, &WICP_DebugView::hk_Init);
+	Detours::X86::DetourFunctionClass((uint8_t *)0x00944A2E, &WICP_DebugView::Init, Detours::X86Option::USE_CALL);
 
 	//
 	// Hook gethostbyname (IAT)
@@ -76,6 +78,7 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 
 	MN_NetRequester::InitializeHook();
 	MMG_CdKey::InitializeHook();
+	PatchMemoryAllocators();
 
 	return TRUE;
 }

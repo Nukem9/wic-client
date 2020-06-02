@@ -35,9 +35,6 @@ typedef unsigned long long	sizeptr_t;
 #define CHECK_SIZE(str, size)				static_assert(sizeof(str) == size, #str ": Invalid struct/class size");
 /****************************************/
 
-// wic.exe and wic_online.exe detours
-#include "versions/stdafx.h"
-
 // MCommon2
 #include "mcommon2/stdafx.h"
 

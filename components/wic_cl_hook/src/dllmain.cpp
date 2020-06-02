@@ -76,6 +76,9 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	// Write MMG_AccountProtocol cipher keys directly after EncryptionKeySequenceNumber in message packets
 	Detours::X86::DetourFunction((PBYTE)0x00BD1C73, (PBYTE)&hook);
 
+	// Register custom commands to show the ingame debug menu
+	Detours::X86::DetourFunctionClass((uint8_t *)0x008FF040, &WICP_DebugView::hk_Init);
+
 	// Hook gethostbyname (IAT)
 	uintptr_t addr = (uintptr_t)&hk_gethostbyname;
 	PatchMemory(0x00BEC594, (PBYTE)&addr, sizeof(uintptr_t));

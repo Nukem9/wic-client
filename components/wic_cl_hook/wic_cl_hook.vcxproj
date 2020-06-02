@@ -77,6 +77,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="hdk\hdk_include.h" />
+    <ClInclude Include="src\ex_3d\EX3D_Console.h" />
+    <ClInclude Include="src\ex_3d\stdafx.h" />
+    <ClInclude Include="src\ex_common\stdafx.h" />
+    <ClInclude Include="src\ex_common\WICO_DebugView.h" />
     <ClInclude Include="src\mcommon2\MC_Mem.h" />
     <ClInclude Include="src\mcommon2\MC_Vector2.h" />
     <ClInclude Include="src\mcommon2\MC_Vector3.h" />
@@ -113,10 +117,13 @@
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\ex_3d\EX3D_Console.cpp" />
+    <ClCompile Include="src\ex_common\WICO_DebugView.cpp" />
     <ClCompile Include="src\mcommon2\MC_Mem.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\mcommon2\MF_File.cpp" />
+    <ClCompile Include="src\memory.cpp" />
     <ClCompile Include="src\mmassgate\MMG_CdKey.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../stdafx.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../stdafx.h</PrecompiledHeaderFile>

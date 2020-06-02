@@ -98,6 +98,18 @@
     <ClInclude Include="src\mcommon2\MF_File.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ex_common\WICO_DebugView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ex_common\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ex_3d\EX3D_Console.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ex_3d\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dllmain.cpp">
@@ -146,6 +158,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\mcommon2\MF_File.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ex_common\WICO_DebugView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\memory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ex_3d\EX3D_Console.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

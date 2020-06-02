@@ -49,3 +49,9 @@ typedef unsigned long long	sizeptr_t;
 
 // MMassgate
 #include "mmassgate/stdafx.h"
+
+// EX_Common
+#include "ex_common/stdafx.h"
+
+// EX_3D
+#include "ex_3d/stdafx.h"

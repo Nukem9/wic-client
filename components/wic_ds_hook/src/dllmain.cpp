@@ -131,15 +131,6 @@ struct hostent *PASCAL hk_gethostbyname(const char *name)
 	return gethostbyname(name);
 }
 
-void Server_PatchFPUExceptions()
-{
-	PatchMemory(0x004024AF, (PBYTE)"\x90\x90\x90\x90\x90", 5);// main(): _clearfp();
-	PatchMemory(0x004024BB, (PBYTE)"\x90\x90\x90\x90\x90", 5);// main(): _controlfp();
-
-	PatchMemory(0x0041C5B1, (PBYTE)"\x90\x90\x90\x90\x90", 5);// MT_Thread_thread_starter(): _clearfp();
-	PatchMemory(0x0041C5BD, (PBYTE)"\x90\x90\x90\x90\x90", 5);// MT_Thread_thread_starter(): _controlfp();
-}
-
 void Server_PatchFramerate(uint Framerate)
 {
 	// Server FPS divisor
@@ -157,7 +148,7 @@ void Server_PatchFramerate(uint Framerate)
 
 void Server_PatchAssertions()
 {
-	auto PatchAssert = [](DWORD Address)
+	auto PatchAssert = [](uintptr_t Address)
 	{
 		// Disable assert by setting 'ignoreAlwaysFlag' to true
 		*(bool *)Address = true;
@@ -194,10 +185,19 @@ void Server_PatchAssertions()
 
 BOOL WicDS_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 {
-	MMG_Protocols::MassgateProtocolVersion = 150;
+	if (_stricmp((const char *)0x00753C64, "henrik.davidsson/MSV-BUILD-04 at 10:57:07 on Jun 10 2009.\n") != 0)
+	{
+		MessageBoxA(nullptr, "Unknown dedicated server version detected. Version 1.0.1.1 is required.", "Error", MB_ICONERROR);
+		return FALSE;
+	}
 
+	//MMG_Protocols::MassgateProtocolVersion = 150;
+
+	//
+	// Detect custom command line options
+	//
 	int argCount = 0;
-	LPWSTR *commandLine = CommandLineToArgvW(GetCommandLineW(), &argCount);
+	auto commandLine = CommandLineToArgvW(GetCommandLineW(), &argCount);
 
 	for (int i = 0; i < argCount; i++)
 	{
@@ -211,13 +211,32 @@ BOOL WicDS_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 		Server_PatchFramerate(_wtoi(commandLine[i + 1]));
 	}
 
-	Server_PatchFPUExceptions();
+	LocalFree(commandLine);
+
+	//
+	// Clear bogus assertions and disable floating point exceptions
+	//
 	Server_PatchAssertions();
 
+	PatchMemory(0x004024AF, (PBYTE)"\x90\x90\x90\x90\x90", 5);// main(): _clearfp();
+	PatchMemory(0x004024BB, (PBYTE)"\x90\x90\x90\x90\x90", 5);// main(): _controlfp();
+	PatchMemory(0x0041C5B1, (PBYTE)"\x90\x90\x90\x90\x90", 5);// MT_Thread_thread_starter(): _clearfp();
+	PatchMemory(0x0041C5BD, (PBYTE)"\x90\x90\x90\x90\x90", 5);// MT_Thread_thread_starter(): _controlfp();
+
+	//
+	// Force the dedicated server to look in the "mods" folder relative to the current directory. Vanilla
+	// code checks in X:\Users\Public\Documents\WIC\Mods.
+	//
 	EXCO_Directory::InitializeHook();
+
+	//
+	// Drop invalid array accesses (removed assertions) in some AI code
+	//
 	EX_CAI_Type::InitializeHook();
 
+	//
 	// Allow ranked servers to use mods
+	//
 	PatchMemory(0x004072E9, (PBYTE)"\xEB", 1);
 
 	//
@@ -227,8 +246,10 @@ BOOL WicDS_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	//
 	PatchMemory(0x004EEFF1, (PBYTE)"\xFF", 1);
 
-	// Hook gethostbyname (IAT)
-	uintptr_t addr = (uintptr_t)&hk_gethostbyname;
+	//
+	// Redirect DNS queries to the new domain. Hook gethostbyname (IAT).
+	//
+	auto addr = (uintptr_t)&hk_gethostbyname;
 	PatchMemory(0x0074D3A8, (PBYTE)&addr, sizeof(uintptr_t));
 
 	//*(PBYTE *)&EXCO_MissionInfo__ValidatePlayerRole = Detours::X86::DetourFunction((PBYTE)0x004478F0, (PBYTE)&hk_EXCO_MissionInfo__ValidatePlayerRole);
@@ -241,7 +262,7 @@ BOOL WicDS_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
 {
-	if(ul_reason_for_call != DLL_PROCESS_ATTACH)
+	if (ul_reason_for_call != DLL_PROCESS_ATTACH)
 		return TRUE;
 
 	return WicDS_HookInit(hModule, ul_reason_for_call);

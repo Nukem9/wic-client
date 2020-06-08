@@ -40,6 +40,19 @@ struct hostent *PASCAL hk_gethostbyname(const char *name)
 	return gethostbyname(name);
 }
 
+const char *__fastcall hk_MF_File__ExtractExtension(void *Unused, const char *aPath)
+{
+	if (!aPath)
+		return "";
+
+	auto ext = PathFindExtensionA(aPath);
+
+	if (ext[0] == '.')
+		return &ext[1];
+
+	return ext;
+}
+
 BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 {
 	if (_stricmp((const char *)0x00D2738C, "henrik.davidsson/MSV-BUILD-04 at 10:51:42 on Jun 10 2009.\n") != 0)
@@ -54,6 +67,11 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	// Always enable the console
 	//
 	PatchMemory(0x00B31A16, (uint8_t *)"\xEB", 1);
+
+	//
+	// Fix an out of bounds access when files without an extension are present in the game or mod folders
+	//
+	Detours::X86::DetourFunction((uint8_t *)0x009FCBB0, (uint8_t *)&hk_MF_File__ExtractExtension);
 
 	//
 	// Copy MC_Debug::DebugMessage strings directly to the console output

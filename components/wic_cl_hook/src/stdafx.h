@@ -5,10 +5,11 @@
 #include <stdio.h>
 #include <intrin.h>
 #include <shellapi.h>
-#include <sys/stat.h>
 #include <winsock.h>
+#include <shlwapi.h>
 
 #pragma comment(lib, "ws2_32.lib")
+#pragma comment(lib, "shlwapi.lib")
 
 // Shared libraries
 #pragma comment(lib, "detours.lib")

@@ -94,6 +94,11 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	Detours::X86::DetourFunction((uint8_t *)0x009FCBB0, (uint8_t *)&hk_MF_File__ExtractExtension);
 
 	//
+	// Fix a use-after-free where they incorrectly hold a pointer to a MC_Str<> after it has exited scope (aka destructed). This is a tiny memory leak now.
+	//
+	PatchMemory(0x004287BD, (uint8_t *)"\x90\x90\x90\x90\x90", 5);
+
+	//
 	// Fix a bug where mods were loaded syncrhonously in a GUI handler when they should've been using the app event queue. MG_Gui::UpdateInternal
 	// or MG_Gui::Update would crash after 'MG_Gui *this' was deleted INSIDE its own event handler.
 	//

@@ -71,6 +71,11 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	Detours::X86::DetourFunctionClass((uint8_t *)0x00944A2E, &WICP_DebugView::Init, Detours::X86Option::USE_CALL);
 
 	//
+	// Restrict MSB_IoCore to 8 threads instead of (num processor cores * 8) threads
+	//
+	PatchMemory(0x00B6E7D3, (uint8_t *)"\x08", 1);
+
+	//
 	// Hook gethostbyname (IAT)
 	//
 	uintptr_t addr = (uintptr_t)&hk_gethostbyname;

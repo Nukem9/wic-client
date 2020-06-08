@@ -6,7 +6,7 @@
 #if WIC_USE_TBB
 #include <tbb/scalable_allocator.h>
 
-void *MemAlloc(size_t Size, size_t Alignment = 0, bool Aligned = false, bool Zeroed = false)
+void *MemAlloc(size_t Size, size_t Alignment = 0, bool Aligned = false)
 {
 	// If the caller doesn't care, force 4 byte aligns as a minimum
 	if (!Aligned)
@@ -41,7 +41,7 @@ void *MemAlloc(size_t Size, size_t Alignment = 0, bool Aligned = false, bool Zer
 #else
 	void *ptr = scalable_aligned_malloc(Size, Alignment);
 
-	if (ptr && Zeroed)
+	if (ptr)
 		memset(ptr, 0, Size);
 #endif
 
@@ -80,7 +80,7 @@ size_t MemSize(void *Memory)
 void *hk_calloc(size_t Count, size_t Size)
 {
 	// The allocated memory is always zeroed
-	return MemAlloc(Count * Size, 0, false, true);
+	return MemAlloc(Count * Size, 0, false);
 }
 
 void *hk_malloc(size_t Size)
@@ -100,7 +100,7 @@ void *hk_aligned_realloc(void *Memory, size_t Size, size_t Alignment)
 	if (Size > 0)
 	{
 		// Recalloc behaves like calloc if there's no existing allocation. Realloc doesn't. Zero it anyway.
-		newMemory = MemAlloc(Size, Alignment, Alignment != 0, true);
+		newMemory = MemAlloc(Size, Alignment, Alignment != 0);
 
 		if (Memory)
 			memcpy(newMemory, Memory, min(Size, MemSize(Memory)));

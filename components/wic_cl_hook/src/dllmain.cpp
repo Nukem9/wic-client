@@ -40,6 +40,26 @@ struct hostent *PASCAL hk_gethostbyname(const char *name)
 	return gethostbyname(name);
 }
 
+void __declspec(naked) hk_EX_OptionsModHandler__HandleEvent__SetActiveMod()
+{
+	__asm
+	{
+		// eax contains selected mod id
+		// ecx contains EX_App::ourInstance
+		mov ecx, dword ptr ds:[0x00E1E664]
+		mov dword ptr ds:[ecx + 0x10F0], eax
+
+		// EX_AppStateNavigator::SetEvent(EVENT_SET_ACTIVE_MOD)
+		mov eax, 0xD
+		lea edx, dword ptr ds:[ecx + 0x10EC]
+		mov ecx, 0x00B42D00
+		call ecx
+
+		mov al, 0x1
+		retn 0x8
+	}
+}
+
 const char *__fastcall hk_MF_File__ExtractExtension(void *Unused, const char *aPath)
 {
 	if (!aPath)
@@ -72,6 +92,13 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	// Fix an out of bounds access when files without an extension are present in the game or mod folders
 	//
 	Detours::X86::DetourFunction((uint8_t *)0x009FCBB0, (uint8_t *)&hk_MF_File__ExtractExtension);
+
+	//
+	// Fix a bug where mods were loaded syncrhonously in a GUI handler when they should've been using the app event queue. MG_Gui::UpdateInternal
+	// or MG_Gui::Update would crash after 'MG_Gui *this' was deleted INSIDE its own event handler.
+	//
+	Detours::X86::DetourFunctionClass((uint8_t *)0x00B4FC10, &hk_EX_OptionsModHandler__HandleEvent__SetActiveMod, Detours::X86Option::USE_CALL);
+	Detours::X86::DetourFunctionClass((uint8_t *)0x00B4FC69, &hk_EX_OptionsModHandler__HandleEvent__SetActiveMod, Detours::X86Option::USE_CALL);
 
 	//
 	// Copy MC_Debug::DebugMessage strings directly to the console output

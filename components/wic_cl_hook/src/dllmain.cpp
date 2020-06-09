@@ -120,7 +120,7 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	// Assert and kill the game if a unit has more than 8 active shooters. The server and client support units with more than 8 shooters, but the
 	// networking code doesn't. This causes memory corruption otherwise.
 	//
-	Detours::X86::DetourFunctionClass((uint8_t *)0x0077D481, &hk_EXR_Server__ParseUnitFrameShooterChange, Detours::X86Option::USE_CALL);
+	Detours::X86::DetourFunctionClass((uint8_t *)0x0077D481, &hk_EXR_Server__ParseUnitFrameShooterChange);
 
 	//
 	// Fix an out of bounds access when files without an extension are present in the game or mod folders

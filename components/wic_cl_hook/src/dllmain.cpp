@@ -60,6 +60,34 @@ void __declspec(naked) hk_EX_OptionsModHandler__HandleEvent__SetActiveMod()
 	}
 }
 
+void __declspec(naked) hk_EXR_Server__ParseUnitFrameShooterChange()
+{
+	static const char *assertString = "shooterIndex < WIC_MAX_NUM_SHOOTERS (8)";
+	static const char *assertFile = __FILE__;
+	static const int assertLine = __LINE__;
+
+	__asm
+	{
+		// EDI is shooterIndex which indexes myShooterData[8]
+		cmp edi, 8
+		jb validArrayIndex
+
+		push 0
+		push assertString
+		push assertLine
+		push assertFile
+		call MC_Assert
+		add esp, 0x10
+		int 3
+
+		validArrayIndex:
+		lea edx, dword ptr ds:[edi + edi * 2]
+		lea ebp, dword ptr ds:[ebx + edx * 4]
+		push 0x0077D487
+		retn
+	}
+}
+
 const char *__fastcall hk_MF_File__ExtractExtension(void *Unused, const char *aPath)
 {
 	if (!aPath)
@@ -87,6 +115,12 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	// Always enable the console
 	//
 	PatchMemory(0x00B31A16, (uint8_t *)"\xEB", 1);
+
+	//
+	// Assert and kill the game if a unit has more than 8 active shooters. The server and client support units with more than 8 shooters, but the
+	// networking code doesn't. This causes memory corruption otherwise.
+	//
+	Detours::X86::DetourFunctionClass((uint8_t *)0x0077D481, &hk_EXR_Server__ParseUnitFrameShooterChange, Detours::X86Option::USE_CALL);
 
 	//
 	// Fix an out of bounds access when files without an extension are present in the game or mod folders

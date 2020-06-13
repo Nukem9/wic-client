@@ -91,9 +91,9 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
 	_wsplitpath_s(g_ModulePath, nullptr, 0, nullptr, 0, g_ExeName, ARRAYSIZE(g_ExeName), nullptr, 0);
 
 	// Hook the original entrypoint
-	PIMAGE_DOS_HEADER dosHeader = (PIMAGE_DOS_HEADER)g_ModuleHandle;
-	PIMAGE_NT_HEADERS ntHeaders = (PIMAGE_NT_HEADERS)((uint8_t *)dosHeader + dosHeader->e_lfanew);
-	uint8_t *entryAddress = ((uint8_t *)dosHeader + ntHeaders->OptionalHeader.AddressOfEntryPoint);
+	auto dosHeader = (PIMAGE_DOS_HEADER)g_ModuleHandle;
+	auto ntHeaders = (PIMAGE_NT_HEADERS)((uint8_t *)dosHeader + dosHeader->e_lfanew);
+	auto entryAddress = ((uint8_t *)dosHeader + ntHeaders->OptionalHeader.AddressOfEntryPoint);
 
 	detourInfo = Detours::X86::DetourFunction(entryAddress, (uint8_t *)&hk_mainCRTStartup);
 	detourEntry = entryAddress;

@@ -7,6 +7,7 @@
 #include <shellapi.h>
 #include <winsock.h>
 #include <shlwapi.h>
+#include <new>
 
 #pragma comment(lib, "ws2_32.lib")
 #pragma comment(lib, "shlwapi.lib")

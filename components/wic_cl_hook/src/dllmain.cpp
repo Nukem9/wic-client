@@ -101,6 +101,15 @@ const char *__fastcall hk_MF_File__ExtractExtension(void *Unused, const char *aP
 	return ext;
 }
 
+INT WINAPI hk_WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
+{
+	// Must be called after CRT initialization
+	auto listener = new (((void *(__cdecl *)(size_t))0x00B2DDE0)(sizeof(MC_DebugConsoleListener))) MC_DebugConsoleListener;
+	((bool(__thiscall *)(void *))0x00A01780)(listener);
+
+	return ((INT(WINAPI *)(HINSTANCE, HINSTANCE, LPSTR, int))0x00B2EF40)(hInstance, hPrevInstance, lpCmdLine, nShowCmd);
+}
+
 BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 {
 	if (_stricmp((const char *)0x00D2738C, "henrik.davidsson/MSV-BUILD-04 at 10:51:42 on Jun 10 2009.\n") != 0)
@@ -108,8 +117,6 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 		MessageBoxA(nullptr, "Unknown game version detected. Version 1.0.1.1 is required.", "Error", MB_ICONERROR);
 		return FALSE;
 	}
-
-	//MMG_Protocols::MassgateProtocolVersion = 150;
 
 	//
 	// Always enable the console
@@ -140,9 +147,9 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	Detours::X86::DetourFunctionClass((uint8_t *)0x00B4FC69, &hk_EX_OptionsModHandler__HandleEvent__SetActiveMod, Detours::X86Option::USE_CALL);
 
 	//
-	// Copy MC_Debug::DebugMessage strings directly to the console output
+	// Copy MC_Debug strings directly to the console output by registering a new listener
 	//
-	Detours::X86::DetourFunction((uint8_t *)0x00A01520, (uint8_t *)&EX3D_Console::StuffTextStatic);
+	Detours::X86::DetourFunction((uint8_t *)0x00554295, (uint8_t *)&hk_WinMain, Detours::X86Option::USE_CALL);
 
 	//
 	// Write MMG_AccountProtocol cipher keys directly after EncryptionKeySequenceNumber in message packets

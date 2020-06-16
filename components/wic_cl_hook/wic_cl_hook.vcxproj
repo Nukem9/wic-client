@@ -81,6 +81,7 @@
     <ClInclude Include="src\ex_3d\stdafx.h" />
     <ClInclude Include="src\ex_common\stdafx.h" />
     <ClInclude Include="src\ex_common\WICO_DebugView.h" />
+    <ClInclude Include="src\mcommon2\MC_CommandLine.h" />
     <ClInclude Include="src\mcommon2\MC_DebugConsoleListener.h" />
     <ClInclude Include="src\mcommon2\MC_Mem.h" />
     <ClInclude Include="src\mcommon2\MC_Vector2.h" />
@@ -120,6 +121,7 @@
     </ClCompile>
     <ClCompile Include="src\ex_3d\EX3D_Console.cpp" />
     <ClCompile Include="src\ex_common\WICO_DebugView.cpp" />
+    <ClCompile Include="src\mcommon2\MC_CommandLine.cpp" />
     <ClCompile Include="src\mcommon2\MC_DebugConsoleListener.cpp" />
     <ClCompile Include="src\mcommon2\MC_Mem.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>

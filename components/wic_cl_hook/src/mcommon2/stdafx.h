@@ -7,3 +7,4 @@
 #include "MC_HybridArray.h"
 #include "MF_File.h"
 #include "MC_DebugConsoleListener.h"
+#include "MC_CommandLine.h"

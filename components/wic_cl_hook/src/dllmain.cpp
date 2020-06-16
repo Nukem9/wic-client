@@ -101,13 +101,24 @@ const char *__fastcall hk_MF_File__ExtractExtension(void *Unused, const char *aP
 	return ext;
 }
 
-INT WINAPI hk_WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
+bool __fastcall hk_WicParseCommandLine(const char *CommandLine)
 {
-	// Must be called after CRT initialization
+	// The listener must be registered after CRT initialization, but during early init, so do it here
 	auto listener = new (((void *(__cdecl *)(size_t))0x00B2DDE0)(sizeof(MC_DebugConsoleListener))) MC_DebugConsoleListener;
 	((bool(__thiscall *)(void *))0x00A01780)(listener);
 
-	return ((INT(WINAPI *)(HINSTANCE, HINSTANCE, LPSTR, int))0x00B2EF40)(hInstance, hPrevInstance, lpCmdLine, nShowCmd);
+	if (((bool(__thiscall *)(const char *))0x00B2F6A0)(CommandLine))
+	{
+		if (MC_CommandLine::ourInstance->IsPresent("ignorealttab"))
+			PatchMemory(0x00B2E101, (uint8_t *)"\xE9\x1E\x01\x00\x00", 5);
+
+		if (MC_CommandLine::ourInstance->IsPresent("nocursorspeed"))
+			PatchMemory(0x0098C1B1, (uint8_t *)"\xEB", 1);
+
+		return true;
+	}
+
+	return false;
 }
 
 BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
@@ -117,6 +128,14 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 		MessageBoxA(nullptr, "Unknown game version detected. Version 1.0.1.1 is required.", "Error", MB_ICONERROR);
 		return FALSE;
 	}
+
+	//
+	// Hook an early function in WinMain to do a few things:
+	// - Register a MC_Debug listener to copy strings directly to the console output
+	// - Add "-ignorealttab" as a command line option to prevent the game from going idle
+	// - Add "-nocursorspeed" as a command line option to prevent the game from setting mouse sensitivity
+	//
+	Detours::X86::DetourFunctionClass((uint8_t *)0x00B2EF85, &hk_WicParseCommandLine, Detours::X86Option::USE_CALL);
 
 	//
 	// Always enable the console
@@ -132,7 +151,7 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	//
 	// Fix an out of bounds access when files without an extension are present in the game or mod folders
 	//
-	Detours::X86::DetourFunction((uint8_t *)0x009FCBB0, (uint8_t *)&hk_MF_File__ExtractExtension);
+	Detours::X86::DetourFunctionClass((uint8_t *)0x009FCBB0, &hk_MF_File__ExtractExtension);
 
 	//
 	// Fix a use-after-free where they incorrectly hold a pointer to a MC_Str<> after it has exited scope (aka destructed). This is a tiny memory leak now.
@@ -147,14 +166,9 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	Detours::X86::DetourFunctionClass((uint8_t *)0x00B4FC69, &hk_EX_OptionsModHandler__HandleEvent__SetActiveMod, Detours::X86Option::USE_CALL);
 
 	//
-	// Copy MC_Debug strings directly to the console output by registering a new listener
-	//
-	Detours::X86::DetourFunction((uint8_t *)0x00554295, (uint8_t *)&hk_WinMain, Detours::X86Option::USE_CALL);
-
-	//
 	// Write MMG_AccountProtocol cipher keys directly after EncryptionKeySequenceNumber in message packets
 	//
-	Detours::X86::DetourFunction((uint8_t *)0x00BD1C73, (uint8_t *)&hk_MMG_AccountProtocol__Query__ToStream);
+	Detours::X86::DetourFunctionClass((uint8_t *)0x00BD1C73, &hk_MMG_AccountProtocol__Query__ToStream);
 
 	//
 	// Register custom commands to show the ingame debug menu

@@ -101,6 +101,19 @@ const char *__fastcall hk_MF_File__ExtractExtension(void *Unused, const char *aP
 	return ext;
 }
 
+void __declspec(naked) hk_EX_CAI_Platoon__AssesSituation()
+{
+	__asm
+	{
+		mov eax, 0x00A02800
+		call eax
+		add esp, 0x10
+
+		push 0x00807D6B
+		retn
+	}
+}
+
 bool __fastcall hk_WicParseCommandLine(const char *CommandLine)
 {
 	// The listener must be registered after CRT initialization, but during early init, so do it here
@@ -141,6 +154,11 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	// Always enable the console
 	//
 	PatchMemory(0x00B31A16, (uint8_t *)"\xEB", 1);
+
+	//
+	// Fix a crash from a null pointer dereference when EX_CAI_CommanderAI_Data::CompareEnemyGroups has no groups available
+	//
+	Detours::X86::DetourFunctionClass((uint8_t *)0x00807D34, &hk_EX_CAI_Platoon__AssesSituation, Detours::X86Option::USE_CALL);
 
 	//
 	// Assert and kill the game if a unit has more than 8 active shooters. The server and client support units with more than 8 shooters, but the

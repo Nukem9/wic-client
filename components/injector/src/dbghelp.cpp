@@ -234,5 +234,11 @@
 
 BOOL WINAPI MiniDumpWriteDump(HANDLE hProcess, DWORD ProcessId, HANDLE hFile, int DumpType, void *ExceptionParam, void *UserStreamParam, void *CallbackParam)
 {
+	static HMODULE dbhelpHandle = LoadLibraryA("dbghelp_old.dll");
+	static auto pfnMiniDumpWriteDump = (decltype(&MiniDumpWriteDump))GetProcAddress(dbhelpHandle, "MiniDumpWriteDump");
+
+	if (dbhelpHandle && pfnMiniDumpWriteDump)
+		return pfnMiniDumpWriteDump(hProcess, ProcessId, hFile, DumpType | 0x00000040 /* MiniDumpWithIndirectlyReferencedMemory */, ExceptionParam, UserStreamParam, CallbackParam);
+
 	return FALSE;
 }

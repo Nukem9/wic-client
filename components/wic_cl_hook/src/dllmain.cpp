@@ -114,6 +114,16 @@ void __declspec(naked) hk_EX_CAI_Platoon__AssesSituation()
 	}
 }
 
+const wchar_t *__fastcall hk_EX_LoadingScreenHandler__Ice__GetMemberValueLoc(void *thisptr, void *Unused, const char *aName, int aMayFailFlag)
+{
+	const wchar_t *value = ((decltype(&hk_EX_LoadingScreenHandler__Ice__GetMemberValueLoc))0x007869E0)(thisptr, Unused, aName, aMayFailFlag);
+
+	if (value && wcscmp(value, L"SPACE NEEDLE") == 0)
+		return L"NUKE NEEDLE";
+
+	return value;
+}
+
 bool __fastcall hk_WicParseCommandLine(const char *CommandLine)
 {
 	// The listener must be registered after CRT initialization, but during early init, so do it here
@@ -177,7 +187,7 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	PatchMemory(0x004287BD, (uint8_t *)"\x90\x90\x90\x90\x90", 5);
 
 	//
-	// Fix a bug where mods were loaded syncrhonously in a GUI handler when they should've been using the app event queue. MG_Gui::UpdateInternal
+	// Fix a bug where mods were loaded synchronously in a GUI handler when they should've been using the app event queue. MG_Gui::UpdateInternal
 	// or MG_Gui::Update would crash after 'MG_Gui *this' was deleted INSIDE its own event handler.
 	//
 	Detours::X86::DetourFunctionClass((uint8_t *)0x00B4FC10, &hk_EX_OptionsModHandler__HandleEvent__SetActiveMod, Detours::X86Option::USE_CALL);
@@ -192,6 +202,11 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	// Register custom commands to show the ingame debug menu
 	//
 	Detours::X86::DetourFunctionClass((uint8_t *)0x00944A2E, &WICP_DebugView::Init, Detours::X86Option::USE_CALL);
+
+	//
+	// Space Needle -> Nuke Needle
+	//
+	Detours::X86::DetourFunctionClass((uint8_t *)0x00B5566B, &hk_EX_LoadingScreenHandler__Ice__GetMemberValueLoc, Detours::X86Option::USE_CALL);
 
 	//
 	// Restrict MSB_IoCore to 8 threads instead of (num processor cores * 8) threads

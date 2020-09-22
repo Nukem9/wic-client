@@ -54,7 +54,7 @@ int __cdecl hk_mainCRTStartup()
 
 			ExitProcess(0);
 		}
-		else if (!_wcsicmp(g_ExeName, L"wic"))
+		else if (!_wcsicmp(g_ExeName, L"wic") || !_wcsicmp(g_ExeName, L"wic_host"))
 		{
 			// Vanilla game exe
 			LoadLibrary(L"wic_cl_hook.dll");

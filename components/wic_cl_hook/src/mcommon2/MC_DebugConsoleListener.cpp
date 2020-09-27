@@ -1,5 +1,14 @@
 #include "../stdafx.h"
 
+MC_DebugListener::MC_DebugListener()
+{
+	myBriefErrorsFlag = false;
+}
+
+MC_DebugListener::~MC_DebugListener()
+{
+}
+
 MC_DebugConsoleListener::MC_DebugConsoleListener()
 {
 }

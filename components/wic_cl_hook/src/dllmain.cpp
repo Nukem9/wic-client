@@ -2,6 +2,16 @@
 
 void PatchMemoryAllocators();
 
+void *operator new(size_t size)
+{
+	return ((void *(__cdecl *)(size_t))0x00B2DDE0)(size);
+}
+
+void operator delete(void *ptr)
+{
+	((void(__cdecl *)(void *))0x00B2DDA0)(ptr);
+}
+
 void WriteEncryptionKeys(void *accountQuery, MN_WriteMessage *aMessage)
 {
 	auto myCipher = *(MMG_BlockTEA **)((uintptr_t)accountQuery + 0x4EA);
@@ -127,7 +137,7 @@ const wchar_t *__fastcall hk_EX_LoadingScreenHandler__Ice__GetMemberValueLoc(voi
 bool __fastcall hk_WicParseCommandLine(const char *CommandLine)
 {
 	// The listener must be registered after CRT initialization, but during early init, so do it here
-	auto listener = new (((void *(__cdecl *)(size_t))0x00B2DDE0)(sizeof(MC_DebugConsoleListener))) MC_DebugConsoleListener;
+	auto listener = new MC_DebugConsoleListener();
 	((bool(__thiscall *)(void *))0x00A01780)(listener);
 
 	if (((bool(__thiscall *)(const char *))0x00B2F6A0)(CommandLine))

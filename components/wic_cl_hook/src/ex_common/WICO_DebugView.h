@@ -90,7 +90,7 @@ public:
 
 class WICP_DebugView
 {
-public:
+private:
 	bool myIsActiveFlag;
 	bool myIsMenuActiveFlag;
 	unsigned int myFont;
@@ -107,6 +107,10 @@ public:
 	bool myKloe_refl;
 	bool myKloe_t2;
 
+public:
+	static void InitializeHook();
+
+private:
 	bool __stdcall Init();
 	void SetCycleValue(int aValue);
 	void SetToggleValue(int aValue);

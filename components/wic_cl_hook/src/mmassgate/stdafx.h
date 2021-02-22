@@ -7,3 +7,4 @@
 #include "MMG_Tiger.h"
 #include "MMG_CdKey.h"
 #include "MMG_Protocols.h"
+#include "MMG_AccountProtocol.h"

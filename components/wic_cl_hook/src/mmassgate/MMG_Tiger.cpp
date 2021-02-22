@@ -12,12 +12,16 @@ extern "C"
 
 MMG_Tiger::MMG_Tiger()
 {
+	memset(myState, 0, sizeof(myState));
+	memset(myDataLeftovers, 0, sizeof(myDataLeftovers));
+	myDataLeftoversLength = 0;
+	myTotalDataLength = 0;
 }
 
 MMG_CryptoHash MMG_Tiger::GenerateHash(const void *theData, unsigned int theDataLength)
 {
-	__int64 result[3];
-	tiger((word64 *)theData, theDataLength, (word64 *)result);
+	word64 result[3];
+	tiger((word64 *)theData, theDataLength, result);
 
 	return MMG_CryptoHash(result, sizeof(result), HASH_ALGORITHM_TIGER);
 }
@@ -240,6 +244,8 @@ void tiger(word64 *str, word64 length, word64 res[3])
 }
 #pragma endregion
 #pragma region tiger_sboxes.c
+#pragma warning(push)
+#pragma warning(disable:4838)
 extern "C"
 {
 /* sboxes.c: Tiger S boxes */
@@ -758,4 +764,5 @@ word64 tiger_table[4 * 256] = {
 	0xCD56D9430EA8280ELL   /* 1020 */, 0xC12591D7535F5065LL   /* 1021 */,
 	0xC83223F1720AEF96LL   /* 1022 */, 0xC3A0396F7363A51FLL   /* 1023 */ };
 }
+#pragma warning(pop)
 #pragma endregion

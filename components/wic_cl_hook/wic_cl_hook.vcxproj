@@ -79,8 +79,13 @@
     <ClInclude Include="hdk\hdk_include.h" />
     <ClInclude Include="src\ex_3d\EX3D_Console.h" />
     <ClInclude Include="src\ex_3d\stdafx.h" />
+    <ClInclude Include="src\ex_commanderai\EX_CAI_Platoon.h" />
+    <ClInclude Include="src\ex_commanderai\stdafx.h" />
+    <ClInclude Include="src\ex_common\EX_OptionsModHandler.h" />
     <ClInclude Include="src\ex_common\stdafx.h" />
     <ClInclude Include="src\ex_common\WICO_DebugView.h" />
+    <ClInclude Include="src\ex_remote\EXR_Server.h" />
+    <ClInclude Include="src\ex_remote\stdafx.h" />
     <ClInclude Include="src\mcommon2\MC_CommandLine.h" />
     <ClInclude Include="src\mcommon2\MC_DebugConsoleListener.h" />
     <ClInclude Include="src\mcommon2\MC_Mem.h" />
@@ -88,6 +93,7 @@
     <ClInclude Include="src\mcommon2\MC_Vector3.h" />
     <ClInclude Include="src\mcommon2\MC_Vector4.h" />
     <ClInclude Include="src\mcommon2\MF_File.h" />
+    <ClInclude Include="src\mmassgate\MMG_AccountProtocol.h" />
     <ClInclude Include="src\mmassgate\MMG_BitStream.h" />
     <ClInclude Include="src\mmassgate\MMG_BlockTEA.h" />
     <ClInclude Include="src\mmassgate\MMG_CryptoHash.h" />
@@ -120,7 +126,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\ex_3d\EX3D_Console.cpp" />
+    <ClCompile Include="src\ex_commanderai\EX_CAI_Platoon.cpp" />
+    <ClCompile Include="src\ex_common\EX_OptionsModHandler.cpp" />
     <ClCompile Include="src\ex_common\WICO_DebugView.cpp" />
+    <ClCompile Include="src\ex_remote\EXR_Server.cpp" />
     <ClCompile Include="src\mcommon2\MC_CommandLine.cpp" />
     <ClCompile Include="src\mcommon2\MC_DebugConsoleListener.cpp" />
     <ClCompile Include="src\mcommon2\MC_Mem.cpp">
@@ -128,6 +137,7 @@
     </ClCompile>
     <ClCompile Include="src\mcommon2\MF_File.cpp" />
     <ClCompile Include="src\memory.cpp" />
+    <ClCompile Include="src\mmassgate\MMG_AccountProtocol.cpp" />
     <ClCompile Include="src\mmassgate\MMG_CdKey.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../stdafx.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../stdafx.h</PrecompiledHeaderFile>

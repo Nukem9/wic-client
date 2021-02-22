@@ -8,6 +8,7 @@
 #include <winsock.h>
 #include <shlwapi.h>
 #include <new>
+#include <array>
 
 #pragma comment(lib, "ws2_32.lib")
 #pragma comment(lib, "shlwapi.lib")
@@ -54,3 +55,9 @@ typedef unsigned long long	sizeptr_t;
 
 // EX_3D
 #include "ex_3d/stdafx.h"
+
+// EX_Remote
+#include "ex_remote/stdafx.h"
+
+// EX_CommanderAI
+#include "ex_commanderai/stdafx.h"

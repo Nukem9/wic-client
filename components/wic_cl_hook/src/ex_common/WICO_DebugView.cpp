@@ -1,5 +1,10 @@
 #include "../stdafx.h"
 
+void WICP_DebugView::InitializeHook()
+{
+	Detours::X86::DetourFunctionClass(reinterpret_cast<uint8_t *>(0x00944A2E), &WICP_DebugView::Init, Detours::X86Option::USE_CALL);
+}
+
 bool WICP_DebugView::Init()
 {
 	EX3D_Console::ourInstance->AddFunc("DebugToggle", Console_DebugScriptToggle, this, false, nullptr);
@@ -16,9 +21,9 @@ void WICP_DebugView::SetCycleValue(int aValue)
 		myFlags[aValue] = 0;
 
 	if (myItems[aValue].myType == WICO_DebugView::DVT_CYCLE_BUTTON)
-		PropagateToGroup((WICO_DebugView::DV_Flag)aValue, true);
+		PropagateToGroup(static_cast<WICO_DebugView::DV_Flag>(aValue), true);
 	else
-		PropagateToGroup((WICO_DebugView::DV_Flag)aValue, myFlags[aValue] == 1);
+		PropagateToGroup(static_cast<WICO_DebugView::DV_Flag>(aValue), myFlags[aValue] == 1);
 }
 
 void WICP_DebugView::SetToggleValue(int aValue)
@@ -39,9 +44,9 @@ void WICP_DebugView::SetToggleValue(int aValue)
 	}
 
 	if (myItems[aValue].myType == WICO_DebugView::DVT_TOGGLE_GROUP_BUTTON)
-		PropagateToGroup((WICO_DebugView::DV_Flag)aValue, myFlags[aValue] == 1);
+		PropagateToGroup(static_cast<WICO_DebugView::DV_Flag>(aValue), myFlags[aValue] == 1);
 	else if (myItems[aValue].myType == WICO_DebugView::DVT_TOGGLE_RADIO_BUTTON)
-		PropagateToRadioGroup((WICO_DebugView::DV_Flag)aValue, myFlags[aValue] == 1);
+		PropagateToRadioGroup(static_cast<WICO_DebugView::DV_Flag>(aValue), myFlags[aValue] == 1);
 }
 
 void WICP_DebugView::PropagateToGroup(WICO_DebugView::DV_Flag aFlag, const bool aEnableFlag)
@@ -118,7 +123,7 @@ int WICP_DebugView::GetTypeForString(const char *aString)
 		"DVF_NUMTYPES",
 	};
 
-	for (int i = 0; i < ARRAYSIZE(flagNames); i++)
+	for (size_t i = 0; i < std::size(flagNames); i++)
 	{
 		if (!strcmp(flagNames[i], aString))
 			return i;
@@ -130,9 +135,9 @@ int WICP_DebugView::GetTypeForString(const char *aString)
 bool WICP_DebugView::Console_DebugScriptToggle(char *aString, void *aUserData)
 {
 	char menuType[255];
-	auto debugView = (WICP_DebugView *)aUserData;
+	auto debugView = reinterpret_cast<WICP_DebugView *>(aUserData);
 
-	if (sscanf(aString, "%s", menuType) == 1)
+	if (sscanf_s(aString, "%s", menuType, 255) == 1)
 	{
 		int type = GetTypeForString(menuType);
 
@@ -162,7 +167,7 @@ bool WICP_DebugView::Console_DebugScriptToggle(char *aString, void *aUserData)
 
 bool WICP_DebugView::Console_DebugViewToggle(char *aString, void *aUserData)
 {
-	auto debugView = (WICP_DebugView *)aUserData;
+	auto debugView = reinterpret_cast<WICP_DebugView *>(aUserData);
 
 	debugView->myIsActiveFlag = true;
 	debugView->myIsMenuActiveFlag = true;

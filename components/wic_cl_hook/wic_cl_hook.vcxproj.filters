@@ -116,6 +116,24 @@
     <ClInclude Include="src\mcommon2\MC_CommandLine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ex_remote\EXR_Server.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ex_remote\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ex_commanderai\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ex_commanderai\EX_CAI_Platoon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\mmassgate\MMG_AccountProtocol.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ex_common\EX_OptionsModHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dllmain.cpp">
@@ -179,6 +197,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\mcommon2\MC_CommandLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ex_remote\EXR_Server.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ex_commanderai\EX_CAI_Platoon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mmassgate\MMG_AccountProtocol.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ex_common\EX_OptionsModHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

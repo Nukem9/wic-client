@@ -34,3 +34,6 @@
 
 // EX_Remote
 #include "ex_remote/stdafx.h"
+
+// EX_Game
+#include "ex_game/stdafx.h"

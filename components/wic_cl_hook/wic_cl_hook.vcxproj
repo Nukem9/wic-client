@@ -84,6 +84,8 @@
     <ClInclude Include="src\ex_common\EX_OptionsModHandler.h" />
     <ClInclude Include="src\ex_common\stdafx.h" />
     <ClInclude Include="src\ex_common\WICO_DebugView.h" />
+    <ClInclude Include="src\ex_game\EXG_TickBalance.h" />
+    <ClInclude Include="src\ex_game\stdafx.h" />
     <ClInclude Include="src\ex_remote\EXR_Server.h" />
     <ClInclude Include="src\ex_remote\stdafx.h" />
     <ClInclude Include="src\mcommon2\MC_CommandLine.h" />
@@ -129,6 +131,7 @@
     <ClCompile Include="src\ex_commanderai\EX_CAI_Platoon.cpp" />
     <ClCompile Include="src\ex_common\EX_OptionsModHandler.cpp" />
     <ClCompile Include="src\ex_common\WICO_DebugView.cpp" />
+    <ClCompile Include="src\ex_game\EXG_TickBalance.cpp" />
     <ClCompile Include="src\ex_remote\EXR_Server.cpp" />
     <ClCompile Include="src\mcommon2\MC_CommandLine.cpp" />
     <ClCompile Include="src\mcommon2\MC_DebugConsoleListener.cpp" />

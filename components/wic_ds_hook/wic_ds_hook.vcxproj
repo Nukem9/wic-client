@@ -116,6 +116,8 @@
     <ClInclude Include="src\ex_common\WICO_SplinePath.h" />
     <ClInclude Include="src\ex_common\WICO_Team.h" />
     <ClInclude Include="src\ex_common\WICO_Vote.h" />
+    <ClInclude Include="src\ex_game\EXG_TickBalance.h" />
+    <ClInclude Include="src\ex_game\stdafx.h" />
     <ClInclude Include="src\ex_remote\stdafx.h" />
     <ClInclude Include="src\ex_remote\WICR_ClientFactory.h" />
     <ClInclude Include="src\ex_remote\WICR_GameController.h" />
@@ -149,6 +151,7 @@
     <ClCompile Include="src\ex_commanderai\EX_CAI_AI.cpp" />
     <ClCompile Include="src\ex_common\EXCO_Directory.cpp" />
     <ClCompile Include="src\ex_common\EXCO_IPlayer.cpp" />
+    <ClCompile Include="src\ex_game\EXG_TickBalance.cpp" />
     <ClCompile Include="src\mcommon2\MC_Mem.cpp" />
     <ClCompile Include="src\mcommon2\MI_Time.cpp" />
     <ClCompile Include="src\mmassgate\MMG_Protocols.cpp" />

@@ -100,6 +100,13 @@ void WicDS_HookInit(HMODULE hModule)
 	EX_CAI_Type::InitializeHook();
 
 	//
+	// Fix for the rounding error in team tick rates when playing domination ("Dom Bar Bug"). Under certain conditions, such as when NonLinearDomination
+	// is enabled, one team would have a small advantage throughout the match. This varies depending on the map parameters and captured command points. See
+	// the game (wic_cl) patch for a full explanation.
+	//
+	EXG_TickBalance::InitializeHook();
+
+	//
 	// Clear bogus assertions and disable floating point exceptions
 	//
 	PatchMemory(0x004024AF, { 0x90, 0x90, 0x90, 0x90, 0x90 });// main(): _clearfp();

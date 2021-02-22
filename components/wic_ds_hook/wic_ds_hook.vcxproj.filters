@@ -236,6 +236,12 @@
     <ClInclude Include="src\types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ex_game\EXG_TickBalance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ex_game\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dllmain.cpp">
@@ -263,6 +269,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ex_commanderai\EX_CAI_AI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ex_game\EXG_TickBalance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

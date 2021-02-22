@@ -61,3 +61,6 @@ typedef unsigned long long	sizeptr_t;
 
 // EX_CommanderAI
 #include "ex_commanderai/stdafx.h"
+
+// EX_Game
+#include "ex_game/stdafx.h"

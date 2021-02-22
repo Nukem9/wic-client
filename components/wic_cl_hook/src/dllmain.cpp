@@ -32,10 +32,10 @@ bool __fastcall Wic_ParseCommandLine(const char *CommandLine)
 	if (((bool(__thiscall *)(const char *))0x00B2F6A0)(CommandLine))
 	{
 		if (MC_CommandLine::ourInstance->IsPresent("ignorealttab"))
-			PatchMemory(0x00B2E101, (uint8_t *)"\xE9\x1E\x01\x00\x00", 5);
+			PatchMemory(0x00B2E101, { 0xE9, 0x1E, 0x01, 0x00, 0x00 });
 
 		if (MC_CommandLine::ourInstance->IsPresent("nocursorspeed"))
-			PatchMemory(0x0098C1B1, (uint8_t *)"\xEB", 1);
+			PatchMemory(0x0098C1B1, { 0xEB });
 
 		return true;
 	}
@@ -104,17 +104,17 @@ void Wic_HookInit(HMODULE hModule)
 	//
 	// Always enable the console
 	//
-	PatchMemory(0x00B31A16, (uint8_t *)"\xEB", 1);
+	PatchMemory(0x00B31A16, { 0xEB });
 
 	//
 	// Fix a use-after-free where they incorrectly hold a pointer to a MC_Str<> after it has exited scope (aka destructed). This is a tiny memory leak now.
 	//
-	PatchMemory(0x004287BD, (uint8_t *)"\x90\x90\x90\x90\x90", 5);
+	PatchMemory(0x004287BD, { 0x90, 0x90, 0x90, 0x90, 0x90 });
 
 	//
 	// Restrict MSB_IoCore to 8 threads instead of (num processor cores * 8) threads
 	//
-	PatchMemory(0x00B6E7D3, (uint8_t *)"\x08", 1);
+	PatchMemory(0x00B6E7D3, { 0x08 });
 
 	//
 	// Hook gethostbyname (IAT)

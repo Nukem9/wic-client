@@ -3,15 +3,19 @@
 #include <Windows.h>
 #include <stdint.h>
 
-static void PatchMemory(ULONG_PTR Address, PBYTE Data, SIZE_T Size)
+static void PatchMemory(uintptr_t Address, const uint8_t *Data, size_t Size)
 {
 	DWORD d = 0;
-	VirtualProtect((LPVOID)Address, Size, PAGE_EXECUTE_READWRITE, &d);
+	VirtualProtect(reinterpret_cast<LPVOID>(Address), Size, PAGE_EXECUTE_READWRITE, &d);
 
-	for (SIZE_T i = 0; i < Size; i++)
-		*(volatile BYTE *)(Address + i) = *Data++;
+	for (uintptr_t i = Address; i < (Address + Size); i++)
+		*reinterpret_cast<volatile uint8_t *>(i) = *Data++;
 
-	VirtualProtect((LPVOID)Address, Size, d, &d);
+	VirtualProtect(reinterpret_cast<LPVOID>(Address), Size, d, &d);
+	FlushInstructionCache(GetCurrentProcess(), reinterpret_cast<LPVOID>(Address), Size);
+}
 
-	FlushInstructionCache(GetCurrentProcess(), (LPVOID)Address, Size);
+static void PatchMemory(uintptr_t Address, std::initializer_list<uint8_t> Data)
+{
+	PatchMemory(Address, Data.begin(), Data.size());
 }

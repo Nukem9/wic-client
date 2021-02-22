@@ -75,13 +75,13 @@ void WicDS_HookInit(HMODULE hModule)
 				// (1000 / FrameTime)	= FPS
 				// (1000 / FPS)			= FrameTime
 				uint frameTime = 1000 / std::max(_wtoi(commandLine[i + 1]), 10);
-				PatchMemory(0x00402B1F, (PBYTE)&frameTime, sizeof(frameTime));
+				PatchMemory(0x00402B1F, reinterpret_cast<uint8_t *>(&frameTime), sizeof(frameTime));
 
 				// Ignore timer errors when a higher framerate is used
-				PatchMemory(0x0041B5ED, (PBYTE)"\xE9\xDD\x00\x00\x00", 5);
+				PatchMemory(0x0041B5ED, { 0xE9, 0xDD, 0x00, 0x00, 0x00 });
 
 				// Disable console title updates every frame
-				PatchMemory(0x00405A40, (PBYTE)"\x90\x90\x90\x90\x90\x90\x90", 7);
+				PatchMemory(0x00405A40, { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 });
 			}
 		}
 
@@ -102,24 +102,24 @@ void WicDS_HookInit(HMODULE hModule)
 	//
 	// Clear bogus assertions and disable floating point exceptions
 	//
-	PatchMemory(0x004024AF, (PBYTE)"\x90\x90\x90\x90\x90", 5);// main(): _clearfp();
-	PatchMemory(0x004024BB, (PBYTE)"\x90\x90\x90\x90\x90", 5);// main(): _controlfp();
-	PatchMemory(0x0041C5B1, (PBYTE)"\x90\x90\x90\x90\x90", 5);// MT_Thread_thread_starter(): _clearfp();
-	PatchMemory(0x0041C5BD, (PBYTE)"\x90\x90\x90\x90\x90", 5);// MT_Thread_thread_starter(): _controlfp();
+	PatchMemory(0x004024AF, { 0x90, 0x90, 0x90, 0x90, 0x90 });// main(): _clearfp();
+	PatchMemory(0x004024BB, { 0x90, 0x90, 0x90, 0x90, 0x90 });// main(): _controlfp();
+	PatchMemory(0x0041C5B1, { 0x90, 0x90, 0x90, 0x90, 0x90 });// MT_Thread_thread_starter(): _clearfp();
+	PatchMemory(0x0041C5BD, { 0x90, 0x90, 0x90, 0x90, 0x90 });// MT_Thread_thread_starter(): _controlfp();
 
 	Server_PatchAssertions();
 
 	//
 	// Allow ranked servers to use mods
 	//
-	PatchMemory(0x004072E9, (PBYTE)"\xEB", 1);
+	PatchMemory(0x004072E9, { 0xEB });
 
 	//
 	// Patch for WICG_MPyPlayer::cPlayer_ChatMessage where the developers incorrectly
 	// used player slot #0 instead of the script player when sending chat messages.
 	// Slot 0 would crash if no player was connected. Slot -1 is used for scripts.
 	//
-	PatchMemory(0x004EEFF1, (PBYTE)"\xFF", 1);
+	PatchMemory(0x004EEFF1, { 0xFF });
 
 	//
 	// Redirect DNS queries to the new domain. Hook gethostbyname (IAT).

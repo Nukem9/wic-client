@@ -138,5 +138,5 @@ void __declspec(naked) MMG_CdKey::Validator::hk_SetKey()
 
 void MMG_CdKey::InitializeHook()
 {
-	Detours::X86::DetourFunctionClass((PBYTE)0x0079C3A0, &MMG_CdKey::Validator::hk_SetKey);
+	Detours::X86::DetourFunctionClass(reinterpret_cast<uint8_t *>(0x0079C3A0), &MMG_CdKey::Validator::hk_SetKey);
 }

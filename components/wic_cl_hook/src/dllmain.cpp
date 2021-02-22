@@ -1,15 +1,5 @@
 #include "stdafx.h"
 
-void *operator new(size_t size)
-{
-	return ((void *(__cdecl *)(size_t))0x00B2DDE0)(size);
-}
-
-void operator delete(void *ptr)
-{
-	((void(__cdecl *)(void *))0x00B2DDA0)(ptr);
-}
-
 struct hostent *PASCAL hk_gethostbyname(const char *name)
 {
 	if (strstr(name, "massgate.net") ||
@@ -21,6 +11,16 @@ struct hostent *PASCAL hk_gethostbyname(const char *name)
 	}
 
 	return gethostbyname(name);
+}
+
+void *operator new(size_t size)
+{
+	return ((void *(__cdecl *)(size_t))0x00B2DDE0)(size);
+}
+
+void operator delete(void *ptr)
+{
+	((void(__cdecl *)(void *))0x00B2DDA0)(ptr);
 }
 
 bool __fastcall Wic_ParseCommandLine(const char *CommandLine)
@@ -43,12 +43,12 @@ bool __fastcall Wic_ParseCommandLine(const char *CommandLine)
 	return false;
 }
 
-BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
+void Wic_HookInit(HMODULE hModule)
 {
 	if (_stricmp(reinterpret_cast<const char *>(0x00D2738C), "henrik.davidsson/MSV-BUILD-04 at 10:51:42 on Jun 10 2009.\n") != 0)
 	{
 		MessageBoxA(nullptr, "Unknown game version detected. Version 1.0.1.1 is required.", "Error", MB_ICONERROR);
-		return FALSE;
+		return;
 	}
 
 	//
@@ -121,8 +121,6 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	//
 	auto addr = reinterpret_cast<uintptr_t>(&hk_gethostbyname);
 	PatchMemory(0x00BEC594, reinterpret_cast<uint8_t *>(&addr), sizeof(addr));
-
-	return TRUE;
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
@@ -130,5 +128,6 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
 	if (ul_reason_for_call != DLL_PROCESS_ATTACH)
 		return TRUE;
 
-	return Wic_HookInit(hModule, ul_reason_for_call);
+	Wic_HookInit(hModule);
+	return TRUE;
 }

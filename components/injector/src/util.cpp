@@ -8,13 +8,13 @@ bool RelaunchWicExecutable(wchar_t *NewExecutable, wchar_t *OldExecutable)
 	if (!args || argCount <= 0)
 		return false;
 
-	wchar_t newCommandLine[32768];
-	memset(newCommandLine, 0, sizeof(newCommandLine));
-
 	// First copy and replace the exe name
-	if (wcschr(args[0], ' ')) wcscpy_s(newCommandLine, L"\"");
-	wcscat_s(newCommandLine, args[0]);
+	wchar_t newCommandLine[32768] = {};
 
+	if (wcschr(args[0], ' '))
+		wcscpy_s(newCommandLine, L"\"");
+
+	wcscat_s(newCommandLine, args[0]);
 	wchar_t *oldExe = wcsstr(newCommandLine, OldExecutable);
 
 	if (!oldExe)
@@ -23,8 +23,10 @@ bool RelaunchWicExecutable(wchar_t *NewExecutable, wchar_t *OldExecutable)
 		return false;
 	}
 
-	wcscpy_s(oldExe, ARRAYSIZE(newCommandLine) - (oldExe - newCommandLine), NewExecutable);
-	if (wcschr(args[0], ' ')) wcscat_s(newCommandLine, L"\"");
+	wcscpy_s(oldExe, std::size(newCommandLine) - (oldExe - newCommandLine), NewExecutable);
+
+	if (wcschr(args[0], ' '))
+		wcscat_s(newCommandLine, L"\"");
 
 	// Now append the rest of the arguments
 	for (int i = 1; i < argCount; i++)
@@ -46,15 +48,15 @@ bool RelaunchWicExecutable(wchar_t *NewExecutable, wchar_t *OldExecutable)
 	}
 
 	// Launch the new process
-	PROCESS_INFORMATION processInfo;
-	memset(&processInfo, 0, sizeof(PROCESS_INFORMATION));
-
-	STARTUPINFO startupInfo;
-	memset(&startupInfo, 0, sizeof(STARTUPINFOA));
+	PROCESS_INFORMATION processInfo = {};
+	STARTUPINFO startupInfo = {};
 	startupInfo.cb = sizeof(startupInfo);
 
-	if (!CreateProcess(nullptr, newCommandLine, nullptr, nullptr, FALSE, 0, nullptr, nullptr, &startupInfo, &processInfo))
+	if (!CreateProcessW(nullptr, newCommandLine, nullptr, nullptr, FALSE, 0, nullptr, nullptr, &startupInfo, &processInfo))
 	{
+		CloseHandle(processInfo.hThread);
+		CloseHandle(processInfo.hProcess);
+
 		LocalFree(args);
 		return false;
 	}
@@ -77,14 +79,14 @@ bool GetModuleVersion(wchar_t *Path, int *Major, int *Minor, int *Build, int *Re
 		UINT size;
 		LPVOID lpBuffer;
 
-		if (!GetFileVersionInfo(Path, verHandle, verSize, verData.data()) || !VerQueryValue(verData.data(), L"\\", (LPVOID *)&lpBuffer, &size))
+		if (!GetFileVersionInfoW(Path, verHandle, verSize, verData.data()) || !VerQueryValueW(verData.data(), L"\\", reinterpret_cast<LPVOID *>(&lpBuffer), &size))
 			return false;
 
 		if (size < sizeof(VS_FIXEDFILEINFO))
 			return false;
 
 		// Check magic constant given by MSDN
-		VS_FIXEDFILEINFO *verInfo = (VS_FIXEDFILEINFO *)lpBuffer;
+		auto verInfo = reinterpret_cast<const VS_FIXEDFILEINFO *>(lpBuffer);
 
 		if (verInfo->dwSignature != 0xFEEF04BD)
 			return false;

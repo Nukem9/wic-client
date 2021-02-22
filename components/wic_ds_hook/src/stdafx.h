@@ -1,9 +1,11 @@
 #pragma once
 
+#define NOMINMAX
 #include <windows.h>
 #include <stdio.h>
 #include <intrin.h>
 #include <winsock.h>
+#include <algorithm>
 
 #pragma comment(lib, "ws2_32.lib")
 

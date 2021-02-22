@@ -13,7 +13,7 @@ void WINAPI hk_GetSystemInfo(LPSYSTEM_INFO lpSystemInfo)
 
 	// Restrict core count to 16 because of a hardcoded array in MT_Supervisor
 	if (lpSystemInfo)
-		lpSystemInfo->dwNumberOfProcessors = min(lpSystemInfo->dwNumberOfProcessors, 16);
+		lpSystemInfo->dwNumberOfProcessors = std::min<DWORD>(lpSystemInfo->dwNumberOfProcessors, 16);
 }
 
 DWORD_PTR WINAPI hk_SetThreadAffinityMask(HANDLE hThread, DWORD_PTR dwThreadAffinityMask)
@@ -37,36 +37,36 @@ int __cdecl hk_mainCRTStartup()
 		if (!_wcsicmp(g_ExeName, L"wic_ds"))
 		{
 			// Dedicated server
-			LoadLibrary(L"wic_ds_hook.dll");
+			LoadLibraryW(L"wic_ds_hook.dll");
 		}
 		else if (!_wcsicmp(g_ExeName, L"wic-BroadcastTool"))
 		{
 			// Broadcast (recording) tool
-			LoadLibrary(L"wic_bt_hook.dll");
+			LoadLibraryW(L"wic_bt_hook.dll");
 		}
 		else if (!_wcsicmp(g_ExeName, L"wic_online"))
 		{
-			// Vanilla game exe, multiplayer-mode only
+			// Vanilla game exe, multiplayer mode only
 			//
 			// This exe is pointless, so relaunch wic.exe that has actual patches
 			if (!RelaunchWicExecutable(L"wic", L"wic_online"))
-				MessageBox(nullptr, L"Unable to launch 'wic.exe'", L"Injector error", MB_ICONERROR);
+				MessageBoxW(nullptr, L"Unable to launch 'wic.exe'", L"Injector error", MB_ICONERROR);
 
 			ExitProcess(0);
 		}
 		else if (!_wcsicmp(g_ExeName, L"wic") || !_wcsicmp(g_ExeName, L"wic_host"))
 		{
 			// Vanilla game exe
-			LoadLibrary(L"wic_cl_hook.dll");
+			LoadLibraryW(L"wic_cl_hook.dll");
 		}
 		else
 		{
-			MessageBox(nullptr, L"Unknown game executable detected. DLL not loaded.", L"Injector error", MB_ICONERROR);
+			MessageBoxW(nullptr, L"Unknown game executable detected. DLL not loaded.", L"Injector error", MB_ICONERROR);
 		}
 	}
 
-	Detours::IATHook((uint8_t *)g_ModuleHandle, "KERNEL32.dll", "GetSystemInfo", (uint8_t *)&hk_GetSystemInfo);
-	Detours::IATHook((uint8_t *)g_ModuleHandle, "KERNEL32.dll", "SetThreadAffinityMask", (uint8_t *)&hk_SetThreadAffinityMask);
+	Detours::IATHook(reinterpret_cast<uint8_t *>(g_ModuleHandle), "KERNEL32.dll", "GetSystemInfo", reinterpret_cast<uint8_t *>(&hk_GetSystemInfo));
+	Detours::IATHook(reinterpret_cast<uint8_t *>(g_ModuleHandle), "KERNEL32.dll", "SetThreadAffinityMask", reinterpret_cast<uint8_t *>(&hk_SetThreadAffinityMask));
 
 	// Unhook and return to the original function prologue
 	Detours::X86::DetourRemove(detourInfo);
@@ -80,22 +80,22 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
 
 	// Force this dll to be loaded permanently
 	HMODULE temp;
-	GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_PIN | GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS, (LPWSTR)hModule, &temp);
+	GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_PIN | GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS, reinterpret_cast<LPWSTR>(hModule), &temp);
 
 	// Determine the executable path
 	g_ModuleHandle = GetModuleHandle(nullptr);
 
-	if (!GetModuleFileName(g_ModuleHandle, g_ModulePath, ARRAYSIZE(g_ModulePath)))
+	if (!GetModuleFileName(g_ModuleHandle, g_ModulePath, std::size(g_ModulePath)))
 		return FALSE;
 
-	_wsplitpath_s(g_ModulePath, nullptr, 0, nullptr, 0, g_ExeName, ARRAYSIZE(g_ExeName), nullptr, 0);
+	_wsplitpath_s(g_ModulePath, nullptr, 0, nullptr, 0, g_ExeName, std::size(g_ExeName), nullptr, 0);
 
 	// Hook the original entrypoint
-	auto dosHeader = (PIMAGE_DOS_HEADER)g_ModuleHandle;
-	auto ntHeaders = (PIMAGE_NT_HEADERS)((uint8_t *)dosHeader + dosHeader->e_lfanew);
-	auto entryAddress = ((uint8_t *)dosHeader + ntHeaders->OptionalHeader.AddressOfEntryPoint);
+	auto dosHeader = reinterpret_cast<const PIMAGE_DOS_HEADER>(g_ModuleHandle);
+	auto ntHeaders = reinterpret_cast<const PIMAGE_NT_HEADERS>(reinterpret_cast<uint8_t *>(dosHeader) + dosHeader->e_lfanew);
+	auto entryAddress = (reinterpret_cast<uint8_t *>(dosHeader) + ntHeaders->OptionalHeader.AddressOfEntryPoint);
 
-	detourInfo = Detours::X86::DetourFunction(entryAddress, (uint8_t *)&hk_mainCRTStartup);
+	detourInfo = Detours::X86::DetourFunction(entryAddress, reinterpret_cast<uint8_t *>(&hk_mainCRTStartup));
 	detourEntry = entryAddress;
 	return TRUE;
 }

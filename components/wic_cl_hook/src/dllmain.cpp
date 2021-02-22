@@ -23,16 +23,6 @@ struct hostent *PASCAL hk_gethostbyname(const char *name)
 	return gethostbyname(name);
 }
 
-const wchar_t *__fastcall hk_EX_LoadingScreenHandler__Ice__GetMemberValueLoc(void *thisptr, void *Unused, const char *aName, int aMayFailFlag)
-{
-	const wchar_t *value = ((decltype(&hk_EX_LoadingScreenHandler__Ice__GetMemberValueLoc))0x007869E0)(thisptr, Unused, aName, aMayFailFlag);
-
-	if (value && wcscmp(value, L"SPACE NEEDLE") == 0)
-		return L"NUKE NEEDLE";
-
-	return value;
-}
-
 bool __fastcall Wic_ParseCommandLine(const char *CommandLine)
 {
 	// The listener must be registered after CRT initialization, but during early init, so do it here
@@ -110,11 +100,6 @@ BOOL Wic_HookInit(HMODULE hModule, DWORD ul_reason_for_call)
 	// - Add "-nocursorspeed" as a command line option to prevent the game from setting mouse sensitivity
 	//
 	Detours::X86::DetourFunctionClass(reinterpret_cast<uint8_t *>(0x00B2EF85), &Wic_ParseCommandLine, Detours::X86Option::USE_CALL);
-
-	//
-	// Space Needle -> Nuke Needle
-	//
-	Detours::X86::DetourFunctionClass(reinterpret_cast<uint8_t *>(0x00B5566B), &hk_EX_LoadingScreenHandler__Ice__GetMemberValueLoc, Detours::X86Option::USE_CALL);
 
 	//
 	// Always enable the console

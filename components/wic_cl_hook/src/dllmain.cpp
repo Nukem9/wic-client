@@ -117,6 +117,13 @@ void Wic_HookInit(HMODULE hModule)
 	PatchMemory(0x00B6E7D3, { 0x08 });
 
 	//
+	// Force the default server list filters to "no filter"
+	//
+	PatchMemory(0x00863114, { 0x0 });
+	PatchMemory(0x00863121, { 0x0 });
+	PatchMemory(0x0086312E, { 0x0 });
+
+	//
 	// Hook gethostbyname (IAT)
 	//
 	auto addr = reinterpret_cast<uintptr_t>(&hk_gethostbyname);

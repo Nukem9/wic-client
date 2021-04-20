@@ -30,7 +30,8 @@ int __cdecl hk_mainCRTStartup()
 		!_wcsicmp(g_ExeName, L"WICEd") ||
 		!_wcsicmp(g_ExeName, L"WinSDF"))
 	{
-		// Modkit executables. Nothing specific to load.
+		// Modkit executables
+		LoadLibraryW(L"wic_ed_hook.dll");
 	}
 	else
 	{

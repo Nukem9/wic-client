@@ -18,7 +18,9 @@
     <ClCompile Include="src\stdafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\util.cpp" />
+    <ClCompile Include="src\util.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\dbghelp.h">
@@ -27,6 +29,8 @@
     <ClInclude Include="src\stdafx.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\util.h" />
+    <ClInclude Include="src\util.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

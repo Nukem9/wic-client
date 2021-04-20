@@ -18,12 +18,12 @@ public:
 	};
 
 protected:
-	uint						m_Position;
-	uint						m_MaxLength;
+	uint32_t					m_Position;
+	uint32_t					m_MaxLength;
 	MMG_BitStream::StreamStatus m_Status;
 
 public:
-	MMG_BitStream(uint theRawBufferLengthInBits)
+	MMG_BitStream(uint32_t theRawBufferLengthInBits)
 	{
 		this->m_Position = 0;
 		this->m_MaxLength = theRawBufferLengthInBits;
@@ -50,7 +50,7 @@ private:
 	const T			*m_ReadBuffer;
 
 public:
-	MMG_BitReader(const T *theRawBuffer, uint theRawBufferLengthInBits) : MMG_BitStream(theRawBufferLengthInBits)
+	MMG_BitReader(const T *theRawBuffer, uint32_t theRawBufferLengthInBits) : MMG_BitStream(theRawBufferLengthInBits)
 	{
 		this->m_BufferLength = theRawBufferLengthInBits;
 		this->m_ReadBuffer = theRawBuffer;
@@ -125,11 +125,11 @@ public:
 private:
 	const static int TypeSizeInBits = (sizeof(T) * 8);
 
-	uint	m_BufferLength;
-	T		*m_DestBuffer;
+	uint32_t	m_BufferLength;
+	T			*m_DestBuffer;
 
 public:
-	MMG_BitWriter(T *theDestBuffer, uint theDestBufferLengthInBits) : MMG_BitStream(theDestBufferLengthInBits)
+	MMG_BitWriter(T *theDestBuffer, uint32_t theDestBufferLengthInBits) : MMG_BitStream(theDestBufferLengthInBits)
 	{
 		this->m_BufferLength = theDestBufferLengthInBits;
 		this->m_DestBuffer = theDestBuffer;
@@ -151,10 +151,10 @@ public:
 		}
 		else
 		{
-			uint v5 = 0;
-			uint v6 = 0;
-			uint v8 = 0;
-			uint pos = 0;
+			uint32_t v5 = 0;
+			uint32_t v6 = 0;
+			uint32_t v8 = 0;
+			uint32_t pos = 0;
 
 			while (1)
 			{

@@ -7,7 +7,7 @@ MMG_CryptoHash::MMG_CryptoHash()
 	this->m_GeneratedFromHashAlgorithm = HASH_ALGORITHM_UNKNOWN;
 }
 
-MMG_CryptoHash::MMG_CryptoHash(voidptr_t theHash, uint theByteLength, HashAlgorithmIdentifier theSourceAlgorithm)
+MMG_CryptoHash::MMG_CryptoHash(void *theHash, uint32_t theByteLength, HashAlgorithmIdentifier theSourceAlgorithm)
 {
 	this->SetHash(theHash, theByteLength, theSourceAlgorithm);
 }
@@ -19,7 +19,7 @@ MMG_CryptoHash::~MMG_CryptoHash()
 	this->m_GeneratedFromHashAlgorithm = HASH_ALGORITHM_UNKNOWN;
 }
 
-void MMG_CryptoHash::SetHash(voidptr_t theHash, uint theByteLength, HashAlgorithmIdentifier theSourceAlgorithm)
+void MMG_CryptoHash::SetHash(void *theHash, uint32_t theByteLength, HashAlgorithmIdentifier theSourceAlgorithm)
 {
 	MC_ASSERT(theByteLength < sizeof(m_Hash));
 
@@ -31,9 +31,9 @@ void MMG_CryptoHash::SetHash(voidptr_t theHash, uint theByteLength, HashAlgorith
 	memcpy(this->m_Hash, theHash, theByteLength);
 }
 
-uint MMG_CryptoHash::Get32BitSubset()
+uint32_t MMG_CryptoHash::Get32BitSubset()
 {
-	MC_ASSERT(m_HashLength >= sizeof(uint));
+	MC_ASSERT(m_HashLength >= sizeof(uint32_t));
 
 	return this->m_Hash[0];
 }

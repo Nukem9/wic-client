@@ -1,6 +1,6 @@
 #pragma once
 
-template<uint Length>
+template<uint32_t Length>
 class MC_StaticString : MC_Str<char, Length>
 {
 public:

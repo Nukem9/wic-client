@@ -16,9 +16,9 @@ public:
 		TraceType		myType;
 		const char		*myFile;
 		const char		*myFunction;
-		uint			myLine;
+		uint32_t		myLine;
 
-		InternalPosTracer(TraceType aType, const char *aFile, const char *aFunction, uint aLine)
+		InternalPosTracer(TraceType aType, const char *aFile, const char *aFunction, uint32_t aLine)
 		{
 			this->myType = aType;
 			this->myFile = aFile;

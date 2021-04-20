@@ -7,12 +7,12 @@ class EXCO_Slot
 	{
 		class Quadrant 
 		{
-			uint				myCount;
+			uint32_t			myCount;
 			MC_Vector3<float>	*myPositions;
 		};
 
 		Quadrant			myQuadrants[4];
-		uint				myCapacity;
+		uint32_t			myCapacity;
 		MC_Vector3<float>	myBounds;
 		float				myMarkerHeight;
 	};

@@ -18,7 +18,7 @@ const char *MF_File::ExtractExtension(const char *aPath)
 	return ext;
 }
 
-bool MF_File::GetFileInfo(const char *aFileName, uint& aReturnDateTime, uint& aReturnSize, char *aSDFName)
+bool MF_File::GetFileInfo(const char *aFileName, uint32_t& aReturnDateTime, uint32_t& aReturnSize, char *aSDFName)
 {
-	return ((bool(__cdecl *)(const char *, uint&, uint&, char *))0x009FDC80)(aFileName, aReturnDateTime, aReturnSize, aSDFName);
+	return ((bool(__cdecl *)(const char *, uint32_t&, uint32_t&, char *))0x009FDC80)(aFileName, aReturnDateTime, aReturnSize, aSDFName);
 }

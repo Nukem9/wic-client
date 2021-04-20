@@ -30,11 +30,11 @@ public:
 		int						myBanTime;		 // this+0x250
 		MC_Str<char, 0>			myBanFileName;		 // this+0x254
 		float					myTimeLimitMultiplier;		 // this+0x258
-		ushort					myMassgateQueryPort;		 // this+0x25C
-		ushort					myGamePortRangeStart;		 // this+0x25E
-		ushort					myAdminPort;		 // this+0x260
-		uint					myTournamentClanA;		 // this+0x264
-		uint					myTournamentClanB;		 // this+0x268
+		uint16_t				myMassgateQueryPort;		 // this+0x25C
+		uint16_t				myGamePortRangeStart;		 // this+0x25E
+		uint16_t				myAdminPort;		 // this+0x260
+		uint32_t				myTournamentClanA;		 // this+0x264
+		uint32_t				myTournamentClanB;		 // this+0x268
 		bool					myTournamentServerFlag;		 // this+0x26C
 		bool					myClanMatchServerFlag;		 // this+0x26D
 		bool					myIsESLMatchFlag;		 // this+0x26E
@@ -53,7 +53,7 @@ public:
 		bool					myAllowFreeSpectatingFlag;		 // this+0x286
 		bool					myStayOnTeamFlag;		 // this+0x287
 		bool					myRankBalanceTeams;		 // this+0x288
-		uint					mySupplierId;		 // this+0x28C
+		uint32_t				mySupplierId;		 // this+0x28C
 		WICO_BotOptions			myBotOptions;		 // this+0x290
 	};
 };

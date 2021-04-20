@@ -4,12 +4,12 @@ class MI_Time
 {
 public:
 	CLASSPTR(MI_Time *, 0x008BF83C, ourInstance);
-	CLASSPTR(uint,		0x008BF820, ourFrameCounter);
+	CLASSPTR(uint32_t,	0x008BF820, ourFrameCounter);
 	CLASSPTR(float,		0x008BF824, ourCurrentTime);
 	CLASSPTR(double,	0x008BF828, ourRealCurrentTime);
 	CLASSPTR(double,	0x008BF830, ourRealElapsedTime);
 	CLASSPTR(float,		0x008BF838, ourElapsedTime);
-	CLASSPTR(uint64,	0x008BF840, ourStartTimes);
+	CLASSPTR(uint64_t,	0x008BF840, ourStartTimes);
 
 	double	*ourInternalElapsedTimes;	// this+0x0
 	double	ourInternalCurrentTime;		// this+0x8

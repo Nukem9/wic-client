@@ -12,7 +12,7 @@ class EX_CAI_Type;
 class EX_CAI_BaseType 
 {
 public:
-	const uint			myId;			// this+0x0
+	const uint32_t		myId;			// this+0x0
 	EXCO_UnitType&		myType;			// this+0x4
 	EX_CAI_Type			*myUnitType;	// this+0x8
 };

@@ -74,7 +74,7 @@ void WicDS_HookInit(HMODULE hModule)
 				// Server FPS divisor
 				// (1000 / FrameTime)	= FPS
 				// (1000 / FPS)			= FrameTime
-				uint frameTime = 1000 / std::max(_wtoi(commandLine[i + 1]), 10);
+				uint32_t frameTime = 1000 / std::max(_wtoi(commandLine[i + 1]), 10);
 				PatchMemory(0x00402B1F, reinterpret_cast<uint8_t *>(&frameTime), sizeof(frameTime));
 
 				// Ignore timer errors when a higher framerate is used

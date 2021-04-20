@@ -10,7 +10,7 @@ public:
 	//virtual bool CreateDynamicMember(EXCO_PersistentDynamicMember *);
 
 	MC_GrowingArray<EXCO_PersistentMember *>	myMembers;		// this+0x4
-	const uint									myKey;			// this+0x14
+	const uint32_t								myKey;			// this+0x14
 	EXCO_PersistentBase							*myNextInstance;// this+0x18
 };
 

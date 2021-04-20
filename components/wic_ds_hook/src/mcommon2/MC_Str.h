@@ -2,7 +2,7 @@
 
 #include "../types.h"
 
-template<typename T, uint Length>
+template<typename T, uint32_t Length>
 class MC_Str
 {
 	union

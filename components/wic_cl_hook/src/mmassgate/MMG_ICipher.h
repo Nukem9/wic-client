@@ -19,8 +19,8 @@ public:
 
 	virtual MMG_CryptoHash *GetHashOfKey(MMG_CryptoHash *);
 
-	virtual void Encrypt(char *, uint);
-	virtual void Decrypt(char *, uint);
+	virtual void Encrypt(char *, uint32_t);
+	virtual void Decrypt(char *, uint32_t);
 
 	virtual CipherIdentifier GetIdentifier();
 };

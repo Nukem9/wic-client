@@ -47,7 +47,7 @@ public:
 
 	public:
 		void SetKey(const char *aKey);
-		uint GetSequenceNumber();
+		uint32_t GetSequenceNumber();
 
 		// Non-class function hook
 		static void hk_SetKey();

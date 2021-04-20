@@ -3,7 +3,7 @@
 class IceLocDecoder
 {
 public:
-	uint		myNumStrings;	// this+0x0
+	uint32_t	myNumStrings;	// this+0x0
 	wchar_t		**myPtrs;		// this+0x4
 };
 

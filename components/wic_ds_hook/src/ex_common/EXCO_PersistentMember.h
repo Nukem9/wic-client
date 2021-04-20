@@ -3,9 +3,9 @@
 #pragma pack(push, 1)
 class EXCO_PersistentMember 
 {
-	virtual void *__vecDelDtor(uint);
-	virtual bool PreSaveValidatePointer(const char *, const uint);
-	virtual bool PostLoadValidatePointer(const char *, const uint);
+	virtual void *__vecDelDtor(uint32_t);
+	virtual bool PreSaveValidatePointer(const char *, const uint32_t);
+	virtual bool PostLoadValidatePointer(const char *, const uint32_t);
 	//virtual bool Persist(MF_File *);
 	//virtual void Read(EXCO_PersistenceDatabaseReadLump *);
 	//virtual void ResolvePointersTo(void *, const char *, const unsigned int);

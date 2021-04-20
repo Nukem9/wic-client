@@ -37,7 +37,7 @@ class MR_Render
 public:
 	CLASSPTR(MR_Render *, 0x00E14FB4, ourInstance);
 
-	virtual void *__vecDelDtor(uint);
+	virtual void *__vecDelDtor(uint32_t);
 
 	virtual void CleanupStandardShaders	();
 	virtual void CloseDown				();
@@ -45,14 +45,14 @@ public:
 	virtual void UnloadAllVertexBuffers			();
 	virtual bool ReloadAllVertexBuffers			();
 	virtual void SetupSurfacePerformanceMode	();
-	virtual bool GetVertexBuffer				(MR_VertexBuffer *aVertexBuffer, char **aVertexList, uint aNumVertices, uint *aBaseIndex);
-	virtual bool GetIndexedVertexBuffer			(MR_VertexBuffer *aVertexBuffer, MR_IndexBuffer *anIndexBuffer, char **aVertexList, uint aNumVertices, ushort **aIndexList, uint aNumIndices, uint *aBaseIndex);
+	virtual bool GetVertexBuffer				(MR_VertexBuffer *aVertexBuffer, char **aVertexList, uint32_t aNumVertices, uint32_t *aBaseIndex);
+	virtual bool GetIndexedVertexBuffer			(MR_VertexBuffer *aVertexBuffer, MR_IndexBuffer *anIndexBuffer, char **aVertexList, uint32_t aNumVertices, uint16_t **aIndexList, uint32_t aNumIndices, uint32_t *aBaseIndex);
 
 	virtual bool Setup	(MR_RenderSettings *aSettings);
 	virtual bool Update	(MR_RenderSettings *aSettings);
 	virtual bool Resize	(int aXPos, int aYPos, int aWidth, int aHeight);
 	
-	virtual bool		DumpScreen				(voidptr_t aBuffer, bool aGrabCurrentScreenFlag);
+	virtual bool		DumpScreen				(void *aBuffer, bool aGrabCurrentScreenFlag);
 	virtual bool		SaveScreenshot			(const char *aFileName, bool aCompressedFlag, bool aGrabCurrentScreenFlag);
 	virtual MC_Image	*CreateScreenshotImage	(bool aGrabCurrentScreenFlag);
 	
@@ -63,10 +63,10 @@ public:
 	virtual bool BeginScene	();
 	virtual void EndScene	();
 	
-	virtual void ClearBuffers		(MC_Vector4<int> *, int, uint, float, char);
-	virtual bool ClearColorBuffer	(MC_Vector4<int> *, uint, MR_ColorWriteMask);
+	virtual void ClearBuffers		(MC_Vector4<int> *, int, uint32_t, float, char);
+	virtual bool ClearColorBuffer	(MC_Vector4<int> *, uint32_t, MR_ColorWriteMask);
 	
-	virtual bool PrepareTexture		(MR_Texture *, uint **, uint, int);
+	virtual bool PrepareTexture		(MR_Texture *, uint32_t **, uint32_t, int);
 	virtual void ReleaseTexture		(MR_Texture *);
 	virtual bool LoadSpecialTexture	(MR_Texture *, const char *);
 	
@@ -74,45 +74,45 @@ public:
 	virtual void ReleaseSurface		(MR_Surface *);
 	virtual bool PrepareSurfacePass	(MR_Surface *, MR_SurfacePass *);
 	virtual void ReleaseSurfacePass	(MR_SurfacePass *);
-	virtual void SelectSurface		(MR_SurfaceInstance *, uint, float, int);
+	virtual void SelectSurface		(MR_SurfaceInstance *, uint32_t, float, int);
 	
-	virtual void SelectTexture			(MR_Texture *, uint);
-	virtual bool LockTexture			(MR_Texture *, void **, uint *, uint);
-	virtual void UnlockTexture			(MR_Texture *, uint);
+	virtual void SelectTexture			(MR_Texture *, uint32_t);
+	virtual bool LockTexture			(MR_Texture *, void **, uint32_t *, uint32_t);
+	virtual void UnlockTexture			(MR_Texture *, uint32_t);
 	virtual void UpdateTextureContents	(MR_Texture *, MR_MemoryTextureData *);
 	
 	virtual void SetState			(MR_RenderState *aState, int aStateFlags);
 	virtual void Set2DState			(bool aTextureFlag);
 	virtual bool SetRenderTarget	(MR_Texture *aRenderTarget, bool aSetDepthBufferAlsoFlag, bool aForceResetFlag);
 	
-	virtual MR_IndexBuffer	*CreateIndexBuffer	(uint aNumIndices, bool aStaticBufferFlag, bool (__cdecl *aFunc)(voidptr_t), voidptr_t aRestoreId);
+	virtual MR_IndexBuffer	*CreateIndexBuffer	(uint32_t aNumIndices, bool aStaticBufferFlag, bool (__cdecl *aFunc)(void *), void *aRestoreId);
 	virtual void			ReleaseIndexBuffer	(MR_IndexBuffer *aIndexBuffer);
-	virtual bool			LockIndexBuffer		(MR_IndexBuffer *aIndexBuffer, ushort **aIndexList, int aStartIndex, int aNumIndices);
+	virtual bool			LockIndexBuffer		(MR_IndexBuffer *aIndexBuffer, uint16_t **aIndexList, int aStartIndex, int aNumIndices);
 	virtual void			UnlockIndexBuffer	(MR_IndexBuffer *aIndexBuffer);
 	
-	virtual MR_VertexBuffer *CreateVertexBuffer				(uint aVertexSize, uint aNumVertices, bool aStaticBufferFlag, bool (__cdecl *aFunc)(voidptr_t), voidptr_t aRestoreId);
+	virtual MR_VertexBuffer *CreateVertexBuffer				(uint32_t aVertexSize, uint32_t aNumVertices, bool aStaticBufferFlag, bool (__cdecl *aFunc)(void *), void *aRestoreId);
 	virtual void			ReleaseVertexBuffer				(MR_VertexBuffer *aVertexBuffer);
 	virtual bool			LockVertexBuffer				(MR_VertexBuffer *aVertexBuffer, char **aVertexList, int aStartVertex, int aNumVertices, bool aNoOverwriteFlag);
 	virtual void			UnlockVertexBuffer				(MR_VertexBuffer *aVertexBuffer);
-	virtual void			DrawVertexBuffer				(MR_VertexBuffer **aVertexBufferList, MR_DrawTypes aType, uint aNumVerts);
-	virtual void			DrawIndexedVertexBuffer			(MR_VertexBuffer **aVertexBufferList, MR_IndexBuffer *nIndexBuffer, MR_DrawTypes aType, uint aNumVerts, uint aNumTriangles, uint aNumStatsTransformVerts);
-	virtual void			DrawIndexedVertexBufferOffset	(MR_VertexBuffer **aVertexBufferList, MR_IndexBuffer *anIndexBuffer, MR_DrawTypes aType, uint aStartVertex, uint aNumVerts, uint aStartIndex, uint aNumTriangles, uint aNumStatsTransformVerts);
+	virtual void			DrawVertexBuffer				(MR_VertexBuffer **aVertexBufferList, MR_DrawTypes aType, uint32_t aNumVerts);
+	virtual void			DrawIndexedVertexBuffer			(MR_VertexBuffer **aVertexBufferList, MR_IndexBuffer *nIndexBuffer, MR_DrawTypes aType, uint32_t aNumVerts, uint32_t aNumTriangles, uint32_t aNumStatsTransformVerts);
+	virtual void			DrawIndexedVertexBufferOffset	(MR_VertexBuffer **aVertexBufferList, MR_IndexBuffer *anIndexBuffer, MR_DrawTypes aType, uint32_t aStartVertex, uint32_t aNumVerts, uint32_t aStartIndex, uint32_t aNumTriangles, uint32_t aNumStatsTransformVerts);
 	
-	virtual bool BeginIndexedVertices	(MR_DrawTypes aType, const int aNumVertices, const int aVertexSize, char **aVertices, const int aNumIndices, ushort **aIndices);
+	virtual bool BeginIndexedVertices	(MR_DrawTypes aType, const int aNumVertices, const int aVertexSize, char **aVertices, const int aNumIndices, uint16_t **aIndices);
 	virtual void EndIndexedVertices		();
 	
 	virtual void BeginVertices	(MR_DrawTypes aType, const int aNumVertices, const int aVertexSize, char **aVertices);
 	virtual void EndVertices	();
 	
-	virtual bool CanAllocateIndexedVertices	(const uint, const uint);
-	virtual bool SetIndexBufferSize			(uint aNumIndices);
-	virtual bool SetVertexBufferSize		(uint aBufferLengthInBytes);
+	virtual bool CanAllocateIndexedVertices	(const uint32_t, const uint32_t);
+	virtual bool SetIndexBufferSize			(uint32_t aNumIndices);
+	virtual bool SetVertexBufferSize		(uint32_t aBufferLengthInBytes);
 
-	virtual bool OptimizeMesh		(voidptr_t aVertexList, uint aNumVertices, uint aVertexSize, ushort *anIndexList, uint aNumIndices);
-	virtual bool OptimizeIndexList	(ushort *aIndexList, uint aNumIndices, uint aNumVertices);
+	virtual bool OptimizeMesh		(void *aVertexList, uint32_t aNumVertices, uint32_t aVertexSize, uint16_t *anIndexList, uint32_t aNumIndices);
+	virtual bool OptimizeIndexList	(uint16_t *aIndexList, uint32_t aNumIndices, uint32_t aNumVertices);
 	
-	virtual void Perf_SetMarker		(uint aColor, const wchar_t *aName);
-	virtual void Perf_BeginEvent	(uint aColor, const wchar_t *aName);
+	virtual void Perf_SetMarker		(uint32_t aColor, const wchar_t *aName);
+	virtual void Perf_BeginEvent	(uint32_t aColor, const wchar_t *aName);
 	virtual void Perf_EndEvent		();
 	
 	virtual int		CreateOcclusionQuery	();
@@ -126,8 +126,8 @@ public:
 	
 	virtual void SetScissor					(bool aEnableFlag, int aX, int aY, int aWidth, int aHeight);
 	virtual void SetBrightnessContrastGamma	(MC_Vector3<float> aBrightnessRGB, float aContrastValue, float aGammaValue);
-	virtual void SetViewport				(uint aXOffset, uint aYOffset, uint aWidth, uint aHeight, float aMinZ, float aMaxZ);
-	virtual void SetAlphaRef				(uint aValue);
+	virtual void SetViewport				(uint32_t aXOffset, uint32_t aYOffset, uint32_t aWidth, uint32_t aHeight, float aMinZ, float aMaxZ);
+	virtual void SetAlphaRef				(uint32_t aValue);
 	virtual void SetPSConstant				(int aIndex, MC_Vector4<float> *aValues);
 	virtual void SetPSConstants				(int aIndex, const float *aValues, int aNumConstants);
 	
@@ -139,11 +139,11 @@ public:
 
 	virtual void SetLoadingState(bool aLoadFlag);
 
-	virtual uint GetD3DVersion		();
-	virtual uint GetD3DSDKVersion	();
+	virtual uint32_t GetD3DVersion		();
+	virtual uint32_t GetD3DSDKVersion	();
 
-	virtual bool DumpRenderTargetToFile	(MR_Texture *aRenderTarget, const char *aFilename, bool aSaveAlphaFlag, uint aExtraFlags);
-	virtual bool MapTextureData			(MR_Texture *aTexture, const voidptr_t *aDataPointer, uint *aRowPitch);
+	virtual bool DumpRenderTargetToFile	(MR_Texture *aRenderTarget, const char *aFilename, bool aSaveAlphaFlag, uint32_t aExtraFlags);
+	virtual bool MapTextureData			(MR_Texture *aTexture, const void *aDataPointer, uint32_t *aRowPitch);
 	virtual void UnmapTextureData		(MR_Texture *aTexture);
 	virtual bool CopyResource			(MR_Texture *aDestination, MR_Texture *aSource);
 

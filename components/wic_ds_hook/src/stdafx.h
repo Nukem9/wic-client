@@ -6,6 +6,7 @@
 #include <intrin.h>
 #include <winsock.h>
 #include <algorithm>
+#include <stdint.h>
 
 #pragma comment(lib, "ws2_32.lib")
 

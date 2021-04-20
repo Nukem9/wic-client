@@ -4,10 +4,10 @@ template<typename T>
 class MC_GrowingArray
 {
 public:
-	int		myMaxNrOfItems;		// this+0x0
-	uint	myItemIncreaseSize;	// this+0x4
-	uint	mySafemodeFlag;		// this+0x8
-	T		*myItemList;		// this+0xC
+	int			myMaxNrOfItems;		// this+0x0
+	uint32_t	myItemIncreaseSize;	// this+0x4
+	uint32_t	mySafemodeFlag;		// this+0x8
+	T			*myItemList;		// this+0xC
 
 	T& At(int Index)
 	{

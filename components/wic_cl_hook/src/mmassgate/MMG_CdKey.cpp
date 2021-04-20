@@ -76,7 +76,7 @@ void MMG_CdKey::Validator::SetKey(const char *aKey)
 	KeyDefinition descrambledKey;
 	descrambledKey.section = this->m_Key.section;
 
-	uchar tekenValue = (uchar)(this->m_Key.section.randomDataPart3 << 4 | this->m_Key.section.randomDataPart3);
+	uint8_t tekenValue = (uint8_t)(this->m_Key.section.randomDataPart3 << 4 | this->m_Key.section.randomDataPart3);
 
 	for (int xorIndex = 2; xorIndex < 11; xorIndex++)
 		descrambledKey.data[xorIndex] ^= tekenValue;
@@ -101,8 +101,8 @@ void MMG_CdKey::Validator::SetKey(const char *aKey)
 		this->m_IsChecksumCorrect = true;
 
 		// 'assault.dat' indicates SA files are present
-		uint dateTime;
-		uint size;
+		uint32_t dateTime;
+		uint32_t size;
 		bool hasSA = MF_File::GetFileInfo("assault.dat", dateTime, size, nullptr);
 
 		// Checksum is good, now check which key type we want. If we have 'assault.dat' in
@@ -115,7 +115,7 @@ void MMG_CdKey::Validator::SetKey(const char *aKey)
 
 }
 
-uint MMG_CdKey::Validator::GetSequenceNumber()
+uint32_t MMG_CdKey::Validator::GetSequenceNumber()
 {
 	MC_ASSERT(this->m_IsChecksumCorrect);
 

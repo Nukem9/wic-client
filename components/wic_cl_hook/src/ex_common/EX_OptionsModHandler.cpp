@@ -2,8 +2,8 @@
 
 void EX_OptionsModHandler::InitializeHook()
 {
-	Detours::X86::DetourFunctionClass(reinterpret_cast<uint8_t *>(0x00B4FC10), &HandleEvent__SetActiveMod_00B4FC10, Detours::X86Option::USE_CALL);
-	Detours::X86::DetourFunctionClass(reinterpret_cast<uint8_t *>(0x00B4FC69), &HandleEvent__SetActiveMod_00B4FC10, Detours::X86Option::USE_CALL);
+	Detours::X86::DetourFunctionClass(0x00B4FC10, &HandleEvent__SetActiveMod_00B4FC10, Detours::X86Option::USE_CALL);
+	Detours::X86::DetourFunctionClass(0x00B4FC69, &HandleEvent__SetActiveMod_00B4FC10, Detours::X86Option::USE_CALL);
 }
 
 void __declspec(naked) EX_OptionsModHandler::HandleEvent__SetActiveMod_00B4FC10()

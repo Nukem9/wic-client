@@ -2,13 +2,13 @@
 
 void MR_RenderD3D10::InitializeHook()
 {
-	PBYTE vTable = (PBYTE)0x00D1E064;
+	uintptr_t virtualTable = 0x00D1E064;
 
-	Detours::X86::DetourFunction((PBYTE)0x00A321D0, (PBYTE)&ForceFlushAllStates);
+	Detours::X86::DetourFunctionClass(0x00A321D0, &ForceFlushAllStates);
 
-	//Detours::X86::DetourClassVTable(vTable, &hk_DrawVertexBuffer, 44);
-	//Detours::X86::DetourClassVTable(vTable, &hk_BeginVertices, 49);
-	//Detours::X86::DetourClassVTable(vTable, &hk_EndVertices, 50);
+	//Detours::X86::DetourClassVTable(virtualTable, &hk_DrawVertexBuffer, 44);
+	//Detours::X86::DetourClassVTable(virtualTable, &hk_BeginVertices, 49);
+	//Detours::X86::DetourClassVTable(virtualTable, &hk_EndVertices, 50);
 }
 
 void MR_RenderD3D10::ForceFlushAllStates()

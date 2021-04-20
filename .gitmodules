@@ -1,0 +1,3 @@
+[submodule "components/shared/detours"]
+	path = components/shared/detours
+	url = https://github.com/Nukem9/detours.git

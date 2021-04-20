@@ -2,7 +2,7 @@
 
 void WICP_DebugView::InitializeHook()
 {
-	Detours::X86::DetourFunctionClass(reinterpret_cast<uint8_t *>(0x00944A2E), &WICP_DebugView::Init, Detours::X86Option::USE_CALL);
+	Detours::X86::DetourFunctionClass(0x00944A2E, &WICP_DebugView::Init, Detours::X86Option::USE_CALL);
 }
 
 bool WICP_DebugView::Init()

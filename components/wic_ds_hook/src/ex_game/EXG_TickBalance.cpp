@@ -2,7 +2,7 @@
 
 void EXG_TickBalance::InitializeHook()
 {
-	Detours::X86::DetourFunctionClass(reinterpret_cast<uint8_t *>(0x00501B99), &Update_00501B99, Detours::X86Option::USE_CALL);
+	Detours::X86::DetourFunctionClass(0x00501B99, &Update_00501B99, Detours::X86Option::USE_CALL);
 }
 
 double EXG_TickBalance::Update_00501B99(double Value)

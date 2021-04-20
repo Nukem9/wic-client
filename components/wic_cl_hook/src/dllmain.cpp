@@ -128,7 +128,7 @@ void Wic_HookInit(HMODULE hModule)
 	// - Add "-ignorealttab" as a command line option to prevent the game from going idle
 	// - Add "-nocursorspeed" as a command line option to prevent the game from setting mouse sensitivity
 	//
-	Detours::X86::DetourFunctionClass(reinterpret_cast<uint8_t *>(0x00B2EF85), &Wic_ParseCommandLine, Detours::X86Option::USE_CALL);
+	Detours::X86::DetourFunctionClass(0x00B2EF85, &Wic_ParseCommandLine, Detours::X86Option::USE_CALL);
 
 	//
 	// Always enable the console

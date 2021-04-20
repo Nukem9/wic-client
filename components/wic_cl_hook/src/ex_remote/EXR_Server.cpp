@@ -2,7 +2,7 @@
 
 void EXR_Server::InitializeHook()
 {
-	Detours::X86::DetourFunctionClass(reinterpret_cast<uint8_t *>(0x0077D481), &ParseUnitFrameShooterChange_0077D481);
+	Detours::X86::DetourFunctionClass(0x0077D481, &ParseUnitFrameShooterChange_0077D481);
 }
 
 void __declspec(naked) EXR_Server::ParseUnitFrameShooterChange_0077D481()

@@ -2,6 +2,7 @@
 
 #include <Windows.h>
 #include <stdint.h>
+#include <initializer_list>
 
 static void PatchMemory(uintptr_t Address, const uint8_t *Data, size_t Size)
 {

@@ -4,8 +4,8 @@ wchar_t g_ModulePath[1024];
 wchar_t g_ExeName[1024];
 HMODULE g_ModuleHandle;
 
-uint8_t *detourInfo;
-uint8_t *detourEntry;
+uintptr_t detourInfo;
+uintptr_t detourEntry;
 
 void WINAPI hk_GetSystemInfo(LPSYSTEM_INFO lpSystemInfo)
 {
@@ -66,8 +66,8 @@ int __cdecl hk_mainCRTStartup()
 		}
 	}
 
-	Detours::IATHook(reinterpret_cast<uint8_t *>(g_ModuleHandle), "KERNEL32.dll", "GetSystemInfo", reinterpret_cast<uint8_t *>(&hk_GetSystemInfo));
-	Detours::IATHook(reinterpret_cast<uint8_t *>(g_ModuleHandle), "KERNEL32.dll", "SetThreadAffinityMask", reinterpret_cast<uint8_t *>(&hk_SetThreadAffinityMask));
+	Detours::IATHook(reinterpret_cast<uintptr_t>(g_ModuleHandle), "KERNEL32.dll", "GetSystemInfo", reinterpret_cast<uintptr_t>(&hk_GetSystemInfo));
+	Detours::IATHook(reinterpret_cast<uintptr_t>(g_ModuleHandle), "KERNEL32.dll", "SetThreadAffinityMask", reinterpret_cast<uintptr_t>(&hk_SetThreadAffinityMask));
 
 	// Unhook and return to the original function prologue
 	Detours::X86::DetourRemove(detourInfo);
@@ -81,12 +81,12 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
 
 	// Force this dll to be loaded permanently
 	HMODULE temp;
-	GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_PIN | GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS, reinterpret_cast<LPWSTR>(hModule), &temp);
+	GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_PIN | GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS, reinterpret_cast<LPWSTR>(hModule), &temp);
 
 	// Determine the executable path
-	g_ModuleHandle = GetModuleHandle(nullptr);
+	g_ModuleHandle = GetModuleHandleW(nullptr);
 
-	if (!GetModuleFileName(g_ModuleHandle, g_ModulePath, std::size(g_ModulePath)))
+	if (!GetModuleFileNameW(g_ModuleHandle, g_ModulePath, std::size(g_ModulePath)))
 		return FALSE;
 
 	_wsplitpath_s(g_ModulePath, nullptr, 0, nullptr, 0, g_ExeName, std::size(g_ExeName), nullptr, 0);
@@ -94,9 +94,9 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
 	// Hook the original entrypoint
 	auto dosHeader = reinterpret_cast<const PIMAGE_DOS_HEADER>(g_ModuleHandle);
 	auto ntHeaders = reinterpret_cast<const PIMAGE_NT_HEADERS>(reinterpret_cast<uint8_t *>(dosHeader) + dosHeader->e_lfanew);
-	auto entryAddress = (reinterpret_cast<uint8_t *>(dosHeader) + ntHeaders->OptionalHeader.AddressOfEntryPoint);
+	auto entryAddress = (reinterpret_cast<uintptr_t>(dosHeader) + ntHeaders->OptionalHeader.AddressOfEntryPoint);
 
-	detourInfo = Detours::X86::DetourFunction(entryAddress, reinterpret_cast<uint8_t *>(&hk_mainCRTStartup));
+	detourInfo = Detours::X86::DetourFunction(entryAddress, reinterpret_cast<uintptr_t>(&hk_mainCRTStartup));
 	detourEntry = entryAddress;
 	return TRUE;
 }

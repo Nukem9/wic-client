@@ -2,7 +2,7 @@
 
 void MF_File::InitializeHook()
 {
-	Detours::X86::DetourFunctionClass(reinterpret_cast<uint8_t *>(0x009FCBB0), &ExtractExtension);
+	Detours::X86::DetourFunctionClass(0x009FCBB0, &ExtractExtension);
 }
 
 const char *MF_File::ExtractExtension(const char *aPath)

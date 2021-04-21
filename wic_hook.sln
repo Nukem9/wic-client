@@ -28,6 +28,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tbbmalloc", "components\shared\tbb\build\vs2013\tbbmalloc.vcxproj", "{B15F131E-328A-4D42-ADC2-9FF4CA6306D8}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wic_ed_hook", "components\wic_ed_hook\wic_ed_hook.vcxproj", "{F6C97C08-8FCC-423F-977C-F0A87E76626A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{06E30C65-D79A-4FEC-8A60-B36D907E6601} = {06E30C65-D79A-4FEC-8A60-B36D907E6601}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "detours", "components\shared\detours\detours\detours.vcxproj", "{06E30C65-D79A-4FEC-8A60-B36D907E6601}"
 EndProject

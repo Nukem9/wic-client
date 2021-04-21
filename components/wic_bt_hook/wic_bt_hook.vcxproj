@@ -79,10 +79,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\ex_common\EX_OptionsModHandler.h" />
+    <ClInclude Include="src\ex_common\stdafx.h" />
+    <ClInclude Include="src\mcommon2\MC_HybridArray.h" />
+    <ClInclude Include="src\mcommon2\MF_File.h" />
+    <ClInclude Include="src\mcommon2\stdafx.h" />
+    <ClInclude Include="src\mmassgate\MMG_AccountProtocol.h" />
+    <ClInclude Include="src\mmassgate\MMG_BlockTEA.h" />
+    <ClInclude Include="src\mmassgate\MMG_CryptoHash.h" />
+    <ClInclude Include="src\mmassgate\MMG_ICipher.h" />
+    <ClInclude Include="src\mmassgate\stdafx.h" />
+    <ClInclude Include="src\mnetwork\MN_Format.h" />
+    <ClInclude Include="src\mnetwork\MN_INetHandler.h" />
+    <ClInclude Include="src\mnetwork\MN_Message.h" />
+    <ClInclude Include="src\mnetwork\MN_Packet.h" />
+    <ClInclude Include="src\mnetwork\MN_WriteMessage.h" />
+    <ClInclude Include="src\mnetwork\stdafx.h" />
     <ClInclude Include="src\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dllmain.cpp" />
+    <ClCompile Include="src\ex_common\EX_OptionsModHandler.cpp" />
+    <ClCompile Include="src\mcommon2\MF_File.cpp" />
+    <ClCompile Include="src\mmassgate\MMG_AccountProtocol.cpp" />
+    <ClCompile Include="src\mnetwork\MN_Format.cpp" />
+    <ClCompile Include="src\mnetwork\MN_Message.cpp" />
+    <ClCompile Include="src\mnetwork\MN_Packet.cpp" />
+    <ClCompile Include="src\mnetwork\MN_WriteMessage.cpp" />
     <ClCompile Include="src\stdafx.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

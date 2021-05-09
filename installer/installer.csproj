@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <OutputPath>$(SolutionDir)\Win32\$(Configuration)\</OutputPath>
+    <AssemblyName>MultiplayerFixInstaller</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="$(SolutionDir)\Win32\$(Configuration)\dbghelp.dll" Link="DLLPackage\dbghelp.dll" />
+    <EmbeddedResource Include="$(SolutionDir)\resources\dbghelp_old.dll" Link="DLLPackage\dbghelp_old.dll" />
+    <EmbeddedResource Include="$(SolutionDir)\Win32\$(Configuration)\wic_cl_hook.dll" Link="DLLPackage\wic_cl_hook.dll" />
+    <EmbeddedResource Include="$(SolutionDir)\Win32\$(Configuration)\wic_ds_hook.dll" Link="DLLPackage\wic_ds_hook.dll" />
+    <EmbeddedResource Include="$(SolutionDir)\Win32\$(Configuration)\wic_bt_hook.dll" Link="DLLPackage\wic_bt_hook.dll" />
+    <EmbeddedResource Include="$(SolutionDir)\Win32\$(Configuration)\wic_ed_hook.dll" Link="DLLPackage\wic_ed_hook.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DLLPackage\" />
+  </ItemGroup>
+
+</Project>

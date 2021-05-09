@@ -140,7 +140,7 @@ namespace installer
 
         private void linkLabelDiscord_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("explorer", "https://discord.com/invite/dAUQkCKC");
+            Process.Start("explorer", "https://discord.com/invite/eKDmvqz");
         }
 
         private void linkLabelReddit_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -150,7 +150,37 @@ namespace installer
 
         private static string TryGuessGamePath()
         {
-            // Assume it's a hardcoded install path for now. No consistent registry keys. Drive doesn't matter.
+            // Try checking the registry first (Steam/GOG/physical disk)
+            try
+            {
+                using (var key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 21760", false))
+                {
+                    if (key != null)
+                    {
+                        string fullPath = key.GetValue("InstallLocation") as string;
+
+                        if (ValidateGameInstallPath(fullPath))
+                            return fullPath;
+                    }
+                }
+
+                using (var key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Massive Entertainment AB\World in Conflict", false))
+                {
+                    if (key != null)
+                    {
+                        string fullPath = key.GetValue("InstallPath") as string;
+
+                        if (ValidateGameInstallPath(fullPath))
+                            return fullPath;
+                    }
+                }
+            }
+            catch (System.Security.SecurityException)
+            {
+                // User doesn't have permission
+            }
+
+            // No registry keys. Assume it's a hardcoded install path for now. Drive doesn't matter.
             var potentialDirs = new string[]
             {
                 @"Program Files (x86)\Sierra Entertainment\World in Conflict",

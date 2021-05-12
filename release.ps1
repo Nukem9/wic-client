@@ -11,6 +11,10 @@ New-Item -Path $finalDir -ItemType Directory
 New-Item -Path $tempDir -ItemType Directory
 
 
+# Build every project in the sln
+$buildCmd = "/c `"`"%VS2019INSTALLDIR%\Common7\Tools\VsDevCmd.bat`" & msbuild wic_hook.sln -m -t:Build -p:Configuration=${projConfig};Platform=Win32`""
+Start-Process -NoNewWindow -Wait "cmd.exe" $buildCmd
+
 # Generate and package the installer in a zip file
 dotnet publish `
     --configuration ${projConfig} `

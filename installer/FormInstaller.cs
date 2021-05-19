@@ -187,10 +187,12 @@ namespace installer
                 @"Program Files (x86)\Ubisoft\World in Conflict",
                 @"Program Files (x86)\Steam\steamapps\common\World in Conflict",
                 @"Program Files (x86)\World in Conflict - Complete Edition",
+                @"Program Files (x86)\Ubisoft\Ubisoft Game Launcher\games\World in Conflict",
                 @"Program Files\Sierra Entertainment\World in Conflict",
                 @"Program Files\Ubisoft\World in Conflict",
                 @"Program Files\Steam\steamapps\common\World in Conflict",
                 @"Program Files\World in Conflict - Complete Edition",
+                @"Program Files\Ubisoft\Ubisoft Game Launcher\games\World in Conflict",
             };
 
             foreach (string drive in Directory.GetLogicalDrives())

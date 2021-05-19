@@ -66,7 +66,7 @@ namespace installer
             this.label2.Size = new System.Drawing.Size(456, 35);
             this.label2.TabIndex = 4;
             this.label2.Text = "Sets a registry key to allow the ModKit and WicEd to be installed properly. This " +
-    "is required if you use the Steam or GOG versions of the game.";
+    "is required if you use the Steam, Uplay, or GOG versions of the game.";
             // 
             // label1
             // 

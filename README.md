@@ -1,17 +1,24 @@
 # WIC-Client
+
 World in Conflict client emulator files. Includes various bug fixes and protocol changes for the Massgate.org backend server. This is the client component for [WIC-MassgateServer](https://github.com/Nukem9/WIC-MassgateServer) and [massgate](https://github.com/ubisoft/massgate).
 
 ## Building
+
 ### Requirements
+
 - Visual Studio 2019
 - .NET 5 support if building the installer
+
 ### Installation
+
 1. Build project with Visual Studio directly or run [release.ps1](release.ps1).
 2. Copy output files (`wic_XX_hook.dll`, `dbghelp.dll`, `dbghelp_old.dll`) to the game folder.
 3. Play.
 
 ## Patches
+
 CL = Game, DS = Dedicated Server, BT = Broadcast Tool, ED = Modkit Editor
+
 - DNS queries redirected to `liveaccount.massgate.org`. [CL, DS, BT, ED]
 - Multiple threading fixes, such as crashing when using a CPU with more than 16 logical cores. [CL, DS, BT, ED]
 - Multiple command line options have been added ("-fps", "-ignorealttab", "-nocursorspeed"). [CL, DS]
@@ -28,9 +35,11 @@ CL = Game, DS = Dedicated Server, BT = Broadcast Tool, ED = Modkit Editor
 - Servers now search for the "Mods" directory in the local folder instead of "C:\Users\Public Documents\". [DS]
 
 ## License
+
 - [LGPL](LICENSE.md)
 - [detours](components/shared/detours) and [TBB](components/shared/tbb) are under their own respective licenses.
 
 ## Authors
+
 - [Nukem9](https://github.com/Nukem9)
 - [Tenerefis](https://github.com/tenerefis)

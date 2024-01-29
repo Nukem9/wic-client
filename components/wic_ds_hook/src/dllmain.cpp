@@ -1,18 +1,5 @@
 #include "stdafx.h"
 
-struct hostent *PASCAL hk_gethostbyname(const char *name)
-{
-	if (strstr(name, "massgate.net") ||
-		strstr(name, "massive.se") ||
-		strstr(name, "ubisoft.com"))
-	{
-		// Everything is redirected to a single IP address now
-		return gethostbyname("liveaccount.massgate.org");
-	}
-
-	return gethostbyname(name);
-}
-
 void Server_PatchAssertions()
 {
 	auto patchAssert = [](uintptr_t Address)
@@ -99,40 +86,7 @@ void WicDS_HookInit(HMODULE hModule)
 	//
 	EX_CAI_Type::InitializeHook();
 
-	//
-	// Fix for the rounding error in team tick rates when playing domination ("Dom Bar Bug"). Under certain conditions, such as when NonLinearDomination
-	// is enabled, one team would have a small advantage throughout the match. This varies depending on the map parameters and captured command points. See
-	// the game (wic_cl) patch for a full explanation.
-	//
-	EXG_TickBalance::InitializeHook();
-
-	//
-	// Clear bogus assertions and disable floating point exceptions
-	//
-	PatchMemory(0x004024AF, { 0x90, 0x90, 0x90, 0x90, 0x90 });// main(): _clearfp();
-	PatchMemory(0x004024BB, { 0x90, 0x90, 0x90, 0x90, 0x90 });// main(): _controlfp();
-	PatchMemory(0x0041C5B1, { 0x90, 0x90, 0x90, 0x90, 0x90 });// MT_Thread_thread_starter(): _clearfp();
-	PatchMemory(0x0041C5BD, { 0x90, 0x90, 0x90, 0x90, 0x90 });// MT_Thread_thread_starter(): _controlfp();
-
 	Server_PatchAssertions();
-
-	//
-	// Allow ranked servers to use mods
-	//
-	PatchMemory(0x004072E9, { 0xEB });
-
-	//
-	// Patch for WICG_MPyPlayer::cPlayer_ChatMessage where the developers incorrectly
-	// used player slot #0 instead of the script player when sending chat messages.
-	// Slot 0 would crash if no player was connected. Slot -1 is used for scripts.
-	//
-	PatchMemory(0x004EEFF1, { 0xFF });
-
-	//
-	// Redirect DNS queries to the new domain. Hook gethostbyname (IAT).
-	//
-	auto addr = reinterpret_cast<uintptr_t>(&hk_gethostbyname);
-	PatchMemory(0x0074D3A8, reinterpret_cast<uint8_t *>(&addr), sizeof(addr));
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)

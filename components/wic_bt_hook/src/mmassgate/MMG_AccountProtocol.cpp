@@ -2,7 +2,7 @@
 
 void MMG_AccountProtocol::InitializeHook()
 {
-	Detours::X86::DetourFunctionClass(0x00BE04F3, &Query__ToStream_00BE04F3);
+	Detours::X86::DetourFunctionT(0x00BE04F3, &Query__ToStream_00BE04F3);
 }
 
 void MMG_AccountProtocol::WriteEncryptionKeys(void *accountQuery, MN_WriteMessage *aMessage)

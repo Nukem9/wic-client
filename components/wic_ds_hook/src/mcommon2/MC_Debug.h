@@ -1,3 +1,4 @@
+#include "MC_Debug.h"
 #pragma once
 
 class MC_Debug

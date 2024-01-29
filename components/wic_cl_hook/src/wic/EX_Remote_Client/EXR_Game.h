@@ -1,0 +1,136 @@
+#pragma once
+
+#include "../EX_Common/EXCO_IGame.h"
+
+class MN_WriteMessage;
+
+class EXR_Game : EXCO_IGame
+{
+private:
+	MN_WriteMessage& myReliableOutgoingMessage;
+	float myLastDirectFireSend;
+
+public:
+	virtual ~EXR_Game();
+	virtual bool CreateUnit(EXCO_IPlayer&, const EXCO_UnitType&, const MC_Vector3f&, const float) override;
+#if WIC_DS
+	virtual void Hack_SetUnitTeam(u16, s32) override;
+	virtual void Hack_SetUnitOwner(u16, const EXCO_PlayerInfo&) override;
+	virtual void Hack_KillUnit(u16) override;
+	virtual void Hack_RemoveUnit(u16) override;
+	virtual void CheatAddTA(EXCO_IPlayer&, const s32) override;
+	virtual void CheatAddTAToAll(const s32) override;
+#endif // WIC_DS
+	virtual void Team1WinsGame() override;
+	virtual bool IsRemote() override;
+	virtual bool PlayerJoinTeam(EXCO_IPlayer&, s32, bool, bool) override;
+	virtual bool SpectatorJoinTeam(EXCO_IPlayer&, const s32) override;
+	virtual bool UseSpecialAbility(EXCO_IPlayer&, s16, s32) override;
+	virtual bool UseSpecialAbility(EXCO_IPlayer&, s16, s32, MC_Vector3f, MC_Vector3f) override;
+	virtual bool UseSpecialAbilityOnUnit(EXCO_IPlayer&, s16, s32, s16) override;
+	virtual bool UseSpecialAbilityOnBuilding(EXCO_IPlayer&, s16, s32, s32) override;
+	virtual bool UseSpecialAbilityOnProp(EXCO_IPlayer&, s16, s32, s32) override;
+	virtual bool EndProcessingSpecialAbility(EXCO_IPlayer&, s16, s32) override;
+	virtual bool MakeVote(EXCO_IPlayer&, WICO_Vote::VoteType, WICO_Vote::VoteValue) override;
+	virtual bool Vote(EXCO_IPlayer&, bool) override;
+	virtual bool ChangeMap(const char *) override;
+	virtual bool ChangeTimeLimit(const s32) override;
+	virtual bool InvitePlayerToTeam(const u8, const s32) override;
+	virtual bool PlayerSetsReady(const char *) override;
+	virtual bool ExitMatchMode(const char *) override;
+	virtual bool GiveTAToAlly(EXCO_IPlayer&, s32, u8) override;
+	virtual bool PlayerSetMatchReady(EXCO_IPlayer&) override;
+	virtual bool DeployStartingUnits(EXCO_IPlayer&, MC_GrowingArray<EXCO_UnitType *>&) override;
+	virtual bool SendChat(EXCO_IPlayer&, const wchar_t *, const bool) override;
+	virtual bool SendChatPrivate(EXCO_IPlayer&, const wchar_t *, const EXCO_PlayerInfo *) override;
+	virtual bool Stop(EXCO_IPlayer&, const u16) override;
+	virtual bool StopSquad(EXCO_IPlayer&, const u16) override;
+	virtual bool MoveFormationToPosition(EXCO_IPlayer&, const MC_GrowingArray<u16>&, const MC_GrowingArray<MC_Vector2f>&, const MC_GrowingArray<float>&, const float, const bool, const bool, const s16, bool) override;
+	virtual bool MoveSquadToPosition(EXCO_IPlayer&, const u32, const MC_Vector3f&, const float, const float, const bool, const bool, const s16) override;
+	virtual bool MoveToPosition(EXCO_IPlayer&, const u16, const MC_Vector3f&, const float, const float, const bool, const bool, const s16) override;
+	virtual bool MoverFollow(EXCO_IPlayer&, const u16, const u16, const float) override;
+	virtual bool SetPatrolRoute(EXCO_IPlayer&, const u16, const MC_Array<MC_Vector3f>&, float, float, bool, bool) override;
+	virtual bool BroadcastLongMove(EXCO_IPlayer&, const u16, const MC_Vector2f&) override;
+	virtual bool DirectAttackShoot(EXCO_IPlayer&, const u16, bool) override;
+	virtual bool DirectAttackAim(EXCO_IPlayer&, const u16, const MC_Vector3f&) override;
+	virtual bool DirectAttackAimUnit(EXCO_IPlayer&, const u16, const u16) override;
+	virtual bool AttackPosition(EXCO_IPlayer&, const u16, const MC_Vector3f&, const bool) override;
+	virtual bool AttackUnit(EXCO_IPlayer&, const u16, const u16, const bool) override;
+	virtual bool AttackUnitWithSquad(EXCO_IPlayer&, const u16, const u16) override;
+	virtual bool AttackUnits(EXCO_IPlayer&, const u16, MC_Array<u16>&, const bool, const bool) override;
+	virtual bool AttackUnitsAsSubGroup(EXCO_IPlayer&, MC_GrowingArray<u16>&, MC_GrowingArray<u16>&, const bool, const bool) override;
+	virtual bool AttackBuildings(EXCO_IPlayer&, const u16, MC_Array<s32>&, const bool, const bool) override;
+	virtual bool StopAttacking(EXCO_IPlayer&, const u16) override;
+	virtual bool SetDirectFireMode(EXCO_IPlayer&, const u16, bool) override;
+	virtual bool SwitchDirectFireUnit(EXCO_IPlayer&, const u16) override;
+	virtual bool UnitClearOrderQueue(EXCO_IPlayer&, const u16) override;
+	virtual bool ResupplySquad(EXCO_IPlayer&, const u16) override;
+	virtual bool CancelResupplySquad(EXCO_IPlayer&, const u16) override;
+	virtual bool BuildingAttackUnits(EXCO_IPlayer&, const s32, MC_Array<u16>&) override;
+	virtual bool BuildingAttackBuilding(EXCO_IPlayer&, const s32, const s32) override;
+	virtual bool SquadLoadContainer(EXCO_IPlayer&, const u16, const u16, const bool) override;
+	virtual bool ContainerLoad(EXCO_IPlayer&, const u16, const u16, const bool) override;
+	virtual bool ContainerUnload(EXCO_IPlayer&, const u16, const u16, const bool) override;
+	virtual bool ContainerUnloadAll(EXCO_IPlayer&, const u16, const bool) override;
+	virtual bool ResidentEnterBuilding(EXCO_IPlayer&, const u16, const s32, bool, bool) override;
+	virtual bool EnterDirectControlModeForUnit(EXCO_IPlayer&, const u16) override;
+	virtual bool SpawnerSetPayload(EXCO_IPlayer&, MC_GrowingArray<EXCO_UnitType *>&) override;
+	virtual bool SpawnerSetSpawnPosition(EXCO_IPlayer&, const MC_Vector3f&) override;
+	virtual bool SpawnerSetRallyPoint(EXCO_IPlayer&, const MC_Vector3f&) override;
+	virtual bool SpawnerStartSpawn(EXCO_IPlayer&, const u8) override;
+	virtual bool BlowerBlow(EXCO_IPlayer&, const u16) override;
+	virtual bool RepairerRepair(EXCO_IPlayer&, const u16, const u16, bool) override;
+	virtual bool LayBridge(EXCO_IPlayer&, const u16, MC_Vector3f, float, bool) override;
+	virtual bool SetUnitFireBehaviour(EXCO_IPlayer&, const u16, const EXCO_Behaviour::Fire) override;
+	virtual bool SetUnitOwner(EXCO_IPlayer&, const u16, const EXCO_PlayerInfo&) override;
+	virtual bool UseSupportThing(EXCO_IPlayer&, const u32, const MC_Vector3f&, MC_Vector3f) override;
+	virtual bool StartSupportThingCooldown(EXCO_IPlayer&, const u32) override;
+	virtual bool MapSignal(EXCO_IPlayer&, const MC_Vector3f&) override;
+	virtual bool ExitGame(EXCO_IPlayer&) override;
+	virtual bool MessageBoxClosed(EXCO_IPlayer&, const s32) override;
+	virtual bool EventStringDone(EXCO_IPlayer&, const s32) override;
+	virtual bool PlayerHaveFinishedLoading(EXCO_IPlayer&) override;
+	virtual bool PlayerAction(EXCO_IPlayer&, const EXCO_Constants::PlayerAction) override;
+	virtual bool PlayerEvent(EXCO_IPlayer&, const char *, const class _object *) override;
+	virtual bool SetPauseState(EXCO_IPlayer&, const bool) override;
+	virtual bool PlayerSetRole(EXCO_IPlayer&, const s32, bool) override;
+	virtual bool PlayerSetESLFreeRole(EXCO_IPlayer&, const bool) override;
+	virtual bool LosTestForAI(const MC_Vector3f&, const MC_Vector3f&, const u32, const u32) override;
+	virtual void SendAIMsgCPMissionAquired(EXCO_IPlayer&, const s32) override;
+	virtual void SendAIMsgCPMissionEnded(EXCO_IPlayer&, const s32) override;
+	virtual void SendAIMsgAirEscortNeed(EXCO_IPlayer&, const s32) override;
+	virtual void SendAIMsgAirEscortMissonAquired(EXCO_IPlayer&, const s32) override;
+	virtual void SendAIMsgAirEscortReceived(EXCO_IPlayer&, const s32) override;
+	virtual void SendAIMsgHealingNeed(EXCO_IPlayer&, const s32) override;
+	virtual void SendAIMsgHealingMissionAquired(EXCO_IPlayer&, const s32) override;
+	virtual void SendAIMsgHealingReceived(EXCO_IPlayer&, const s32) override;
+	virtual void SendAIMsgFireSuppotNeed(EXCO_IPlayer&, const MC_Vector3f) override;
+	virtual void SendAIMsgFireSuppotMissionAquired(EXCO_IPlayer&, const MC_Vector3f) override;
+	virtual void SendAIMsgFireSuppotReceived(EXCO_IPlayer&, const MC_Vector3f) override;
+	virtual void SendAIMsgBackupNeed(EXCO_IPlayer&, const s32) override;
+	virtual void SendAIMsgBackupMissionAquired(EXCO_IPlayer&, const s32) override;
+	virtual void SendAIMsgBackupReceived(EXCO_IPlayer&, const s32) override;
+	virtual void SendAIMsgTANeed(EXCO_IPlayer&, const s32) override;
+	virtual void SendAIMsgTAMissionAquired(EXCO_IPlayer&, const s32) override;
+	virtual void SendAIMsgTAReceived(EXCO_IPlayer&, const s32) override;
+	virtual void SpecialDebugPrintOutput() override;
+	virtual bool IsSinglePlayerGame() override;
+	virtual void ResetAllClouds() override;
+	virtual bool CallPythonFunction(const char *, const s32) override;
+	virtual bool CallPythonFunction(const char *) override;
+	virtual void SendRequest(EXCO_IPlayer&, WICO_Request::RequestType, s32, const MC_Vector2f&, u32, const wchar_t *) override;
+	virtual void AcceptRequest(EXCO_IPlayer&, u32) override;
+	virtual void RestartSP() override;
+	virtual void RestartAndLoadSP() override;
+	virtual bool SetPlayerLANName(EXCO_IPlayer&, const wchar_t *) override;
+	virtual void SendCameraPosition(EXCO_IPlayer&, const MC_Vector3f) override;
+	virtual void SendCameraRotation(EXCO_IPlayer&, const MC_Vector2f) override;
+	virtual void SendCameraHeightOverGround(EXCO_IPlayer&, const float) override;
+	virtual bool DisbandUnit(EXCO_IPlayer&, u16) override;
+	virtual WICO_StatsManager *GetStats() override;
+	virtual bool CreateGameMode() override;
+	virtual WICO_BotOptions *GetBotOptions() override;
+	virtual void AdminPassword(EXCO_IPlayer&, MC_LocString) override;
+	virtual void EmptyMessage(EXCO_IPlayer&) override;
+};
+static_assert_size(EXR_Game, 0x10);

@@ -5,6 +5,10 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Release-ds|Win32">
+      <Configuration>Release-ds</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
@@ -18,17 +22,24 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-ds|Win32'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -41,28 +52,60 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\common.props" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release-ds|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\common.props" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
     <LibraryPath>$(SolutionDir)$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(SolutionDir)components\shared\tbb\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)src\Hooking;$(ProjectDir)src\Framework;$(ProjectDir)src\wic;$(IncludePath)</IncludePath>
+    <TargetName>wic_cl_hook</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
     <LibraryPath>$(SolutionDir)$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(SolutionDir)components\shared\tbb\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)src\Hooking;$(ProjectDir)src\Framework;$(ProjectDir)src\wic;$(IncludePath)</IncludePath>
+    <TargetName>wic_cl_hook</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-ds|Win32'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+    <LibraryPath>$(SolutionDir)$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)src\Hooking;$(ProjectDir)src\Framework;$(ProjectDir)src\wic;$(IncludePath)</IncludePath>
+    <TargetName>wic_ds_hook</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <VcpkgUseStatic>true</VcpkgUseStatic>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <VcpkgUseStatic>true</VcpkgUseStatic>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-ds|Win32'" Label="Vcpkg">
+    <VcpkgUseStatic>true</VcpkgUseStatic>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnableManifest>true</VcpkgEnableManifest>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <PreprocessorDefinitions>NOMINMAX;WIN32;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ForcedIncludeFiles>MCommon2\MC_GlobalDefines.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/D WIC_MP=1 %(AdditionalOptions)</AdditionalOptions>
+      <ConformanceMode>true</ConformanceMode>
+      <WarningLevel>Level4</WarningLevel>
+      <DisableSpecificWarnings>4100;4201;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>winmm.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -70,57 +113,147 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <PreprocessorDefinitions>NOMINMAX;WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <ForcedIncludeFiles>MCommon2\MC_GlobalDefines.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <AdditionalOptions>/D WIC_MP=1 %(AdditionalOptions)</AdditionalOptions>
+      <ConformanceMode>true</ConformanceMode>
+      <WarningLevel>Level4</WarningLevel>
+      <DisableSpecificWarnings>4100;4201;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>winmm.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-ds|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NOMINMAX;WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <ForcedIncludeFiles>MCommon2\MC_GlobalDefines.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <AdditionalOptions>/D WIC_DS=1 %(AdditionalOptions)</AdditionalOptions>
+      <ConformanceMode>true</ConformanceMode>
+      <WarningLevel>Level4</WarningLevel>
+      <DisableSpecificWarnings>4100;4201;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>winmm.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="hdk\hdk_include.h" />
-    <ClInclude Include="src\ex_3d\EX3D_Console.h" />
-    <ClInclude Include="src\ex_3d\stdafx.h" />
-    <ClInclude Include="src\ex_commanderai\EX_CAI_Platoon.h" />
-    <ClInclude Include="src\ex_commanderai\stdafx.h" />
-    <ClInclude Include="src\ex_common\EX_OptionsModHandler.h" />
-    <ClInclude Include="src\ex_common\stdafx.h" />
-    <ClInclude Include="src\ex_common\WICO_DebugView.h" />
-    <ClInclude Include="src\ex_game\EXG_TickBalance.h" />
-    <ClInclude Include="src\ex_game\stdafx.h" />
-    <ClInclude Include="src\ex_remote\EXR_Server.h" />
-    <ClInclude Include="src\ex_remote\stdafx.h" />
-    <ClInclude Include="src\mcommon2\MC_CommandLine.h" />
-    <ClInclude Include="src\mcommon2\MC_DebugConsoleListener.h" />
-    <ClInclude Include="src\mcommon2\MC_Mem.h" />
-    <ClInclude Include="src\mcommon2\MC_Vector2.h" />
-    <ClInclude Include="src\mcommon2\MC_Vector3.h" />
-    <ClInclude Include="src\mcommon2\MC_Vector4.h" />
-    <ClInclude Include="src\mcommon2\MF_File.h" />
-    <ClInclude Include="src\mmassgate\MMG_AccountProtocol.h" />
-    <ClInclude Include="src\mmassgate\MMG_BitStream.h" />
-    <ClInclude Include="src\mmassgate\MMG_BlockTEA.h" />
-    <ClInclude Include="src\mmassgate\MMG_CryptoHash.h" />
-    <ClInclude Include="src\mmassgate\MMG_ICipher.h" />
-    <ClInclude Include="src\mmassgate\MMG_CdKey.h" />
-    <ClInclude Include="src\mmassgate\MMG_Tiger.h" />
-    <ClInclude Include="src\mnetwork\MN_INetHandler.h" />
-    <ClInclude Include="src\mnetwork\MN_NetRequester.h" />
-    <ClInclude Include="src\mrender\MR_Render.h" />
-    <ClInclude Include="src\mrender\MR_RenderD3D10.h" />
-    <ClInclude Include="src\mrender\MR_VertexShader.h" />
-    <ClInclude Include="src\mrender\stdafx.h" />
-    <ClInclude Include="src\mcommon2\MC_HybridArray.h" />
-    <ClInclude Include="src\mcommon2\stdafx.h" />
-    <ClInclude Include="src\mmassgate\MMG_Protocols.h" />
-    <ClInclude Include="src\mmassgate\stdafx.h" />
-    <ClInclude Include="src\mnetwork\MN_Format.h" />
-    <ClInclude Include="src\mnetwork\MN_Message.h" />
-    <ClInclude Include="src\mnetwork\MN_Packet.h" />
-    <ClInclude Include="src\mnetwork\MN_WriteMessage.h" />
-    <ClInclude Include="src\mnetwork\stdafx.h" />
-    <ClInclude Include="src\stdafx.h" />
+    <ClInclude Include="src\Framework\Ice\Ice.h" />
+    <ClInclude Include="src\Framework\MCommon2\MC_Algorithm.h" />
+    <ClInclude Include="src\Framework\MCommon2\MC_Array.h" />
+    <ClInclude Include="src\Framework\MCommon2\MC_Base.h" />
+    <ClInclude Include="src\Framework\MCommon2\MC_DataTypes.h" />
+    <ClInclude Include="src\Framework\MCommon2\MC_Debug.h" />
+    <ClInclude Include="src\Framework\MCommon2\MC_EggClockTimer.h" />
+    <ClInclude Include="src\Framework\MCommon2\MC_GlobalDefines.h" />
+    <ClInclude Include="src\Framework\MCommon2\MC_GrowingArray.h" />
+    <ClInclude Include="src\Framework\MCommon2\MC_HashMap.h" />
+    <ClInclude Include="src\Framework\MCommon2\MC_HeapImplementation.h" />
+    <ClInclude Include="src\Framework\MCommon2\MC_Math.h" />
+    <ClInclude Include="src\Framework\MCommon2\MC_SortedGrowingArray.h" />
+    <ClInclude Include="src\Framework\MCommon2\MC_StaticArray.h" />
+    <ClInclude Include="src\Framework\MCommon2\MC_String.h" />
+    <ClInclude Include="src\Framework\MCommon2\MC_SystemPaths.h" />
+    <ClInclude Include="src\Framework\MCommon2\MC_Vector.h" />
+    <ClInclude Include="src\Framework\MCommon2\MI_Time.h" />
+    <ClInclude Include="src\Framework\MCommon2\MM_AngleUtils.h" />
+    <ClInclude Include="src\Framework\MCommon2\MT_Mutex.h" />
+    <ClInclude Include="src\Framework\MCommon2\MT_Thread.h" />
+    <ClInclude Include="src\Framework\MGui\MG_Manager.h" />
+    <ClInclude Include="src\Framework\MMassgate\MMG_BlockTEA.h" />
+    <ClInclude Include="src\Framework\MMassgate\MMG_CdKeyValidator.h" />
+    <ClInclude Include="src\Framework\MMassgate\MMG_Constants.h" />
+    <ClInclude Include="src\Framework\MMassgate\MMG_CryptoHash.h" />
+    <ClInclude Include="src\Framework\MMassgate\MMG_ICipher.h" />
+    <ClInclude Include="src\Framework\MMassgate\MMG_ICryptoHashAlgorithm.h" />
+    <ClInclude Include="src\Framework\MMassgate\MMG_IStreamable.h" />
+    <ClInclude Include="src\Framework\MMassgate\MMG_LadderProtocol.h" />
+    <ClInclude Include="src\Framework\MMassgate\MMG_ModDataDownloader.h" />
+    <ClInclude Include="src\Framework\MMassgate\MMG_Options.h" />
+    <ClInclude Include="src\Framework\MMassgate\MMG_PCCProtocol.h" />
+    <ClInclude Include="src\Framework\MMassgate\MMG_Profile.h" />
+    <ClInclude Include="src\Framework\MMassgate\MMG_ProtocolDelimiters.h" />
+    <ClInclude Include="src\Framework\MMassgate\MMG_Protocols.h" />
+    <ClInclude Include="src\Framework\MMassgate\MMG_ServerTracker.h" />
+    <ClInclude Include="src\Framework\MMassgate\MMG_ServerVariables.h" />
+    <ClInclude Include="src\Framework\MMassgate\MMG_Tiger.h" />
+    <ClInclude Include="src\Framework\MMassgate\MMG_TrackableServer.h" />
+    <ClInclude Include="src\Framework\MNetwork\MN_ConnectionErrorType.h" />
+    <ClInclude Include="src\Framework\MNetwork\MN_Format.h" />
+    <ClInclude Include="src\Framework\MNetwork\MN_IWriteableDataStream.h" />
+    <ClInclude Include="src\Framework\MNetwork\MN_LoopbackConnection.h" />
+    <ClInclude Include="src\Framework\MNetwork\MN_Message.h" />
+    <ClInclude Include="src\Framework\MNetwork\MN_Packet.h" />
+    <ClInclude Include="src\Framework\MNetwork\MN_ReadMessage.h" />
+    <ClInclude Include="src\Framework\MNetwork\MN_TcpSocket.h" />
+    <ClInclude Include="src\Framework\MNetwork\MN_UdpSocket.h" />
+    <ClInclude Include="src\Framework\MNetwork\MN_WriteMessage.h" />
+    <ClInclude Include="src\Hooking\Hooks\Hooks.h" />
+    <ClInclude Include="src\Hooking\Hooks\Memory.h" />
+    <ClInclude Include="src\wic\EX_3D\EX3D_Console.h" />
+    <ClInclude Include="src\wic\EX_3D\EX3D_Render.h" />
+    <ClInclude Include="src\wic\EX_CommanderAI\EX_CAI_Platoon.h" />
+    <ClInclude Include="src\wic\Exodus\EX_OptionsModHandler.h" />
+    <ClInclude Include="src\wic\EX_CommanderAI\EX_CAI_ShooterAbility.h" />
+    <ClInclude Include="src\wic\EX_CommanderAI\EX_CAI_Type.h" />
+    <ClInclude Include="src\wic\EX_Common\EXCO_Behaviour.h" />
+    <ClInclude Include="src\wic\EX_Common\EXCO_Constants.h" />
+    <ClInclude Include="src\wic\EX_Common\EXCO_Difficulty.h" />
+    <ClInclude Include="src\wic\EX_Common\EXCO_Directory.h" />
+    <ClInclude Include="src\wic\EX_Common\EXCO_ErrorMessage.h" />
+    <ClInclude Include="src\wic\EX_Common\EXCO_IGame.h" />
+    <ClInclude Include="src\wic\EX_Common\EXCO_IPlayer.h" />
+    <ClInclude Include="src\wic\EX_Common\EXCO_Map.h" />
+    <ClInclude Include="src\wic\EX_Common\EXCO_MissionInfo.h" />
+    <ClInclude Include="src\wic\EX_Common\EXCO_MissionSet.h" />
+    <ClInclude Include="src\wic\EX_Common\EXCO_PlayerInfo.h" />
+    <ClInclude Include="src\wic\EX_Common\EXCO_SlotManager.h" />
+    <ClInclude Include="src\wic\EX_Common\WICO_BotOptions.h" />
+    <ClInclude Include="src\wic\EX_Common\WICO_DebugView.h" />
+    <ClInclude Include="src\wic\EX_Common\WICO_GameSettings.h" />
+    <ClInclude Include="src\wic\EX_Common\WICO_Request.h" />
+    <ClInclude Include="src\wic\EX_Common\WICO_Vote.h" />
+    <ClInclude Include="src\wic\EX_DedicatedServer\EXD_DedicatedServer.h" />
+    <ClInclude Include="src\wic\EX_Game\EXG_Game.h" />
+    <ClInclude Include="src\wic\EX_Game\EXG_Player.h" />
+    <ClInclude Include="src\wic\EX_Game\EXG_PlayerContainer.h" />
+    <ClInclude Include="src\wic\EX_Game\EXG_TickBalance.h" />
+    <ClInclude Include="src\wic\EX_Game\WICG_Root.h" />
+    <ClInclude Include="src\wic\EX_Game\WICG_VoipServer.h" />
+    <ClInclude Include="src\wic\EX_Player\EXP_Physics.h" />
+    <ClInclude Include="src\wic\EX_Player\EXP_Player.h" />
+    <ClInclude Include="src\wic\EX_Player\EXP_UIHandler.h" />
+    <ClInclude Include="src\wic\EX_Player\WICP_DebugView.h" />
+    <ClInclude Include="src\wic\EX_Player\WICP_GameEventsHandler.h" />
+    <ClInclude Include="src\wic\EX_Player\WICP_MegaMap.h" />
+    <ClInclude Include="src\wic\EX_Player\WICP_Root.h" />
+    <ClInclude Include="src\wic\EX_Remote\WICR_ClientFactory.h" />
+    <ClInclude Include="src\wic\EX_Remote\WICR_GameController.h" />
+    <ClInclude Include="src\wic\EX_Remote_Client\EXR_Game.h" />
+    <ClInclude Include="src\wic\EX_Remote_Client\EXR_Server.h" />
+    <ClInclude Include="src\Framework\MCommon2\MC_CommandLine.h" />
+    <ClInclude Include="src\wic\EX_3D\EX3D_DebugConsoleListener.h" />
+    <ClInclude Include="src\Framework\MCommon2\MC_Mem.h" />
+    <ClInclude Include="src\Framework\MCommon2\MF_File.h" />
+    <ClInclude Include="src\Framework\MMassgate\MMG_AccountProtocol.h" />
+    <ClInclude Include="src\Framework\MMassgate\MMG_BitStream.h" />
+    <ClInclude Include="src\Framework\MNetwork\MN_NetRequester.h" />
+    <ClInclude Include="src\Framework\MRender\MR_Render.h" />
+    <ClInclude Include="src\Framework\MRender\MR_RenderD3D10.h" />
+    <ClInclude Include="src\Framework\MRender\MR_VertexShader.h" />
+    <ClInclude Include="src\Framework\MCommon2\MC_HybridArray.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dllmain.cpp">
@@ -128,59 +261,89 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </PrecompiledHeader>
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release-ds|Win32'">false</CompileAsManaged>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release-ds|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\ex_3d\EX3D_Console.cpp" />
-    <ClCompile Include="src\ex_commanderai\EX_CAI_Platoon.cpp" />
-    <ClCompile Include="src\ex_common\EX_OptionsModHandler.cpp" />
-    <ClCompile Include="src\ex_common\WICO_DebugView.cpp" />
-    <ClCompile Include="src\ex_game\EXG_TickBalance.cpp" />
-    <ClCompile Include="src\ex_remote\EXR_Server.cpp" />
-    <ClCompile Include="src\mcommon2\MC_CommandLine.cpp" />
-    <ClCompile Include="src\mcommon2\MC_DebugConsoleListener.cpp" />
-    <ClCompile Include="src\mcommon2\MC_Mem.cpp">
+    <ClCompile Include="src\Framework\Ice\Ice.cpp" />
+    <ClCompile Include="src\Framework\MCommon2\MC_Debug.cpp" />
+    <ClCompile Include="src\Framework\MCommon2\MC_HashMap.cpp" />
+    <ClCompile Include="src\Framework\MCommon2\MC_HeapImplementation.cpp" />
+    <ClCompile Include="src\Framework\MCommon2\MC_String.cpp" />
+    <ClCompile Include="src\Framework\MCommon2\MC_SystemPaths.cpp" />
+    <ClCompile Include="src\Framework\MCommon2\MC_SystemPathsHooks.cpp" />
+    <ClCompile Include="src\Framework\MCommon2\MF_FileHooks.cpp" />
+    <ClCompile Include="src\Framework\MCommon2\MI_Time.cpp" />
+    <ClCompile Include="src\Framework\MCommon2\MI_TimeHooks.cpp" />
+    <ClCompile Include="src\Framework\MCommon2\MM_AngleUtils.cpp" />
+    <ClCompile Include="src\Framework\MCommon2\MM_AngleUtilsHooks.cpp" />
+    <ClCompile Include="src\Framework\MCommon2\MT_Mutex.cpp" />
+    <ClCompile Include="src\Framework\MGui\MG_Manager.cpp" />
+    <ClCompile Include="src\Framework\MMassgate\MMG_AccountProtocolHooks.cpp" />
+    <ClCompile Include="src\Framework\MMassgate\MMG_BlockTEA.cpp" />
+    <ClCompile Include="src\Framework\MMassgate\MMG_CdKeyValidator.cpp" />
+    <ClCompile Include="src\Framework\MMassgate\MMG_CdKeyValidatorHooks.cpp" />
+    <ClCompile Include="src\Framework\MMassgate\MMG_CryptoHash.cpp" />
+    <ClCompile Include="src\Framework\MMassgate\MMG_ICipher.cpp" />
+    <ClCompile Include="src\Framework\MMassgate\MMG_ModDataDownloader.cpp" />
+    <ClCompile Include="src\Framework\MMassgate\MMG_Options.cpp" />
+    <ClCompile Include="src\Framework\MMassgate\MMG_ServerTracker.cpp" />
+    <ClCompile Include="src\Framework\MMassgate\MMG_ServerTrackerHooks.cpp" />
+    <ClCompile Include="src\Framework\MMassgate\MMG_ServerVariables.cpp" />
+    <ClCompile Include="src\Framework\MMassgate\MMG_TrackableServer.cpp" />
+    <ClCompile Include="src\Framework\MNetwork\MN_Message.cpp" />
+    <ClCompile Include="src\Framework\MNetwork\MN_NetRequesterHooks.cpp" />
+    <ClCompile Include="src\Framework\MNetwork\MN_Packet.cpp" />
+    <ClCompile Include="src\Framework\MNetwork\MN_ReadMessage.cpp" />
+    <ClCompile Include="src\Framework\MNetwork\MN_TcpSocket.cpp" />
+    <ClCompile Include="src\Framework\MNetwork\MN_UdpSocket.cpp" />
+    <ClCompile Include="src\Hooking\Hooks\Hooks.cpp" />
+    <ClCompile Include="src\Hooking\Hooks\Memory.cpp" />
+    <ClCompile Include="src\wic\Exodus\EX_OptionsModHandlerHooks.cpp" />
+    <ClCompile Include="src\wic\EX_3D\EX3D_Console.cpp" />
+    <ClCompile Include="src\wic\EX_3D\EX3D_RenderHooks.cpp" />
+    <ClCompile Include="src\wic\EX_CommanderAI\EX_CAI_PlatoonHooks.cpp" />
+    <ClCompile Include="src\wic\EX_CommanderAI\EX_CAI_Type.cpp" />
+    <ClCompile Include="src\wic\EX_CommanderAI\EX_CAI_TypeHooks.cpp" />
+    <ClCompile Include="src\wic\EX_Common\EXCO_Directory.cpp" />
+    <ClCompile Include="src\wic\EX_Common\EXCO_ErrorMessage.cpp" />
+    <ClCompile Include="src\wic\EX_Common\EXCO_IPlayer.cpp" />
+    <ClCompile Include="src\wic\EX_Common\EXCO_Map.cpp" />
+    <ClCompile Include="src\wic\EX_DedicatedServer\EXD_DedicatedServer.cpp" />
+    <ClCompile Include="src\wic\EX_DedicatedServer\EXD_DedicatedServerHooks.cpp" />
+    <ClCompile Include="src\wic\EX_Game\EXG_PlayerContainer.cpp" />
+    <ClCompile Include="src\wic\EX_Game\EXG_ShooterHooks.cpp" />
+    <ClCompile Include="src\wic\EX_Game\EXG_TickBalanceHooks.cpp" />
+    <ClCompile Include="src\wic\EX_Game\WICG_AgentContainerHooks.cpp" />
+    <ClCompile Include="src\wic\EX_Player\EXP_PhysicsHooks.cpp" />
+    <ClCompile Include="src\wic\EX_Player\EXP_PlayerHooks.cpp" />
+    <ClCompile Include="src\wic\EX_Player\EXP_UIHandler.cpp" />
+    <ClCompile Include="src\wic\EX_Player\WICP_DebugView.cpp" />
+    <ClCompile Include="src\wic\EX_Player\WICP_DebugViewHooks.cpp" />
+    <ClCompile Include="src\wic\EX_Player\WICP_MegaMap.cpp" />
+    <ClCompile Include="src\wic\EX_Player\WICP_MegaMapHooks.cpp" />
+    <ClCompile Include="src\wic\EX_Remote\WICR_ClientFactory.cpp" />
+    <ClCompile Include="src\wic\EX_Remote\WICR_GameController.cpp" />
+    <ClCompile Include="src\wic\EX_Remote_Client\EXR_Server.cpp" />
+    <ClCompile Include="src\Framework\MCommon2\MC_CommandLine.cpp" />
+    <ClCompile Include="src\wic\EX_3D\EX3D_DebugConsoleListener.cpp" />
+    <ClCompile Include="src\Framework\MCommon2\MC_Mem.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release-ds|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\mcommon2\MF_File.cpp" />
-    <ClCompile Include="src\memory.cpp" />
-    <ClCompile Include="src\mmassgate\MMG_AccountProtocol.cpp" />
-    <ClCompile Include="src\mmassgate\MMG_CdKey.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../stdafx.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../stdafx.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="src\mmassgate\MMG_CryptoHash.cpp" />
-    <ClCompile Include="src\mmassgate\MMG_Protocols.cpp">
+    <ClCompile Include="src\Framework\MCommon2\MF_File.cpp" />
+    <ClCompile Include="src\Framework\MMassgate\MMG_Tiger.cpp" />
+    <ClCompile Include="src\Framework\MNetwork\MN_NetRequester.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release-ds|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\mmassgate\MMG_Tiger.cpp" />
-    <ClCompile Include="src\mnetwork\MN_Format.cpp">
+    <ClCompile Include="src\Framework\MNetwork\MN_WriteMessage.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release-ds|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\mnetwork\MN_Message.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="src\mnetwork\MN_NetRequester.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="src\mnetwork\MN_Packet.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="src\mnetwork\MN_WriteMessage.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="src\mrender\MR_Render.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="src\mrender\MR_RenderD3D10.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="src\mrender\MR_VertexShader.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="src\stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="src\wic\EX_Remote_Client\EXR_ServerHooks.cpp" />
+    <ClCompile Include="src\wic.cpp" />
+    <ClCompile Include="src\wic_ds.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

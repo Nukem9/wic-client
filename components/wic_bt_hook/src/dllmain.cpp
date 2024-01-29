@@ -1,18 +1,5 @@
 #include "stdafx.h"
 
-struct hostent *PASCAL hk_gethostbyname(const char *name)
-{
-	if (strstr(name, "massgate.net") ||
-		strstr(name, "massive.se") ||
-		strstr(name, "ubisoft.com"))
-	{
-		// Everything is redirected to a single IP address now
-		return gethostbyname("liveaccount.massgate.org");
-	}
-
-	return gethostbyname(name);
-}
-
 void WicBT_HookInit(HMODULE hModule)
 {
 	if (_stricmp(reinterpret_cast<const char *>(0x00D35C62), "Built by daniel.wesslen/ME633 at 10:43:54 on Jun 22 2009 with compiler version 1400.\n") != 0)
@@ -58,12 +45,6 @@ void WicBT_HookInit(HMODULE hModule)
 	PatchMemory(0x008625D4, { 0x0 });
 	PatchMemory(0x008625E1, { 0x0 });
 	PatchMemory(0x008625EE, { 0x0 });
-
-	//
-	// Hook gethostbyname (IAT)
-	//
-	auto addr = reinterpret_cast<uintptr_t>(&hk_gethostbyname);
-	PatchMemory(0x00BFB594, reinterpret_cast<uint8_t *>(&addr), sizeof(addr));
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)

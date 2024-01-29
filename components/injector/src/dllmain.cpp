@@ -7,6 +7,19 @@ HMODULE g_ModuleHandle;
 uintptr_t detourInfo;
 uintptr_t detourEntry;
 
+struct hostent *PASCAL hk_gethostbyname(const char *name)
+{
+	// Redirect all old DNS queries to the new domain
+	if (strstr(name, "massgate.net") ||
+		strstr(name, "massive.se") ||
+		strstr(name, "ubisoft.com"))
+	{
+		return gethostbyname("liveaccount.massgate.org");
+	}
+
+	return gethostbyname(name);
+}
+
 void WINAPI hk_GetSystemInfo(LPSYSTEM_INFO lpSystemInfo)
 {
 	GetSystemInfo(lpSystemInfo);
@@ -68,6 +81,7 @@ int __cdecl hk_mainCRTStartup()
 
 	Detours::IATHook(reinterpret_cast<uintptr_t>(g_ModuleHandle), "KERNEL32.dll", "GetSystemInfo", reinterpret_cast<uintptr_t>(&hk_GetSystemInfo));
 	Detours::IATHook(reinterpret_cast<uintptr_t>(g_ModuleHandle), "KERNEL32.dll", "SetThreadAffinityMask", reinterpret_cast<uintptr_t>(&hk_SetThreadAffinityMask));
+	Detours::IATHook(reinterpret_cast<uintptr_t>(g_ModuleHandle), "WS2_32.dll", reinterpret_cast<const char *>(IMAGE_ORDINAL(52)), reinterpret_cast<uintptr_t>(&hk_gethostbyname), true);
 
 	// Unhook and return to the original function prologue
 	Detours::X86::DetourRemove(detourInfo);

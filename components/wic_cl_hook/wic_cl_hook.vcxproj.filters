@@ -17,127 +17,316 @@
     <ClInclude Include="hdk\hdk_include.h">
       <Filter>HDK</Filter>
     </ClInclude>
-    <ClInclude Include="src\stdafx.h">
+    <ClInclude Include="src\Framework\MCommon2\MC_HybridArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mnetwork\MN_Format.h">
+    <ClInclude Include="src\Framework\MRender\MR_RenderD3D10.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mnetwork\stdafx.h">
+    <ClInclude Include="src\Framework\MRender\MR_Render.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mnetwork\MN_WriteMessage.h">
+    <ClInclude Include="src\Framework\MRender\MR_VertexShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mnetwork\MN_Message.h">
+    <ClInclude Include="src\Framework\MCommon2\MC_Mem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mnetwork\MN_Packet.h">
+    <ClInclude Include="src\Framework\MNetwork\MN_NetRequester.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mcommon2\MC_HybridArray.h">
+    <ClInclude Include="src\Framework\MMassgate\MMG_BitStream.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mcommon2\stdafx.h">
+    <ClInclude Include="src\Framework\MCommon2\MF_File.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mmassgate\MMG_Protocols.h">
+    <ClInclude Include="src\wic\EX_Common\WICO_DebugView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mmassgate\stdafx.h">
+    <ClInclude Include="src\wic\EX_3D\EX3D_Console.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mrender\MR_RenderD3D10.h">
+    <ClInclude Include="src\wic\EX_3D\EX3D_DebugConsoleListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mrender\stdafx.h">
+    <ClInclude Include="src\Framework\MCommon2\MC_CommandLine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mrender\MR_Render.h">
+    <ClInclude Include="src\wic\EX_Remote_Client\EXR_Server.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mcommon2\MC_Vector2.h">
+    <ClInclude Include="src\wic\EX_CommanderAI\EX_CAI_Platoon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mcommon2\MC_Vector3.h">
+    <ClInclude Include="src\Framework\MMassgate\MMG_AccountProtocol.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mcommon2\MC_Vector4.h">
+    <ClInclude Include="src\wic\Exodus\EX_OptionsModHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mmassgate\MMG_ICipher.h">
+    <ClInclude Include="src\wic\EX_Game\EXG_TickBalance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mmassgate\MMG_BlockTEA.h">
+    <ClInclude Include="src\Framework\MCommon2\MC_GlobalDefines.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mmassgate\MMG_CryptoHash.h">
+    <ClInclude Include="src\Framework\MCommon2\MC_DataTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mrender\MR_VertexShader.h">
+    <ClInclude Include="src\Framework\MCommon2\MC_Vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mcommon2\MC_Mem.h">
+    <ClInclude Include="src\Framework\MCommon2\MC_Math.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mmassgate\MMG_CdKey.h">
+    <ClInclude Include="src\Framework\MMassgate\MMG_ICipher.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mnetwork\MN_NetRequester.h">
+    <ClInclude Include="src\Framework\MMassgate\MMG_CryptoHash.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mnetwork\MN_INetHandler.h">
+    <ClInclude Include="src\Framework\MCommon2\MC_String.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mmassgate\MMG_BitStream.h">
+    <ClInclude Include="src\Framework\MCommon2\MC_Base.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mmassgate\MMG_Tiger.h">
+    <ClInclude Include="src\Framework\MMassgate\MMG_CdKeyValidator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mcommon2\MF_File.h">
+    <ClInclude Include="src\Framework\MMassgate\MMG_BlockTEA.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ex_common\WICO_DebugView.h">
+    <ClInclude Include="src\Framework\MMassgate\MMG_Tiger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ex_common\stdafx.h">
+    <ClInclude Include="src\Framework\MMassgate\MMG_ICryptoHashAlgorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ex_3d\EX3D_Console.h">
+    <ClInclude Include="src\Framework\MNetwork\MN_Format.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ex_3d\stdafx.h">
+    <ClInclude Include="src\Framework\MNetwork\MN_ConnectionErrorType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mcommon2\MC_DebugConsoleListener.h">
+    <ClInclude Include="src\Framework\MNetwork\MN_Message.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mcommon2\MC_CommandLine.h">
+    <ClInclude Include="src\Framework\MNetwork\MN_Packet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ex_remote\EXR_Server.h">
+    <ClInclude Include="src\Framework\MNetwork\MN_WriteMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ex_remote\stdafx.h">
+    <ClInclude Include="src\Framework\MCommon2\MC_Debug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ex_commanderai\stdafx.h">
+    <ClInclude Include="src\wic\EX_Player\WICP_DebugView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ex_commanderai\EX_CAI_Platoon.h">
+    <ClInclude Include="src\Framework\MCommon2\MC_HeapImplementation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mmassgate\MMG_AccountProtocol.h">
+    <ClInclude Include="src\Framework\MCommon2\MC_GrowingArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ex_common\EX_OptionsModHandler.h">
+    <ClInclude Include="src\Framework\MCommon2\MT_Mutex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ex_game\EXG_TickBalance.h">
+    <ClInclude Include="src\Hooking\Hooks\Hooks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ex_game\stdafx.h">
+    <ClInclude Include="src\Hooking\Hooks\Memory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Player\WICP_MegaMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Player\WICP_Root.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Player\EXP_UIHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Common\EXCO_Constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\Ice\Ice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Player\WICP_GameEventsHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Player\EXP_Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Common\EXCO_Directory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MCommon2\MC_SystemPaths.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Remote_Client\EXR_Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Common\EXCO_IGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Common\WICO_Vote.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Common\WICO_Request.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Common\EXCO_Behaviour.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MCommon2\MC_Array.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Game\EXG_Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Game\EXG_PlayerContainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Game\WICG_Root.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Game\EXG_Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Common\EXCO_IPlayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Common\EXCO_MissionInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Common\EXCO_PlayerInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MCommon2\MC_StaticArray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_3D\EX3D_Render.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Player\EXP_Physics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MCommon2\MI_Time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_CommanderAI\EX_CAI_Type.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_CommanderAI\EX_CAI_ShooterAbility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_DedicatedServer\EXD_DedicatedServer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Remote\WICR_ClientFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Common\EXCO_MissionSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Common\EXCO_SlotManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Common\WICO_GameSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Common\EXCO_Difficulty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Common\WICO_BotOptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Game\WICG_VoipServer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Remote\WICR_GameController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MNetwork\MN_TcpSocket.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MMassgate\MMG_TrackableServer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Common\EXCO_Map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wic\EX_Common\EXCO_ErrorMessage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MGui\MG_Manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MMassgate\MMG_ServerVariables.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MMassgate\MMG_Constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MMassgate\MMG_IStreamable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MMassgate\MMG_Protocols.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MCommon2\MT_Thread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MNetwork\MN_UdpSocket.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MMassgate\MMG_ProtocolDelimiters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MNetwork\MN_LoopbackConnection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MNetwork\MN_IWriteableDataStream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MNetwork\MN_ReadMessage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MCommon2\MM_AngleUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MCommon2\MC_EggClockTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MMassgate\MMG_ServerTracker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MCommon2\MC_HashMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MMassgate\MMG_LadderProtocol.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MMassgate\MMG_Profile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MCommon2\MC_SortedGrowingArray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MMassgate\MMG_PCCProtocol.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MMassgate\MMG_Options.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MCommon2\MC_Algorithm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\MMassgate\MMG_ModDataDownloader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -145,79 +334,214 @@
     <ClCompile Include="src\dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\stdafx.cpp">
+    <ClCompile Include="src\Framework\MNetwork\MN_WriteMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\mnetwork\MN_Format.cpp">
+    <ClCompile Include="src\Framework\MCommon2\MC_Mem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\mnetwork\MN_WriteMessage.cpp">
+    <ClCompile Include="src\Framework\MNetwork\MN_NetRequester.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\mnetwork\MN_Message.cpp">
+    <ClCompile Include="src\Framework\MMassgate\MMG_Tiger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\mnetwork\MN_Packet.cpp">
+    <ClCompile Include="src\Framework\MCommon2\MF_File.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\mmassgate\MMG_Protocols.cpp">
+    <ClCompile Include="src\wic\EX_Player\WICP_DebugView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\mrender\MR_RenderD3D10.cpp">
+    <ClCompile Include="src\wic\EX_3D\EX3D_Console.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\mrender\MR_Render.cpp">
+    <ClCompile Include="src\wic\EX_3D\EX3D_DebugConsoleListener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\mrender\MR_VertexShader.cpp">
+    <ClCompile Include="src\Framework\MCommon2\MC_CommandLine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\mcommon2\MC_Mem.cpp">
+    <ClCompile Include="src\wic\EX_Remote_Client\EXR_Server.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\mmassgate\MMG_CdKey.cpp">
+    <ClCompile Include="src\Framework\MMassgate\MMG_ICipher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\mnetwork\MN_NetRequester.cpp">
+    <ClCompile Include="src\Framework\MMassgate\MMG_CryptoHash.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\mmassgate\MMG_Tiger.cpp">
+    <ClCompile Include="src\Framework\MCommon2\MC_String.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\mmassgate\MMG_CryptoHash.cpp">
+    <ClCompile Include="src\Framework\MMassgate\MMG_CdKeyValidator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\mcommon2\MF_File.cpp">
+    <ClCompile Include="src\Framework\MMassgate\MMG_BlockTEA.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ex_common\WICO_DebugView.cpp">
+    <ClCompile Include="src\Framework\MNetwork\MN_Message.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\memory.cpp">
+    <ClCompile Include="src\Framework\MNetwork\MN_Packet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ex_3d\EX3D_Console.cpp">
+    <ClCompile Include="src\Framework\MCommon2\MC_HeapImplementation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\mcommon2\MC_DebugConsoleListener.cpp">
+    <ClCompile Include="src\Framework\MCommon2\MT_Mutex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\mcommon2\MC_CommandLine.cpp">
+    <ClCompile Include="src\Hooking\Hooks\Hooks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ex_remote\EXR_Server.cpp">
+    <ClCompile Include="src\wic\EX_CommanderAI\EX_CAI_PlatoonHooks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ex_commanderai\EX_CAI_Platoon.cpp">
+    <ClCompile Include="src\wic\EX_Game\EXG_TickBalanceHooks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\mmassgate\MMG_AccountProtocol.cpp">
+    <ClCompile Include="src\wic\EX_Player\WICP_DebugViewHooks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ex_common\EX_OptionsModHandler.cpp">
+    <ClCompile Include="src\wic\EX_Remote_Client\EXR_ServerHooks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ex_game\EXG_TickBalance.cpp">
+    <ClCompile Include="src\wic\Exodus\EX_OptionsModHandlerHooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hooking\Hooks\Memory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\MNetwork\MN_NetRequesterHooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\MCommon2\MF_FileHooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\MMassgate\MMG_AccountProtocolHooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\MCommon2\MC_Debug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wic\EX_Player\EXP_PhysicsHooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\MMassgate\MMG_CdKeyValidatorHooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wic\EX_Player\WICP_MegaMapHooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wic\EX_Player\WICP_MegaMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\Ice\Ice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wic\EX_Common\EXCO_Directory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\MCommon2\MC_SystemPathsHooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\MCommon2\MC_SystemPaths.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wic\EX_Player\EXP_PlayerHooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wic\EX_Game\EXG_PlayerContainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wic\EX_Common\EXCO_IPlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wic\EX_3D\EX3D_RenderHooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wic\EX_Player\EXP_UIHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wic_ds.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wic\EX_Game\WICG_AgentContainerHooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\MCommon2\MI_Time.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\MCommon2\MI_TimeHooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wic\EX_CommanderAI\EX_CAI_Type.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wic\EX_CommanderAI\EX_CAI_TypeHooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wic\EX_DedicatedServer\EXD_DedicatedServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\MMassgate\MMG_TrackableServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wic\EX_Common\EXCO_Map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\MNetwork\MN_TcpSocket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wic\EX_Remote\WICR_ClientFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wic\EX_Remote\WICR_GameController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wic\EX_DedicatedServer\EXD_DedicatedServerHooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wic\EX_Common\EXCO_ErrorMessage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\MGui\MG_Manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wic\EX_Game\EXG_ShooterHooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\MMassgate\MMG_ServerVariables.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\MNetwork\MN_UdpSocket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\MNetwork\MN_ReadMessage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\MCommon2\MM_AngleUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\MCommon2\MM_AngleUtilsHooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\MMassgate\MMG_ServerTracker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\MCommon2\MC_HashMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\MMassgate\MMG_ServerTrackerHooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\MMassgate\MMG_Options.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\MMassgate\MMG_ModDataDownloader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

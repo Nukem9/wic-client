@@ -101,7 +101,7 @@
 
 BOOL WINAPI MiniDumpWriteDump(HANDLE hProcess, DWORD ProcessId, HANDLE hFile, int DumpType, void *ExceptionParam, void *UserStreamParam, void *CallbackParam)
 {
-	static HMODULE dbghelpHandle = LoadLibraryW(L"dbghelp_old.dll");
+	static auto dbghelpHandle = LoadLibraryW(L"dbghelp_old.dll");
 	static auto pfnMiniDumpWriteDump = reinterpret_cast<decltype(&MiniDumpWriteDump)>(GetProcAddress(dbghelpHandle, "MiniDumpWriteDump"));
 
 	if (dbghelpHandle && pfnMiniDumpWriteDump)
